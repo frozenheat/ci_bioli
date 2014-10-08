@@ -1,0 +1,53 @@
+#wrapper_login{margin:80 auto 0 auto; width:806px; height:auto; min-height:300px}
+#left_login{width:535px; height:300px; border-bottom-left-radius: 10px; border-bottom-left-radius: 10px; float: left;}
+#right_login{margin:55 0px; float:right; width: 250px;}
+.loginimage{background-image: url("../image/loginlogo.png"); background-repeat:no-repeat; height:37px; }
+.login_inp{background: url("../image/inp_login.gif") no-repeat; border: none; color: #fff; font-size: 16px; height: 28px; width: 169px;}
+.login_button{background: url("../image/masuk.jpg")no-repeat; border: none; cursor: pointer; display: block; height: 29px; text-indent: -3000px; width: 73px; border-radius: 5 5 5 5;}
+
+
+
+
+
+/*slideshow*/	
+#slider {
+    width:535px;height:300px;/* Make it the same size as your images */
+	background:#fff url(loading.gif) no-repeat 50% 50%;
+	position:relative;
+	margin:0 auto;/*make the image slider center-aligned */
+    box-shadow: 0px 1px 5px #999999;
+	
+}
+
+#slider img {
+	position:absolute;
+	border:none;
+	display:none;
+	
+}
+
+/* ------ built-in navigation bullets wrapper ------*/
+div.navBulletsWrapper  {
+	top:320px; left:280px; /* Its position is relative to the #slider */
+	width:150px;
+	background:none;
+	padding-left:20px;
+	position:relative;
+	z-index:5;
+	cursor:pointer;
+}
+
+/* each bullet */
+div.navBulletsWrapper div 
+{
+    width:11px; height:11px;
+    background:transparent url(bullet.png) no-repeat 0 0;
+    float:left;overflow:hidden;vertical-align:middle;cursor:pointer;
+    margin-right:11px;/* distance between each bullet*/
+    _position:relative;/*IE6 hack*/
+}
+
+div.navBulletsWrapper div.active {background-position:0 -11px;}
+
+
+/*slideshow end*/
