@@ -1,7 +1,7 @@
 
 
 <title>Bioli Lestari</title>
-<link rel="stylesheet" href="./css/normalize.css">
-<link rel="stylesheet" href="./css/banner.css">
-<link rel="stylesheet" href="./css/body.css">
-<link rel="stylesheet" href="./css/footer.css">
+<link rel="stylesheet" href="<?php echo base_url();?>css/normalize.css" type="text/css" />
+<link rel="stylesheet" href="<?php echo base_url();?>css/banner.css" type="text/css" />
+<link rel="stylesheet" href="<?php echo base_url();?>css/body.css" type="text/css" />
+<link rel="stylesheet" href="<?php echo base_url();?>css/footer.css" type="text/css" />
