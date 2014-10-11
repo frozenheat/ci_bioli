@@ -26,12 +26,15 @@
 </div>
 <div id="right_login">
 		<div class="loginimage"></div>
-		<form name="login" method="post">
+		<?php 
+		echo validation_errors();
+		echo form_open('login/verifikasi_login');
+		?>
 			<table cellspacing="-" cellpadding="-" width="250" border="0">
 			<tr><td>User Id</td></tr>
 			<tr><td><input type="text" name="username" class ="login_inp"></td></tr>
 			<tr><td>Password</td></tr>
-			<tr><td><input type="text" name="password" class ="login_inp"></td></tr>
+			<tr><td><input type="password" name="password" class ="login_inp"></td></tr>
 			<tr align="center"><td><input type="submit" name="login" class="login_button"></td></tr>
 			</table>
 		</form>
