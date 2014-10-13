@@ -5,7 +5,7 @@
 		
 		function index()
 		{
-		$this->load->helper(array('form'));
+		//$this->load->helper(array('form')); tidak diperlukan karena sudah disetting di autoload
 		$this->load->view('hlm_login');
 		}
 		

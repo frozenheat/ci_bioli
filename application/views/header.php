@@ -9,4 +9,5 @@
 		</div>
 		<div class="top-banner-right"></div>
 		</div>
+	<div class="clear"></div>
 	</div>

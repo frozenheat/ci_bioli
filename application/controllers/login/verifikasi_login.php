@@ -18,7 +18,7 @@ function index()
 			}
 			else
 			{
-				redirect('admin/c_halaman_utama','refresh');
+				redirect('c_halaman_utama','refresh');
 			}
 		}
 		
