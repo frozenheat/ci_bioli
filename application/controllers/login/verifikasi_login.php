@@ -4,7 +4,25 @@ function __construct()
 		{
 			parent::__construct();
 			$this->load->model('m_login');
+			$this->load->model('penampilan_data');
 		}
+		
+		//function percobaan($username,$password)
+		//{
+			//$result=$this->penampilan_data->pegawai($username,$password);
+			//$data=array();
+			
+			//foreach($result['query'] as $row)
+			//{
+				//$data=array(
+				//'database'=>$row->database,
+				//'nama_pegawai'=>$row->nm_pgw,
+				//'password'=>$row->password);
+			//}
+			
+			//$data["database"]=$result["database"];	// harus ditaruh dibawah setelah deklarasi $data = array()diatas
+			//$this->load->view('penampilan_data',$data);
+		//}
 
 function index()
 		{
@@ -32,13 +50,30 @@ function index()
 			if($result)//artinya kalo ada result yang dihasilkan
 			{
 				$sess_array= array();
-				foreach($result as $row)
+				if($result['database']=='1')
+				{
+				foreach($result['query'] as $row)
 				{
 					$sess_array = array(
 						'id_pegawai' => $row->id_pgw,
 						'nama_pegawai'=>$row->nm_pgw,
-						'otoritas'=>$row->otoritas
+						'otoritas'=>$row->otoritas,
+						'database'=>'pegawai'
 					);
+					$this->session->set_userdata('logged_in',$sess_array);
+				}
+				}
+				elseif($result['database']=='2')
+				{
+					foreach($result['query'] as $row)
+					{
+					$sess_array = array(
+						'id_pelanggan' => $row->id_pln,
+						'nama_pelanggan'=>$row->nm_pln,
+						'otoritas'=>'pelanggan',
+						'database'=>'pelanggan'
+					);
+					}
 					$this->session->set_userdata('logged_in',$sess_array);
 				}
 				return TRUE;
