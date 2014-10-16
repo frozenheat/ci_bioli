@@ -3,9 +3,9 @@
 <div id="wrapper_menu">
 <div id='cssmenu'>
 <ul>
-   <li><a href='#'>Beranda</a></li>
-   <li class="has-sub"><a href='#'>Master</a><ul><li class="has-sub"><a href='#'>Pegawai</a></li><li class="has-sub"><a href='#'>Barang</a></li><li><a href='#'>Pelanggan</a></li><li><a href="#">Pesanan pelanggan</a></li></ul></li>
-   <li><a href="c_halaman_utama/logout">Keluar</a></li>
+   <li><a href='<?php echo site_url();?>/c_halaman_utama'>Beranda</a></li>
+   <li class="has-sub"><a href='#'>Master</a><ul><li class="has-sub"><a href='<?php echo site_url();?>/master_pegawai/c_tampil_pegawai'>Pegawai</a></li><li class="has-sub"><a href='#'>Barang</a></li><li><a href='#'>Pelanggan</a></li><li><a href="#">Pesanan pelanggan</a></li></ul></li>
+   <li><a href="<?php echo site_url();?>/c_halaman_utama/logout">Keluar</a></li>
 </ul>
 </div>
 </div>
@@ -21,7 +21,7 @@
    <li><a href='#'>Beranda</a></li>
    <li class="has-sub"><a href='#'>Master</a><ul><li class="has-sub"><a href='#'>Barang</a></li></ul></li>
    <li><a href='#'>Jadwal Produksi</a></li>
-   <li><a href="c_halaman_utama/logout">Keluar</a></li>
+   <li><a href="<?php echo site_url();?>/c_halaman_utama/logout">Keluar</a></li>
 </ul>
 </div>
 </div>
@@ -36,7 +36,7 @@
 <ul>
    <li><a href='#'>Beranda</a></li>
    <li class="has-sub"><a href='#'>Master</a><ul><li class="has-sub"><a href='#'>Pelanggan</a></li><li class="has-sub"><a href='#'>Pesanan pelanggan</a></li></ul></li>
-   <li><a href="c_halaman_utama/logout">Keluar</a></li>
+   <li><a href="<?php echo site_url();?>/c_halaman_utama/logout">Keluar</a></li>
 </ul>
 </div>
 </div>
@@ -52,7 +52,7 @@
 	<li><a href='#'>Beranda</a></li>
 	<li class="has-sub"><a href='#'>Pemesanan barang</a></li>
 	<li><a href="">status barang</a></li>
-	<li><a href="c_halaman_utama/logout">Keluar</a></li>
+	<li><a href="<?php echo site_url();?>/c_halaman_utama/logout">Keluar</a></li>
 </ul>
 </div>
 </div>
