@@ -1,4 +1,4 @@
-#wrapper_login{margin:80 auto 0 auto; width:806px; height:auto; min-height:300px}
+#wrapper_login{margin:0 auto 0 auto; width:806px; height:auto; min-height:300px}
 #left_login{width:535px; height:300px; border-bottom-left-radius: 10px; border-bottom-left-radius: 10px; float: left;}
 #right_login{margin:55 0px; float:right; width: 250px;}
 .loginimage{background-image: url("../image/loginlogo.png"); background-repeat:no-repeat; height:37px; }

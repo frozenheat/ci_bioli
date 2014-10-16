@@ -40,11 +40,12 @@
 		</form>
 </div>
 </div>
+
 </div>
 
 
 <footer>
- <?php include "footer.php"; ?>
+ <?php $this->load->view('footer'); ?>
 </footer>
 
 </body>

@@ -1,1 +1,6 @@
-#body{min-height:395px; height:auto; position:relative;}
+#body{min-height:395px; margin:80 0 0px; position:relative;}
+
+.wrapper-table{width:800px; margin:0 auto;}
+
+
+.table tr td{padding:0 11px;}
