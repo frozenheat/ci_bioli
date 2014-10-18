@@ -1,6 +1,7 @@
 <html>
 <head>
 <?php $this->load->view('head');?>
+
 </head>
 <body>
 <header>
