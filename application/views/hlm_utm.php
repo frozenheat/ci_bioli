@@ -7,7 +7,10 @@
 <?php $this->load->view('header');?>
 </header>
 <?php $this->load->view('menu');?>
+
 <div id="body">
+
+
 <?php
 		if (isset($body))
 		{
@@ -18,7 +21,10 @@
 		}
 
 ?>
+
 </div>
+
+
 
 </body>
 <footer>
