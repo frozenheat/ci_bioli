@@ -27,6 +27,10 @@
 		{
 		$this->load->view('body_jenis_barang');
 		}
+		else if($body=='master_pelanggan')
+		{
+		$this->load->view('body_master_pelanggan');
+		}
 		}
 
 ?>
