@@ -19,6 +19,14 @@
 		{
 		$this->load->view('body_master_pegawai');
 		}
+		else if($body=='master_barang')
+		{
+		$this->load->view('body_master_barang');
+		}
+		else if($body=='jenis_barang')
+		{
+		$this->load->view('body_jenis_barang');
+		}
 		}
 
 ?>

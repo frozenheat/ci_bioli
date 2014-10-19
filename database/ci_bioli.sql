@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 18, 2014 at 07:36 PM
+-- Generation Time: Oct 19, 2014 at 01:08 PM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -19,6 +19,53 @@ SET time_zone = "+00:00";
 --
 -- Database: `ci_bioli`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `barang`
+--
+
+CREATE TABLE IF NOT EXISTS `barang` (
+  `id_brng` varchar(50) NOT NULL,
+  `nm_brng` varchar(50) NOT NULL,
+  `lot_size` int(11) NOT NULL,
+  `wkt_prdksi` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `barang`
+--
+
+INSERT INTO `barang` (`id_brng`, `nm_brng`, `lot_size`, `wkt_prdksi`) VALUES
+('c001', 'cylinder_liner_(boring)_FR70', 100, 3),
+('c002', 'cylinder_liner_(boring)_RC80', 90, 3),
+('c003', 'cylinder_liner_(boring)_A100', 300, 3),
+('g001', 'Guide_Valve_(Bosh_klep)_c700', 200, 2),
+('g002', 'Guide_Valve_(Bosh_klep)_H90', 200, 2),
+('g003', 'Guide_Valve_(Bosh_klep)_GL100', 300, 2),
+('v001', 'Valve_Seat_(Cincin_Setting)_Grand/Prima', 500, 1),
+('v002', 'Valve_Seat_(Cincin_Setting)_Star/Astrea', 500, 1),
+('v003', 'vValve_Seat_(Cincin_Setting)_Shogun', 500, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jenis_barang`
+--
+
+CREATE TABLE IF NOT EXISTS `jenis_barang` (
+  `id_jns_brng` varchar(2) NOT NULL,
+  `nm_jns_brng` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `jenis_barang`
+--
+
+INSERT INTO `jenis_barang` (`id_jns_brng`, `nm_jns_brng`) VALUES
+('b', 'Bosh_klep'),
+('c', 'Cylinder_liner');
 
 -- --------------------------------------------------------
 
@@ -62,10 +109,7 @@ CREATE TABLE IF NOT EXISTS `pegawai` (
 
 INSERT INTO `pegawai` (`id_pgw`, `nm_pgw`, `almt_pgw`, `telp_pgw`, `almt_email_pgw`, `otoritas`, `password`) VALUES
 ('a5001', 'herry', 'sdps', 1238213201, 'aaaa@ymai.com', 'admin_utama', 'admin'),
-('h5001', 'testing', 'testing', 2147483647, 'aaa@msn.com', 'admin_utama', 'h5001'),
-('m24189', 'kepala', 'surga', 138213021, 'ga tau', 'admin_pelanggan', 'adpel'),
 ('m5001', 'rudi', 'dsafasd', 123141, 'rudi@gmail.com', 'admin_pelanggan', 'adpel'),
-('m52178', 'kepala', 'surga', 138213021, 'ga tau', 'admin_pelanggan', 'adpel'),
 ('p5001', 'adi', 'dsafjasdjoa', 3213124, 'coba@gmail.com', 'admin_produksi', 'produksi');
 
 -- --------------------------------------------------------
@@ -93,6 +137,18 @@ INSERT INTO `pelanggan` (`id_pln`, `nm_pln`, `almt_pln`, `almt_email`, `no_telp`
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `barang`
+--
+ALTER TABLE `barang`
+ ADD PRIMARY KEY (`id_brng`);
+
+--
+-- Indexes for table `jenis_barang`
+--
+ALTER TABLE `jenis_barang`
+ ADD PRIMARY KEY (`id_jns_brng`);
 
 --
 -- Indexes for table `otoritas`
