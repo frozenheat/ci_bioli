@@ -4,7 +4,7 @@
 
 <?php 
 echo validation_errors();
-echo form_open(site_url().'/master_barang/input_barang/jenis_barang');
+echo form_open(site_url().'/master_barang/c_input_barang/jenis_barang');
 ?>
 
 <tr><td>id jenis barang:</td><td><input type ="text" name="id_jenis_barang"></td></tr>

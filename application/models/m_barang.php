@@ -37,27 +37,33 @@ class m_barang extends CI_Model{
 	}
 	
 	
-	
-	function id_otoritas($otoritas)
+	function pencarian_jenis_barang($jenis)
 	{
-	$this->db->select('id_otoritas');
-	$this->db->from('otoritas');
-	$this->db->where('nama_otoritas',$otoritas);
-	$query = $this->db->get();
+	$this->db->select('id_jns_brng');
+	$this->db->from('jenis_barang');
+	$this->db->where('nm_jns_brng',$jenis);
+	$query=$this->db->get();
+	
 	if ($query->num_rows()>0)
 	{
-	return $query->result();
+		return $query->result();
 	}
 	else
 	{
-	return false;
+		return false;
+	}
 	}
 	
-	}
-	function input_pegawai($insert)
+	function input_master_barang($insert)
 	{
-	$this->db->insert('pegawai',$insert);
+		$this->db->insert('barang',$insert);
 	}
+	
+	function input_jenis_barang($insert)
+	{	
+		$this->db->insert('jenis_barang',$insert);
+	}
+	
 
 }
 ?>
