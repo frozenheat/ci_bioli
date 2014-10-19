@@ -1,33 +1,16 @@
 <?php
-class c_tampil_pegawai extends CI_Controller 
+class input_pegawai extends CI_Controller
 {
 
+	
+	
 	function __construct()
 	{
-		parent::__construct();
-		$this->load->model('m_pegawai');
-		
-		
+	parent::__construct();
+	$this->load->model('m_pegawai');
 	}
-
+	
 	function index()
-	{
-	$data['body']="master_pegawai";
-	
-	if($this->session->userdata('logged_in'))
-		{
-			$session_data=$this->session->userdata('logged_in');;
-			$data['database']=$session_data['database'];
-			$data['id_pegawai']=$session_data['id_pegawai'];
-			$data['otoritas']=$session_data['otoritas'];
-			$data['data_pegawai']=$this->m_pegawai->tampil_pegawai();
-			$this->load->view('hlm_utm',$data);
-	
-		}
-	}
-
-	
-	function input_pegawai()
 	{
 	
 	$this->load->library('form_validation');
@@ -37,12 +20,8 @@ class c_tampil_pegawai extends CI_Controller
 	$this->form_validation->set_rules('telp','Telp','trim|required|xss_clean');
 	$this->form_validation->set_rules('password','Password','trim|required|xss_clean');
 	
-	if($this->form_validation->run()==false)
+	if($this->form_validation->run()==true)
 	{
-	$this->load->view('hlm_utm');
-	}
-	
-	
 	
 	$array_word=array('0','1','2','3','4','5','6','7','8','9');
 	shuffle($array_word);
@@ -73,9 +52,11 @@ class c_tampil_pegawai extends CI_Controller
 	);
 	
 	$this->m_pegawai->input_pegawai($insert);
-	
-	redirect('master_pegawai/c_tampil_pegawai');
 	}
+	redirect('master_pegawai/c_tampil_pegawai');
+	
+	}
+	
 }
 
 ?>

@@ -1,7 +1,12 @@
 <div class="wrapper-form">
 <center>
 <table  class="table-form">
-<?php echo form_open(site_url().'/master_pegawai/c_tampil_pegawai/input_pegawai');?>
+
+<?php 
+echo validation_errors();
+echo form_open(site_url().'/master_pegawai/input_pegawai');
+?>
+
 <tr><td>nama pegawai:</td><td><input type ="text" name="nama_pegawai"></td></tr>
 <tr><td>alamat pegawai:</td><td><input type ="text" name="almt_pgw"></td></tr>
 <tr><td>alamat email pegawai:</td><td><input type ="text" name="almt_email"></td></tr>
