@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 19, 2014 at 04:45 PM
+-- Generation Time: Oct 21, 2014 at 08:08 PM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -108,10 +108,9 @@ CREATE TABLE IF NOT EXISTS `pegawai` (
 --
 
 INSERT INTO `pegawai` (`id_pgw`, `nm_pgw`, `almt_pgw`, `telp_pgw`, `almt_email_pgw`, `otoritas`, `password`) VALUES
-('a5001', 'herry', 'sdps', 1238213201, 'aaaa@ymai.com', 'admin_utama', 'admin'),
-('m5001', 'rudi', 'dsafasd', 123141, 'rudi@gmail.com', 'admin_pelanggan', 'adpel'),
-('m64092', 'sadsa', 'sadsa', 123213, 'sadsa', 'admin_pelanggan', 'asdsadas'),
-('p5001', 'adi', 'dsafjasdjoa', 3213124, 'coba@gmail.com', 'admin_produksi', 'produksi');
+('a5001', 'herry', 'SDPS', 3213123, 'herry@gmail.com', 'admin_utama', 'admin'),
+('m5001', 'rudisss', 'dsafasd', 123141, 'rudi@gmail.com', 'admin_pelanggan', 'rudi'),
+('p5001', 'adi', 'adada', 12312312, 'adi@gmail.com', 'admin_produksi', 'adpro');
 
 -- --------------------------------------------------------
 

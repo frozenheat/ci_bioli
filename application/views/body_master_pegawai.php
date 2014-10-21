@@ -1,8 +1,33 @@
+<script type="text/Javascript">
+function pilihtindakan(tindakan, id_pegawai, nama_pegawai, alamat_email, alamat_pegawai, telp_pegawai, otoritas)
+{
+document.getElementById('id_pegawai').value = id_pegawai;
+document.getElementById('nama_pegawai').value = nama_pegawai;
+document.getElementById('alamat_email').value = alamat_email;
+document.getElementById('alamat_pegawai').value = alamat_pegawai;
+document.getElementById('telp_pegawai').value = telp_pegawai;
+document.getElementById('otoritas').value = otoritas;
+document.getElementById('tindak').value = tindakan;
+
+if (tindakan == 'hapus' || tindakan=='ubah')
+{	
+	//alert(id_pegawai);
+	document.getElementById('tindakan').submit();
+	
+}
+
+
+}
+
+</script>
+
+
 <div class="wrapper-form">
 <center>
 <table  class="table-form">
 
-<?php 
+
+<?php
 echo validation_errors();
 echo form_open(site_url().'/master_pegawai/input_pegawai');
 ?>
@@ -15,6 +40,7 @@ echo form_open(site_url().'/master_pegawai/input_pegawai');
 <tr><td>password:</td><td><input type ="text" name="password"></td></tr>
 <tr><td></td><td><input type="submit" name="tambah" value="tambah" class="submit"></td></tr>
 </table>
+</form>
 </center>
 </div>
 
@@ -35,9 +61,16 @@ foreach ($data_pegawai as $row)
 	echo "<td>".$row->almt_pgw."</td>";
 	echo "<td>".$row->telp_pgw."</td>";
 	echo "<td>".$row->otoritas."</td>";
+	echo "<td><select name='tindakan' onchange='pilihtindakan(this.value, \"$row->id_pgw\", \"$row->nm_pgw\" , \"$row->almt_email_pgw\" , \"$row->almt_pgw\", \"$row->telp_pgw\", \"$row->otoritas\")'><option></option><option value='hapus'>hapus</option><option value='ubah'>ubah</option></td>";
+	//echo "<td><select name='tindakan'><option></option><option value='hapus'>hapus</option><option value='ubah'>ubah</option></td>";
+	//echo "<td><button type='submit' name='tindakan'></form></td>";
 	echo "</tr>";
-
+	
 }
+	echo "</table>";
+	
+
+
 }
 else
 {
@@ -45,7 +78,19 @@ else
 }
 
 ?>
-</table>
+
 </div>
+<?php
+	echo "<form id='tindakan' method='POST' action='".site_url()."/master_pegawai/edit_pegawai'>";
+	echo "<input type='hidden' name='id_pegawai' id='id_pegawai'>";
+	echo "<input type='hidden' name='nama_pegawai' id='nama_pegawai'>";
+	echo "<input type='hidden' name='alamat_email' id='alamat_email'>";
+	echo "<input type='hidden' name='alamat_pegawai' id='alamat_pegawai'>";
+	echo "<input type='hidden' name='telp_pegawai' id='telp_pegawai'>";
+	echo "<input type='hidden' name='otoritas' id='otoritas'>";
+	echo "<input type='hidden' name='tindak' id='tindak'>";
+
+	echo "</form>";
+?>
 </center>
 

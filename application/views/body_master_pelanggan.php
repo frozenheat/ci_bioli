@@ -13,6 +13,7 @@ echo form_open(site_url().'/master_pelanggan/c_input_pelanggan');
 <tr><td>no telp:</td><td><input type ="text" name="no_telp"></td></tr>
 <tr><td>password:</td><td><input type ="text" name="password"></td></tr>
 <tr><td></td><td><input type="submit" name="tambah" value="tambah" class="submit"></td></tr>
+</form>
 </table>
 </center>
 </div>

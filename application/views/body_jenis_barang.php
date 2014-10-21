@@ -10,6 +10,7 @@ echo form_open(site_url().'/master_barang/c_input_barang/jenis_barang');
 <tr><td>id jenis barang:</td><td><input type ="text" name="id_jenis_barang"></td></tr>
 <tr><td>nama jenis barang:</td><td><input type ="text" name="nama_jenis_barang"></td></tr>
 <tr><td></td><td><input type="submit" name="tambah" value="tambah" class="submit"></td></tr>
+</form>
 </table>
 </center>
 </div>

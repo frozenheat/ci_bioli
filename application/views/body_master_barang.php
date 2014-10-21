@@ -11,6 +11,7 @@ echo form_open(site_url().'/master_barang/c_input_barang/master_barang');
 <tr><td>lot size:</td><td><input type ="text" name="lot_size"></td></tr>
 <tr><td>waktu produksi:</td><td><input type ="text" name="waktu_produksi"></td></tr>
 <tr><td>jenis barang:</td><td><select name="jenis_barang">
+</form>
 <?php
 foreach ($jenis_barang as $row)
 {

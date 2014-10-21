@@ -39,6 +39,21 @@ class m_pegawai extends CI_Model{
 	{
 	$this->db->insert('pegawai',$insert);
 	}
-
+	
+	
+	
+	function delete_pegawai($delete)
+	{
+		
+		$this->db->delete('pegawai',$delete);
+		
+	}
+	
+	function ubah_pegawai($ubah, $id_pgw)
+	{
+		$this->db->where('id_pgw',$id_pgw);
+		$this->db->update('pegawai',$ubah);
+		
+	}
 }
 ?>
