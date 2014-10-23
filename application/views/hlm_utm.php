@@ -35,6 +35,10 @@
 		{
 		$this->load->view('body_ubah');
 		}
+		else if($body=='pesanan_pelanggan')
+		{
+		$this->load->view('body_pesanan_barang');
+		}
 		}
 
 ?>

@@ -72,6 +72,7 @@ function index()
 						'nama_pelanggan'=>$row->nm_pln,
 						'otoritas'=>'pelanggan',
 						'database'=>'pelanggan'
+						//database dipakai apabila ada 1 halaman yang dipakai oleh pegawai atau pelanggan
 					);
 					}
 					$this->session->set_userdata('logged_in',$sess_array);
