@@ -61,16 +61,10 @@ foreach ($data_pegawai as $row)
 	echo "<td>".$row->almt_pgw."</td>";
 	echo "<td>".$row->telp_pgw."</td>";
 	echo "<td>".$row->otoritas."</td>";
-	echo "<td><select name='tindakan' onchange='pilihtindakan(this.value, \"$row->id_pgw\", \"$row->nm_pgw\" , \"$row->almt_email_pgw\" , \"$row->almt_pgw\", \"$row->telp_pgw\", \"$row->otoritas\")'><option></option><option value='hapus'>hapus</option><option value='ubah'>ubah</option></td>";
-	//echo "<td><select name='tindakan'><option></option><option value='hapus'>hapus</option><option value='ubah'>ubah</option></td>";
-	//echo "<td><button type='submit' name='tindakan'></form></td>";
+	echo "<td><select onchange='pilihtindakan(this.value, \"$row->id_pgw\", \"$row->nm_pgw\" , \"$row->almt_email_pgw\" , \"$row->almt_pgw\", \"$row->telp_pgw\", \"$row->otoritas\")'><option></option><option value='hapus'>hapus</option><option value='ubah'>ubah</option></td>";
 	echo "</tr>";
 	
 }
-	echo "</table>";
-	
-
-
 }
 else
 {
@@ -78,8 +72,11 @@ else
 }
 
 ?>
-
+</table>
 </div>
+</center>
+
+
 <?php
 	echo "<form id='tindakan' method='POST' action='".site_url()."/master_pegawai/edit_pegawai'>";
 	echo "<input type='hidden' name='id_pegawai' id='id_pegawai'>";
@@ -89,8 +86,6 @@ else
 	echo "<input type='hidden' name='telp_pegawai' id='telp_pegawai'>";
 	echo "<input type='hidden' name='otoritas' id='otoritas'>";
 	echo "<input type='hidden' name='tindak' id='tindak'>";
-
 	echo "</form>";
 ?>
-</center>
 

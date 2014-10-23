@@ -28,7 +28,8 @@ class edit_pegawai extends CI_Controller
 	else if ($this->input->POST('tindak')=='ubah')
 	{
 	
-	$data['body']="ubah_pegawai";
+	$data['body']="ubah";
+	$data['bagian']="pegawai";
 	
 	$data['id_pegawai'] = $this->input->POST('id_pegawai');
 	$data['nama_pegawai'] = $this->input->POST('nama_pegawai');
@@ -40,10 +41,7 @@ class edit_pegawai extends CI_Controller
 	if($this->session->userdata('logged_in'))
 		{
 			$session_data=$this->session->userdata('logged_in');;
-			$data['database']=$session_data['database'];
-			
 			$data['otoritas']=$session_data['otoritas'];
-			$data['data_pegawai']=$this->m_pegawai->tampil_pegawai();
 			$this->load->view('hlm_utm',$data);
 	
 		}
@@ -62,10 +60,21 @@ class edit_pegawai extends CI_Controller
 		'almt_pgw' => $this->input->POST('almt_pgw'),
 		'telp_pgw' => $this->input->POST('telp'),
 		'almt_email_pgw' => $this->input->POST('almt_email'),
-		'otoritas' => $this->input->POST('otoritas'),
-		'password' => $this->input->POST('password')
-		
+		'otoritas' => $this->input->POST('otoritas'),	
 	);
+
+	if ($this->input->POST('password')=='')
+	{	
+		$password = $this->m_pegawai->select_password($this->input->post('id_pegawai'));
+		foreach ($password as $row)
+		{
+			$ubah['password'] = $row->password;
+		}
+	}
+	else
+	{
+			$ubah['password'] = $this->input->POST('password');
+	}
 	
 	$id_pgw = $this->input->POST('id_pegawai');
 	

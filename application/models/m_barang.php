@@ -59,11 +59,25 @@ class m_barang extends CI_Model{
 		$this->db->insert('barang',$insert);
 	}
 	
+	function delete_master_barang($delete)
+	{
+		
+		$this->db->delete('barang',$delete);
+		
+	}
+	
+	function ubah_master_barang($ubah, $id_barang)
+	{
+		$this->db->where('id_brng',$id_barang);
+		$this->db->update('barang',$ubah);
+	}
+	
 	function input_jenis_barang($insert)
 	{	
 		$this->db->insert('jenis_barang',$insert);
 	}
 	
 
+	
 }
 ?>

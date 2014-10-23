@@ -1,3 +1,26 @@
+<script type="text/Javascript">
+function pilihtindakan(tindakan, id_pelanggan, nama_pelanggan, alamat_pelanggan, alamat_email, telp_pelanggan)
+{
+document.getElementById('id_pelanggan').value = id_pelanggan;
+document.getElementById('nama_pelanggan').value = nama_pelanggan;
+document.getElementById('alamat_email').value = alamat_email;
+document.getElementById('alamat_pelanggan').value = alamat_pelanggan;
+document.getElementById('telp_pelanggan').value = telp_pelanggan;
+document.getElementById('tindak').value = tindakan;
+
+if (tindakan == 'hapus' || tindakan=='ubah')
+{	
+	//alert(id_pegawai);
+	document.getElementById('tindakan').submit();
+	
+}
+
+
+}
+
+</script>
+
+
 <div class="wrapper-form">
 <center>
 <table  class="table-form">
@@ -34,6 +57,7 @@ foreach ($data_pelanggan as $row)
 	echo "<td>".$row->almt_pln."</td>";
 	echo "<td>".$row->almt_email."</td>";
 	echo "<td>".$row->no_telp."</td>";
+	echo "<td><select onchange='pilihtindakan(this.value, \"$row->id_pln\", \"$row->nm_pln\" , \"$row->almt_pln\" , \"$row->almt_email\", \"$row->no_telp\")'><option></option><option value='hapus'>hapus</option><option value='ubah'>ubah</option></td>";
 	echo "</tr>";
 
 }
@@ -48,3 +72,13 @@ else
 </div>
 </center>
 
+<?php
+	echo "<form id='tindakan' method='POST' action='".site_url()."/master_pelanggan/edit_pelanggan'>";
+	echo "<input type='hidden' name='id_pelanggan' id='id_pelanggan'>";
+	echo "<input type='hidden' name='nama_pelanggan' id='nama_pelanggan'>";
+	echo "<input type='hidden' name='alamat_email' id='alamat_email'>";
+	echo "<input type='hidden' name='alamat_pelanggan' id='alamat_pelanggan'>";
+	echo "<input type='hidden' name='telp_pelanggan' id='telp_pelanggan'>";
+	echo "<input type='hidden' name='tindak' id='tindak'>";
+	echo "</form>";
+?>

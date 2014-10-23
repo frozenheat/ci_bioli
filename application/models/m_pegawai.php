@@ -19,6 +19,28 @@ class m_pegawai extends CI_Model{
 	}
 	}
 	
+	
+	function select_password($id_pegawai)
+	{
+		$this->db->select('password');
+		$this->db->from('pegawai');
+		$this->db->where('id_pgw',$id_pegawai);
+		$query=$this->db->get();
+		
+		if($query->num_rows()>0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	
+	
+	
+	
 	function id_otoritas($otoritas)
 	{
 	$this->db->select('id_otoritas');

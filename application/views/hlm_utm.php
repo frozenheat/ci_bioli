@@ -31,9 +31,9 @@
 		{
 		$this->load->view('body_master_pelanggan');
 		}
-		else if($body=='ubah_pegawai')
+		else if($body=='ubah')
 		{
-		$this->load->view('body_ubah_pelanggan');
+		$this->load->view('body_ubah');
 		}
 		}
 
