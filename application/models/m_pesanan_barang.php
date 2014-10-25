@@ -39,6 +39,32 @@ class m_pesanan_barang extends CI_Model
 	}
 	
 	
+	function pilih_status($status)
+	{
+		
+		$this->db->select('*');
+		$this->db->from('pesanan_barang');
+		
+		if ($status == 'belum')
+		{
+		$this->db->where('status_pesanan','belum_konfirmasi');
+		}
+		else if($status == 'telah')
+		{
+		$this->db->where('status_pesanan','telah_konfirmasi');
+		}
+		$query = $this->db->get();
+		
+		if ($query->num_rows()>0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return false;
+		}
+	
+	}
 	
 }
 	

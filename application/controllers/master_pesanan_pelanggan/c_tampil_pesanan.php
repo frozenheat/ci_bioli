@@ -18,6 +18,7 @@ class c_tampil_pesanan extends CI_Controller
 		$data['body']='pesanan_pelanggan';
 		$data['id_pegawai']=$session_data['id_pegawai'];
 		$data['otoritas']=$session_data['otoritas'];
+		$data['database']=$session_data['database'];
 		$data['nama_barang']=$this->m_pesanan_barang->nama_barang();
 		$data['data_pesanan']=$this->m_pesanan_barang->tampil_pesanan();
 		$this->load->view('hlm_utm',$data);
@@ -26,9 +27,11 @@ class c_tampil_pesanan extends CI_Controller
 		
 		elseif ($session_data['database']=='pelanggan')
 		{
+		$data['body'] = 'pesanan_pelanggan';
 		$data['id_pelanggan']=$session_data['id_pelanggan'];
 		$data['nama_pelanggan']=$session_data['nama_pelanggan'];
 		$data['otoritas']=$session_data['otoritas'];
+		$data['database']=$session_data['database'];
 		$data['nama_barang']=$this->m_pesanan_barang->nama_barang();
 		
 		
@@ -43,6 +46,26 @@ class c_tampil_pesanan extends CI_Controller
 		redirect('login/c_login');
 		}
 	}
-
+	
+	
+	function pilihan_form()
+	{
+		if ($this->session->userdata('logged_in'))
+		{
+		$session_data=$this->session->userdata('logged_in');
+		 if ($session_data['database']=='pegawai')
+		{
+		
+		$data['body']='pesanan_pelanggan';
+		$data['id_pegawai']=$session_data['id_pegawai'];
+		$data['otoritas']=$session_data['otoritas'];
+		$data['database']=$session_data['database'];
+		$data['nama_barang']=$this->m_pesanan_barang->nama_barang();
+		$data['data_pesanan']=$this->m_pesanan_barang->pilih_status($this->input->POST('status'));
+		$this->load->view('hlm_utm',$data);
+		}
+		}
+	}
+	
 }
 ?>
