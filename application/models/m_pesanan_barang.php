@@ -66,6 +66,27 @@ class m_pesanan_barang extends CI_Model
 	
 	}
 	
+	function pilih_jenis_barang($nama_barang)
+	{
+		$this->db->select('nm_jns_brng');
+		$this->db->from('barang');
+		$this->db->where('nm_brng',$nama_barang);
+		$query=$this->db->get();
+		
+		if ($query->num_rows()>0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	function input_pesanan($insert)
+	{
+		$this->db->insert('pesanan_barang',$insert);
+	}
 }
 	
 	

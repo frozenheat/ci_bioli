@@ -6,6 +6,7 @@
 	parent::__construct();
 	
 		$this->load->model('m_barang');
+		$this->load->model('m_acak');
 	}
  
  
@@ -19,16 +20,7 @@
 		if($this->form_validation->run()==true)
 		{
 		
-		$array_word=array('0','1','2','3','4','5','6','7','8','9');
-		shuffle($array_word);
-		reset($array_word);
-		$no=0;
-		foreach($array_word as $line)
-		{
-		@$acak.=strtoupper($line);
-		$no++;
-		if (($no >= 3)) break;
-		}
+		
 		
 		$result=$this->m_barang->pencarian_jenis_barang($this->input->post('jenis_barang'));
 		
@@ -37,6 +29,8 @@
 			$id_jenis_barang = $row->id_jns_brng;
 		}
 		
+		
+		$acak = $this->m_acak->input_barang();
 		$id_barang=$id_jenis_barang.$acak;
 	
 		
@@ -45,6 +39,7 @@
 				
 				'id_brng' => $id_barang,
 				'nm_brng' => $this->input->post('nama_barang'),
+				'nm_jns_brng' => $this->input->post('jenis_barang'),
 				'lot_size' => $this->input->post('lot_size'),
 				'wkt_prdksi' => $this->input->post('waktu_produksi')
 		

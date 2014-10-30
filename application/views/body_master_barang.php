@@ -50,7 +50,7 @@ foreach ($jenis_barang as $row)
 <center>
 <div class="scroll">
 <table border=1 class="table-data">
-<tr><td>id_barang</td><td>nama_barang</td><td>lot_size</td><td>waktu_produksi</td></tr>
+<tr><td>id_barang</td><td>nama_barang</td><td>nama_jenis_barang</td><td>lot_size</td><td>waktu_produksi</td></tr>
 
 <?php if ($otoritas=='admin_utama'||$otoritas=='admin_produksi')
 {
@@ -60,6 +60,7 @@ foreach ($barang as $row)
 	echo "<tr>";
 	echo "<td>".$row->id_brng."</td>";
 	echo "<td>".$row->nm_brng."</td>";
+	echo "<td>".$row->nm_jns_brng."</td>";
 	echo "<td>".$row->lot_size."</td>";
 	echo "<td>".$row->wkt_prdksi."</td>";
 	echo "<td><select onchange='pilihtindakan(this.value, \"$row->id_brng\", \"$row->nm_brng\" , \"$row->lot_size\" , \"$row->wkt_prdksi\")'><option></option><option value='hapus'>hapus</option><option value='ubah'>ubah</option></td>";

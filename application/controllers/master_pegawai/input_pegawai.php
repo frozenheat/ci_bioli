@@ -8,6 +8,7 @@ class input_pegawai extends CI_Controller
 	{
 	parent::__construct();
 	$this->load->model('m_pegawai');
+	$this->load->model('m_acak');
 	}
 	
 	function index()
@@ -23,16 +24,8 @@ class input_pegawai extends CI_Controller
 	if($this->form_validation->run()==true)
 	{
 	
-	$array_word=array('0','1','2','3','4','5','6','7','8','9');
-	shuffle($array_word);
-	reset($array_word);
-	$no=0;
-	foreach($array_word as $line)
-	{
-	@$acak.=strtoupper($line);
-	$no++;
-	if (($no >= 5)) break;
-	}
+	$acak = $this->m_acak->input_pegawai();
+	
 	$result=$this->m_pegawai->id_otoritas($this->input->post('otoritas'));
 	foreach ($result as $row)
 	{

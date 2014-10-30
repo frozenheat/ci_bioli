@@ -4,6 +4,8 @@ class c_input_pelanggan extends CI_Controller{
 	function __construct(){
 		parent::__construct();
 		$this->load->model('m_pelanggan');
+		$this->load->model('m_acak');
+		$this->load->model('m_waktu');
 	}
 
 	function index()
@@ -17,17 +19,12 @@ class c_input_pelanggan extends CI_Controller{
 		
 	if($this->form_validation->run()==true)
 	{
-		$array_word=array('0','1','2','3','4','5','6','7','8','9');
-		shuffle($array_word);
-		reset($array_word);
-		$no=0;
-		foreach($array_word as $line)
-		{
-		@$acak.=strtoupper($line);
-		$no++;
-		if (($no >= 7)) break;
-		}
-		$id_pelanggan = 'c'.$acak;
+		$acak = $this->m_acak->input_pelanggan();
+		$this->m_waktu->setting_waktu_local();
+		$time = time();
+		$datestring ='%d%m%Y';
+		$tanggalsistem = mdate($datestring,$time);
+		$id_pelanggan = 'c'.$tanggalsistem.$acak;
 		
 		$insert=array(
 		

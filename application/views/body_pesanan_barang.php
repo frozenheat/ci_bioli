@@ -46,7 +46,7 @@ function pilih_form()
 <center>
 <div class="scroll">
 <table border=1 class="table-data">
-<tr><td>id pesanan</td><td>id pemesan</td><td>nama barang</td><td>tanggal pemesanan</td><td>jam pemesanan</td><td>jumlah pesanan</td><td>status pesanan</td><td>jumlah ketersediaan</td><td>jumlah kekurangan</td><td>perkiraan waktu selesai</td></tr>
+<tr><td>id pesanan</td><td>id pemesan</td><td>nama barang</td><td>tanggal pemesanan</td><td>jam pemesanan</td><td>jumlah pesanan</td><td>status pesanan</td><td>status konfirmasi</td><td>jumlah ketersediaan</td><td>jumlah kekurangan</td><td>perkiraan waktu selesai</td></tr>
 
 <?php if ($otoritas=='admin_utama' || $otoritas=='admin_pelanggan')
 {
@@ -61,6 +61,7 @@ foreach ($data_pesanan as $row2)
 	echo "<td>".$row2->jam_pemesanan."</td>";
 	echo "<td>".$row2->jumlah_pesanan."</td>";
 	echo "<td>".$row2->status_pesanan."</td>";
+	echo "<td>".$row2->sts_konfirm."</td>";
 	echo "<td>".$row2->jumlah_ketersediaan_pesanan."</td>";
 	echo "<td>".$row2->jumlah_kekurangan_pesanan."</td>";
 	echo "<td>".$row2->perkiraan_waktu_selesai."</td>";
