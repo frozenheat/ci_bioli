@@ -62,6 +62,7 @@ class c_tampil_pesanan extends CI_Controller
 		$data['database']=$session_data['database'];
 		$data['nama_barang']=$this->m_pesanan_barang->nama_barang();
 		$data['data_pesanan']=$this->m_pesanan_barang->pilih_status($this->input->POST('status'));
+		$data['status']=$this->input->post('status');
 		$this->load->view('hlm_utm',$data);
 		}
 		}

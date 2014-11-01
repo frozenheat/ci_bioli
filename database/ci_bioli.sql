@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 21, 2014 at 08:08 PM
+-- Generation Time: Nov 01, 2014 at 04:55 PM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `barang` (
   `id_brng` varchar(50) NOT NULL,
   `nm_brng` varchar(50) NOT NULL,
+  `nm_jns_brng` varchar(50) NOT NULL,
   `lot_size` int(11) NOT NULL,
   `wkt_prdksi` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -37,16 +38,14 @@ CREATE TABLE IF NOT EXISTS `barang` (
 -- Dumping data for table `barang`
 --
 
-INSERT INTO `barang` (`id_brng`, `nm_brng`, `lot_size`, `wkt_prdksi`) VALUES
-('c001', 'cylinder_liner_(boring)_FR70', 100, 3),
-('c002', 'cylinder_liner_(boring)_RC80', 90, 3),
-('c003', 'cylinder_liner_(boring)_A100', 300, 3),
-('g001', 'Guide_Valve_(Bosh_klep)_c700', 200, 2),
-('g002', 'Guide_Valve_(Bosh_klep)_H90', 200, 2),
-('g003', 'Guide_Valve_(Bosh_klep)_GL100', 300, 2),
-('v001', 'Valve_Seat_(Cincin_Setting)_Grand/Prima', 500, 1),
-('v002', 'Valve_Seat_(Cincin_Setting)_Star/Astrea', 500, 1),
-('v003', 'vValve_Seat_(Cincin_Setting)_Shogun', 500, 1);
+INSERT INTO `barang` (`id_brng`, `nm_brng`, `nm_jns_brng`, `lot_size`, `wkt_prdksi`) VALUES
+('c001', 'cylinder_liner_(boring)_FR70', 'Cylinder_liner', 321321, 12),
+('c002', 'cylinder_liner_(boring)_RC80', 'Cylinder_liner', 90, 4),
+('g001', 'Guide_Valve_(Bosh_klep)_c700', 'Bosh_klep', 200, 2),
+('g002', 'Guide_Valve_(Bosh_klep)_H90', 'Bosh_klep', 200, 2),
+('v001', 'Valve_Seat_(Cincin_Setting)_Grand/Prima', 'Cincin_setting', 500, 1),
+('v002', 'Valve_Seat_(Cincin_Setting)_Star/Astrea', 'Cincin_setting', 500, 1),
+('v003', 'vValve_Seat_(Cincin_Setting)_Shogun', 'Cincin_setting', 500, 1);
 
 -- --------------------------------------------------------
 
@@ -55,17 +54,18 @@ INSERT INTO `barang` (`id_brng`, `nm_brng`, `lot_size`, `wkt_prdksi`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `jenis_barang` (
-  `id_jns_brng` varchar(2) NOT NULL,
-  `nm_jns_brng` varchar(50) NOT NULL
+  `nm_jns_brng` varchar(50) NOT NULL,
+  `id_jns_brng` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `jenis_barang`
 --
 
-INSERT INTO `jenis_barang` (`id_jns_brng`, `nm_jns_brng`) VALUES
-('b', 'Bosh_klep'),
-('c', 'Cylinder_liner');
+INSERT INTO `jenis_barang` (`nm_jns_brng`, `id_jns_brng`) VALUES
+('Bosh_klep', 'b'),
+('Cincin_setting', 'v'),
+('Cylinder_liner', 'c');
 
 -- --------------------------------------------------------
 
@@ -108,8 +108,8 @@ CREATE TABLE IF NOT EXISTS `pegawai` (
 --
 
 INSERT INTO `pegawai` (`id_pgw`, `nm_pgw`, `almt_pgw`, `telp_pgw`, `almt_email_pgw`, `otoritas`, `password`) VALUES
-('a5001', 'herry', 'SDPS', 3213123, 'herry@gmail.com', 'admin_utama', 'admin'),
-('m5001', 'rudisss', 'dsafasd', 123141, 'rudi@gmail.com', 'admin_pelanggan', 'rudi'),
+('a5001', 'herry1', 'SDPS', 3213123, 'herry@gmail.com', 'admin_utama', 'admin'),
+('m5001', 'rudisss', 'dsafasd', 123141, 'rudi@gmail.com', 'admin_pelanggan', 'adpel'),
 ('p5001', 'adi', 'adada', 12312312, 'adi@gmail.com', 'admin_produksi', 'adpro');
 
 -- --------------------------------------------------------
@@ -133,7 +133,48 @@ CREATE TABLE IF NOT EXISTS `pelanggan` (
 
 INSERT INTO `pelanggan` (`id_pln`, `nm_pln`, `almt_pln`, `almt_email`, `no_telp`, `password`) VALUES
 ('c0826459', 'adi', 'manukan', 'ad@gmail.com', 23, 'adis'),
-('c5001', 'herry susanto', 'simpang darmo permai selatan', 'ruinz90@gmail.com', 80821031, 'pelanggan');
+('c5001', 'herry susanto kwee', 'simpang', 'ruinz90@gmail.com', 80821031, 'pelanggan');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pesanan_barang`
+--
+
+CREATE TABLE IF NOT EXISTS `pesanan_barang` (
+  `id_pesanan` varchar(100) NOT NULL,
+  `id_pemesan` varchar(50) NOT NULL,
+  `nama_barang` varchar(50) NOT NULL,
+  `tanggal_pemesanan` date NOT NULL,
+  `jam_pemesanan` time NOT NULL,
+  `jumlah_pesanan` int(11) NOT NULL,
+  `status_pesanan` varchar(20) NOT NULL,
+  `sts_konfirm` varchar(50) NOT NULL,
+  `jumlah_ketersediaan_pesanan` int(11) NOT NULL,
+  `jumlah_kekurangan_pesanan` int(11) NOT NULL,
+  `perkiraan_waktu_selesai` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pesanan_barang`
+--
+
+INSERT INTO `pesanan_barang` (`id_pesanan`, `id_pemesan`, `nama_barang`, `tanggal_pemesanan`, `jam_pemesanan`, `jumlah_pesanan`, `status_pesanan`, `sts_konfirm`, `jumlah_ketersediaan_pesanan`, `jumlah_kekurangan_pesanan`, `perkiraan_waktu_selesai`) VALUES
+('b0111201407564', 'c5001', 'Guide_Valve_(Bosh_klep)_c700', '2014-11-01', '16:08:18', 30, 'belum_konfirmasi', '', 0, 0, '0000-00-00'),
+('b3010201410679', 'c5001', 'Guide_Valve_(Bosh_klep)_c700', '2014-10-30', '12:47:29', 40, 'belum_konfirmasi', '', 0, 0, '0000-00-00'),
+('v3010201403718', 'c5001', 'Valve_Seat_(Cincin_Setting)_Grand/Prima', '2014-10-30', '12:47:34', 60, 'belum_konfirmasi', '', 0, 0, '0000-00-00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stock_barang`
+--
+
+CREATE TABLE IF NOT EXISTS `stock_barang` (
+  `tgl_stock` date NOT NULL,
+  `id_brng` varchar(50) NOT NULL,
+  `jml_stock` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Indexes for dumped tables
@@ -149,7 +190,7 @@ ALTER TABLE `barang`
 -- Indexes for table `jenis_barang`
 --
 ALTER TABLE `jenis_barang`
- ADD PRIMARY KEY (`id_jns_brng`);
+ ADD PRIMARY KEY (`nm_jns_brng`);
 
 --
 -- Indexes for table `otoritas`
@@ -168,6 +209,18 @@ ALTER TABLE `pegawai`
 --
 ALTER TABLE `pelanggan`
  ADD PRIMARY KEY (`id_pln`);
+
+--
+-- Indexes for table `pesanan_barang`
+--
+ALTER TABLE `pesanan_barang`
+ ADD PRIMARY KEY (`id_pesanan`);
+
+--
+-- Indexes for table `stock_barang`
+--
+ALTER TABLE `stock_barang`
+ ADD PRIMARY KEY (`tgl_stock`,`id_brng`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
