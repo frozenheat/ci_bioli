@@ -18,7 +18,7 @@
 			//end
 			foreach ($query->result() as $row)
 			{
-				$this->db->select('nm_brng, lot_size, wkt_prdksi');
+				$this->db->select('nm_brng, nm_jns_brng, lot_size, wkt_prdksi');
 				$this->db->from('barang');
 				$this->db->where('nm_brng',$row->nama_barang);
 				$query2[$a]= $this->db->get();
@@ -29,7 +29,7 @@
 		
 		function penjumlahan_pesanan($nama_barang)
 		{
-			$this->db->select('nama_barang, sum(jumlah_pesanan) as total_pesanan');
+			$this->db->select('sum(jumlah_pesanan) as total_pesanan');
 			$this->db->from('pesanan_barang');
 			$this->db->where('nama_barang',$nama_barang);
 			$this->db->where('status_pesanan','belum_konfirmasi');
@@ -38,6 +38,63 @@
 			{
 				return $query->result();
 			}
+		}
+		
+		function input_penjadwalan($insert)
+		{
+			$this->db->insert('jadwal_prdksi',$insert);
+		}
+		
+		function urutan_waktu_proses($waktu_jdwl)
+		{
+			$this->db->select('*');
+			$this->db->from('jadwal_prdksi');
+			$this->db->where('waktu_jdwl',$waktu_jdwl);
+			$this->db->order_by('wkt_prdksi','asc');
+			$query = $this->db->get();
+			
+			if ($query->num_rows()>0)
+			{
+				return $query->result();
+			}
+			else
+			{
+			return false;
+			}
+		}
+		
+		function pengecekan_jam_selesai($wkt_jdwl)
+		{
+			$this->db->select('waktu_jdwl');
+			$this->db->from('jadwal_prdksi');
+			$this->db->where('waktu_jdwl <',$wkt_jdwl);
+			$this->db->order_by('waktu_jdwl','asc');
+			$query = $this->db->get();
+			
+			if ($query->num_rows() > 0)
+			{
+				foreach ($query->result() as $row)
+				{
+					$waktu_jadwal = $row->waktu_jdwl;
+				}
+				$this->db->select('*');
+				$this->db->from('jadwal_prdksi');
+				$this->db->where('waktu_jdwl',$waktu_jadwal);
+				$this->db->order_by('jam_selesai','asc');
+				$query = $this->db->get();
+				
+				return $query ->result();
+			}
+			else
+			{
+			return false;
+			}
+		}
+		
+		function update_waktu_mulai($update, $id_prdksi)
+		{
+			$this->db->where('id_prdksi',$id_prdksi);
+			$this->db->update('jadwal_prdksi',$update);
 		}
 		
 	}
