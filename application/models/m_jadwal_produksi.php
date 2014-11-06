@@ -80,7 +80,7 @@
 				$this->db->select('*');
 				$this->db->from('jadwal_prdksi');
 				$this->db->where('waktu_jdwl',$waktu_jadwal);
-				$this->db->order_by('jam_selesai','asc');
+				$this->db->order_by('waktu_selesai','asc');
 				$query = $this->db->get();
 				
 				return $query ->result();

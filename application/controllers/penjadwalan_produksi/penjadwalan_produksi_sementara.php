@@ -100,18 +100,35 @@ function index()
 		{
 		$nama_barang_terakhir = $row2->nm_brng;
 		$waktu_jadwal_terakhir = $row2->waktu_jdwl;
-		$jam_selesai_terakhir = $row2->jam_selesai;
+		$waktu_selesai_terakhir = $row2->waktu_selesai;
 		}
 		//echo $nama_barang_terakhir." ";
 		//echo $waktu_jadwal_terakhir." ";
 		//echo $jam_selesai_terakhir." ";
 		$waktu_pemrosesan = 3600 * $row->wkt_prdksi;
-		$waktu_mulai_produksi = $jam_selesai_terakhir;
-		$waktu_selesai_produksi = date('H:i',strtotime($waktu_mulai_produksi)+$waktu_pemrosesan);
+		
+		if (mdate('%H:%i',strtotime(substr($waktu_selesai_terakhir, -8))) <= mdate('%H:%i',strtotime('17:00:00')))
+		{
+		$waktu_mulai_produksi = $waktu_selesai_terakhir;
+		}
+		else
+		{
+		
+		//apabila pemroduksian telah melebihi jam 17:00 pemroduksian akan dialihkan pada hari berikutnya dengan jam mulai produksi adalah jam 07:00
+		$tanggal_selesai_terakhir = substr($waktu_selesai_terakhir, 0, 10);
+		$tanggal_selesai_terakhir1 = str_replace('-','/', $tanggal_selesai_terakhir);
+		$tommorow = date('Y-m-d', strtotime($tanggal_selesai_terakhir1."+1 days"));
+		
+		$jam_mulai = "07:00";
+		
+		$waktu_mulai_produksi = $tommorow." ".$jam_mulai;
+		}
+		
+		$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_mulai_produksi)+$waktu_pemrosesan);
 		
 		$update = array(
-			'jam_mulai' =>$waktu_mulai_produksi,
-			'jam_selesai' => $waktu_selesai_produksi
+			'waktu_mulai' =>$waktu_mulai_produksi,
+			'waktu_selesai' => $waktu_selesai_produksi
 		);
 		$this->m_jadwal_produksi->update_waktu_mulai($update, $row->id_prdksi);
 		//echo $waktu_mulai_produksi;
@@ -121,14 +138,15 @@ function index()
 		else
 		{
 		$waktu_pemrosesan = 3600 * $row->wkt_prdksi;
-		$waktu_mulai_produksi = date('H:i',time()+3600);
-		$waktu_selesai_produksi = date('H:i',strtotime($waktu_mulai_produksi)+$waktu_pemrosesan);
+		$waktu_mulai_produksi = date('Y-m-d H:i',time()+3600);
+		$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_mulai_produksi)+$waktu_pemrosesan);
 		$update = array(
-			'jam_mulai' =>$waktu_mulai_produksi,
-			'jam_selesai' =>$waktu_selesai_produksi
+			'waktu_mulai' =>$waktu_mulai_produksi,
+			'waktu_selesai' =>$waktu_selesai_produksi
 		);
 		$this->m_jadwal_produksi->update_waktu_mulai($update, $row->id_prdksi);
-		echo $waktu_mulai_produksi;
+		//echo $waktu_mulai_produksi;
+		
 		}
 		
 		$b=1;
@@ -139,11 +157,31 @@ function index()
 	else
 	{
 		$waktu_pemrosesan = 3600 * $row->wkt_prdksi;
+		
+		
+		if (mdate('%H:%i',strtotime(substr($waktu_selesai_produksi, -5))) <= mdate('%H:%i',strtotime('17:00')))
+		{
+		
 		$waktu_mulai_produksi = $waktu_selesai_produksi;
-		$waktu_selesai_produksi = date('H:i',strtotime($waktu_mulai_produksi)+$waktu_pemrosesan);
+		 
+		}
+		else
+		{
+		
+		//apabila pemroduksian telah melebihi jam 17:00 pemroduksian akan dialihkan pada hari berikutnya dengan jam mulai produksi adalah jam 07:00
+		$tanggal_selesai_terakhir = substr($waktu_selesai_produksi, 0, 10);
+		$tanggal_selesai_terakhir1 = str_replace('-','/', $tanggal_selesai_terakhir);
+		$tommorow = date('Y-m-d', strtotime($tanggal_selesai_terakhir1."+1 days"));
+		
+		$jam_mulai = "07:00";
+		
+		$waktu_mulai_produksi = $tommorow." ".$jam_mulai;
+		}
+		
+		$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_mulai_produksi)+$waktu_pemrosesan);
 		$update = array(
-			'jam_mulai' =>$waktu_mulai_produksi,
-			'jam_selesai' =>$waktu_selesai_produksi
+			'waktu_mulai' =>$waktu_mulai_produksi,
+			'waktu_selesai' =>$waktu_selesai_produksi
 		);
 		$this->m_jadwal_produksi->update_waktu_mulai($update, $row->id_prdksi);
 		 //echo 'test';
