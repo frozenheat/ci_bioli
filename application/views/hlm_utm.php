@@ -23,6 +23,10 @@
 		{
 		$this->load->view('body_master_barang');
 		}
+		else if($body=='stock_barang')
+		{
+		$this->load->view('body_master_stock_barang');
+		}
 		else if($body=='jenis_barang')
 		{
 		$this->load->view('body_jenis_barang');

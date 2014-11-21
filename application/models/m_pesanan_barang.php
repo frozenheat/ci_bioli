@@ -87,9 +87,19 @@ class m_pesanan_barang extends CI_Model
 	{
 		$this->db->insert('pesanan_barang',$insert);
 	}
+	
+	function update_perkiraan_waktu_selesai($nama_barang, $update2)
+	{
+		$this->db->where('nama_barang', $nama_barang);
+		$this->db->where('status_pesanan', 'belum_konfirmasi');
+		$this->db->update('pesanan_barang', $update2);
+	}
+	
+	
+	
+	
 }
-	
-	
+		
 	
 
 ?>

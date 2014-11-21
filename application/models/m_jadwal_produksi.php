@@ -97,6 +97,17 @@
 			$this->db->update('jadwal_prdksi',$update);
 		}
 		
+	
+	
+		function delete_pesanan_telah_terpenuhi($nama_barang)
+		{
+			$this->db->where('nm_brng',$nama_barang);
+			$this->db->where('status','sementara');
+			$this->db->delete('jadwal_prdksi');
+	
+		}
+		
+		
 	}
 	
 ?>

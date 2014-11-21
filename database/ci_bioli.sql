@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 01, 2014 at 04:55 PM
+-- Generation Time: Nov 22, 2014 at 03:28 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -46,6 +46,31 @@ INSERT INTO `barang` (`id_brng`, `nm_brng`, `nm_jns_brng`, `lot_size`, `wkt_prdk
 ('v001', 'Valve_Seat_(Cincin_Setting)_Grand/Prima', 'Cincin_setting', 500, 1),
 ('v002', 'Valve_Seat_(Cincin_Setting)_Star/Astrea', 'Cincin_setting', 500, 1),
 ('v003', 'vValve_Seat_(Cincin_Setting)_Shogun', 'Cincin_setting', 500, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jadwal_prdksi`
+--
+
+CREATE TABLE IF NOT EXISTS `jadwal_prdksi` (
+  `id_prdksi` varchar(100) NOT NULL,
+  `waktu_jdwl` datetime NOT NULL,
+  `nm_brng` varchar(50) NOT NULL,
+  `wkt_prdksi` int(11) NOT NULL,
+  `waktu_mulai` datetime NOT NULL,
+  `waktu_selesai` datetime NOT NULL,
+  `status` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `jadwal_prdksi`
+--
+
+INSERT INTO `jadwal_prdksi` (`id_prdksi`, `waktu_jdwl`, `nm_brng`, `wkt_prdksi`, `waktu_mulai`, `waktu_selesai`, `status`) VALUES
+('b221120140325183042', '2014-11-22 03:25:00', 'Guide_Valve_(Bosh_klep)_H90', 2, '2014-11-22 07:25:00', '2014-11-22 09:25:00', 'sementara'),
+('b221120140325287431', '2014-11-22 03:25:00', 'Guide_Valve_(Bosh_klep)_c700', 2, '2014-11-22 09:25:00', '2014-11-22 11:25:00', 'sementara'),
+('v221120140325216894', '2014-11-22 03:25:00', 'Valve_Seat_(Cincin_Setting)_Star/Astrea', 1, '2014-11-22 05:25:00', '2014-11-22 06:25:00', 'sementara');
 
 -- --------------------------------------------------------
 
@@ -152,7 +177,7 @@ CREATE TABLE IF NOT EXISTS `pesanan_barang` (
   `sts_konfirm` varchar(50) NOT NULL,
   `jumlah_ketersediaan_pesanan` int(11) NOT NULL,
   `jumlah_kekurangan_pesanan` int(11) NOT NULL,
-  `perkiraan_waktu_selesai` date NOT NULL
+  `perkiraan_waktu_selesai` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -160,9 +185,16 @@ CREATE TABLE IF NOT EXISTS `pesanan_barang` (
 --
 
 INSERT INTO `pesanan_barang` (`id_pesanan`, `id_pemesan`, `nama_barang`, `tanggal_pemesanan`, `jam_pemesanan`, `jumlah_pesanan`, `status_pesanan`, `sts_konfirm`, `jumlah_ketersediaan_pesanan`, `jumlah_kekurangan_pesanan`, `perkiraan_waktu_selesai`) VALUES
-('b0111201407564', 'c5001', 'Guide_Valve_(Bosh_klep)_c700', '2014-11-01', '16:08:18', 30, 'belum_konfirmasi', '', 0, 0, '0000-00-00'),
-('b3010201410679', 'c5001', 'Guide_Valve_(Bosh_klep)_c700', '2014-10-30', '12:47:29', 40, 'belum_konfirmasi', '', 0, 0, '0000-00-00'),
-('v3010201403718', 'c5001', 'Valve_Seat_(Cincin_Setting)_Grand/Prima', '2014-10-30', '12:47:34', 60, 'belum_konfirmasi', '', 0, 0, '0000-00-00');
+('b0111201407564', 'c5001', 'Guide_Valve_(Bosh_klep)_c700', '2014-11-01', '16:08:18', 30, 'belum_konfirmasi', '', 0, 0, '2014-11-22 11:25:00'),
+('b1211201494216', 'c5001', 'Guide_Valve_(Bosh_klep)_H90', '2014-11-12', '22:08:18', 20, 'belum_konfirmasi', '', 0, 0, '2014-11-22 09:25:00'),
+('b2211201456098', 'c0826459', 'Guide_Valve_(Bosh_klep)_H90', '2014-11-22', '03:18:25', 120, 'belum_konfirmasi', '', 0, 0, '2014-11-22 09:25:00'),
+('b3010201410679', 'c5001', 'Guide_Valve_(Bosh_klep)_c700', '2014-10-30', '12:47:29', 40, 'belum_konfirmasi', '', 0, 0, '2014-11-22 11:25:00'),
+('c2211201451830', 'c0826459', 'cylinder_liner_(boring)_RC80', '2014-11-22', '03:19:01', 30, 'belum_konfirmasi', '', 0, 0, '2014-11-19 00:00:00'),
+('c2211201494381', 'c0826459', 'cylinder_liner_(boring)_FR70', '2014-11-22', '03:19:18', 30, 'belum_konfirmasi', '', 0, 0, '2014-11-17 00:00:00'),
+('c2211201494786', 'c0826459', 'cylinder_liner_(boring)_RC80', '2014-11-22', '03:19:23', 40, 'belum_konfirmasi', '', 0, 0, '2014-11-19 00:00:00'),
+('v1211201496214', 'c5001', 'Valve_Seat_(Cincin_Setting)_Star/Astrea', '2014-11-12', '22:08:13', 40, 'belum_konfirmasi', '', 0, 0, '2014-11-22 06:25:00'),
+('v2211201476018', 'c0826459', 'vValve_Seat_(Cincin_Setting)_Shogun', '2014-11-22', '03:18:55', 210, 'belum_konfirmasi', '', 0, 0, '2014-11-19 00:00:00'),
+('v3010201403718', 'c5001', 'Valve_Seat_(Cincin_Setting)_Grand/Prima', '2014-10-30', '12:47:34', 60, 'belum_konfirmasi', '', 0, 0, '2014-11-19 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -173,8 +205,22 @@ INSERT INTO `pesanan_barang` (`id_pesanan`, `id_pemesan`, `nama_barang`, `tangga
 CREATE TABLE IF NOT EXISTS `stock_barang` (
   `tgl_stock` date NOT NULL,
   `id_brng` varchar(50) NOT NULL,
-  `jml_stock` int(11) NOT NULL
+  `jml_stock` int(11) NOT NULL,
+  `status` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `stock_barang`
+--
+
+INSERT INTO `stock_barang` (`tgl_stock`, `id_brng`, `jml_stock`, `status`) VALUES
+('2014-11-17', 'c001', 380, 'terbaru'),
+('2014-11-19', 'c002', 444, 'terbaru'),
+('2014-11-19', 'g001', 0, 'terbaru'),
+('2014-11-19', 'g002', 30, 'terbaru'),
+('2014-11-19', 'v001', 335, 'terbaru'),
+('2014-11-19', 'v002', 23, 'terbaru'),
+('2014-11-19', 'v003', 465, 'terbaru');
 
 --
 -- Indexes for dumped tables
@@ -185,6 +231,12 @@ CREATE TABLE IF NOT EXISTS `stock_barang` (
 --
 ALTER TABLE `barang`
  ADD PRIMARY KEY (`id_brng`);
+
+--
+-- Indexes for table `jadwal_prdksi`
+--
+ALTER TABLE `jadwal_prdksi`
+ ADD PRIMARY KEY (`id_prdksi`);
 
 --
 -- Indexes for table `jenis_barang`
