@@ -11,6 +11,18 @@ function pilih_form()
 	document.getElementById('pilihan_form').submit();
 }
 
+function konfirm_pesanan(hasil_konfirm, id_pesanan, id_pemesan, nama_barang)
+{
+	
+	document.getElementById('id_pesanan').value = id_pesanan;
+	document.getElementById('id_pemesan').value = id_pemesan;
+	document.getElementById('nama_barang').value = nama_barang;
+	document.getElementById('hasil_konfirm').value = hasil_konfirm;
+	
+	document.getElementById('con').submit();
+
+}
+
 
 </script>
 
@@ -32,7 +44,7 @@ function pilih_form()
 ?>
 	<div class="scroll">
 	<table border=1 class="table-data">
-	<tr><td>id pesanan</td><td>id pemesan</td><td>nama barang</td><td>tanggal pemesanan</td><td>jam pemesanan</td><td>jumlah pesanan</td><td>status pesanan</td><td>status konfirmasi</td><td>perkiraan waktu selesai</td></tr>
+	<tr><td>id pesanan</td><td>id pemesan</td><td>nama barang</td><td>tanggal pemesanan</td><td>jam pemesanan</td><td>jumlah pesanan</td><td>status pesanan</td><td>konfirmasi pesanan</td><td>perkiraan waktu selesai</td></tr>
 <?php
 	foreach ($data_pesanan as $row2)
 	{
@@ -45,8 +57,54 @@ function pilih_form()
 	echo "<td>".$row2->jam_pemesanan."</td>";
 	echo "<td>".$row2->jumlah_pesanan."</td>";
 	echo "<td>".$row2->status_pesanan."</td>";
-	echo "<td>".$row2->sts_konfirm."</td>";
+	//echo "<td>".$row2->sts_konfirm."</td>
+
+	if ($row2->perkiraan_waktu_selesai == '0000-00-00 00:00:00'|| $row2->perkiraan_waktu_selesai =='')
+	{
+		echo "<td>belum dilakukan pemrosesan penjadwalan _produksi</td>";
+		echo "<td>masih belum diproses</td>";
+	}
+	else
+	{
+	if (isset($status))
+	{
+		if ($status =='belum')
+		{
+		echo "<td><select onchange='konfirm_pesanan(this.value, \"$row2->id_pesanan\", \"$row2->id_pemesan\", \"$row2->nama_barang\")'><option></option><option value='batal'>batal</option><option value='pesan'>pesan</option></select></td>";
+		}
+		else if($status =='telah')
+		{
+		echo "<td>".$row2->sts_konfirm."</td>";
+		}
+		else if($status == 'semua')
+		{
+			if($row2->status_pesanan =="telah_konfirmasi")
+			{
+			echo "<td>".$row2->sts_konfirm."</td>";
+			}
+			else if($row2->status_pesanan =="belum_konfirmasi")
+			{
+			echo "<td><select onchange='konfirm_pesanan(this.value, \"$row2->id_pesanan\", \"$row2->id_pemesan\", \"$row2->nama_barang\")'><option></option><option value='batal'>batal</option><option value='pesan'>pesan</option></select></td>";
+			}
+		}
+	}
+	else
+	{
+			if($row2->status_pesanan =="telah_konfirmasi")
+			{
+			echo "<td>".$row2->sts_konfirm."</td>";
+			}
+			else if($row2->status_pesanan =="belum_konfirmasi")
+			{
+			echo "<td><select onchange='konfirm_pesanan(this.value, \"$row2->id_pesanan\", \"$row2->id_pemesan\", \"$row2->nama_barang\")'><option></option><option value='batal'>batal</option><option value='pesan'>pesan</option></select></td>";
+			}
+	}
+	
 	echo "<td>".$row2->perkiraan_waktu_selesai."</td>";
+	}
+	
+	
+	
 	//echo "<td><select><option>batal</option><option>pesan</option></select></td>";
 	//echo "<td><select onchange='pilihtindakan(this.value, \"$row->id_pgw\", \"$row->nm_pgw\" , \"$row->almt_email_pgw\" , \"$row->almt_pgw\", \"$row->telp_pgw\", \"$row->otoritas\")'><option></option><option value='hapus'>hapus</option><option value='ubah'>ubah</option></td>";
 	echo "</tr>";
@@ -61,9 +119,21 @@ function pilih_form()
 		?>
 		
 		<input type ='submit' style='margin-top:5px;' value='Penjadwalan produksi'>
+		</form>
+		
 		<?php
 		}
 		}
+		?>
+		<form action='<?php echo site_url();?>/master_pesanan_pelanggan/konfirmasi_pesanan' id='con' method='POST'>
+		
+		<input type='hidden' name="id_pesanan" id="id_pesanan">
+		<input type='hidden' name="id_pemesan" id="id_pemesan">
+		<input type='hidden' name="nama_barang" id="nama_barang">
+		<input type='hidden' name="hasil_konfirm" id="hasil_konfirm">
+		</form>
+		<?php
+		
 	}
 	else
 	{

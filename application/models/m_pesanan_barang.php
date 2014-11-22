@@ -95,6 +95,22 @@ class m_pesanan_barang extends CI_Model
 		$this->db->update('pesanan_barang', $update2);
 	}
 	
+	function konfirmasi_barang($hasil_konfirm, $id_pesanan, $id_pemesan, $nama_barang, $update)
+	{
+		if($hasil_konfirm =='pesan')
+		{
+			$this->db->where('id_pesanan',$id_pesanan);
+			$this->db->where('id_pemesan',$id_pemesan);
+			$this->db->where('nama_barang',$nama_barang);
+			$this->db->update('pesanan_barang',$update);
+		}
+		else if($hasil_konfirm == 'batal')
+		{
+			$this->db->where('id_pesanan',$id_pesanan);
+			$this->db->delete('pesanan_barang');
+		}
+	}
+	
 	
 	
 	
