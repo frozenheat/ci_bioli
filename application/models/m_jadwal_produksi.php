@@ -5,6 +5,7 @@
 	
 		
 		
+		
 		function pilih_lot_size_dan_waktu_produksi_dari_pesanan_belum_konfirm()
 		{
 			$this->db->select('nama_barang');
@@ -91,23 +92,30 @@
 			}
 		}
 		
-		function update_waktu_mulai($update, $id_prdksi)
+		function update_waktu_mulai($update_waktu_mulai_produksi, $id_prdksi)
 		{
 			$this->db->where('id_prdksi',$id_prdksi);
-			$this->db->update('jadwal_prdksi',$update);
+			$this->db->update('jadwal_prdksi',$update_waktu_mulai_produksi);
 		}
 		
-	
-	
-		function delete_pesanan_telah_terpenuhi($nama_barang)
+		function update_waktu_selesai($update_waktu_selesai_produksi, $id_prdksi)
 		{
-			$this->db->where('nm_brng',$nama_barang);
+			$this->db->where('id_prdksi',$id_prdksi);
+			$this->db->update('jadwal_prdksi',$update_waktu_selesai_produksi);
+		}
+	
+	
+		function delete_pesanan_telah_terpenuhi($id_prdksi)
+		{
+			$this->db->where('id_prdksi',$id_prdksi);
+			$this->db->delete('jadwal_prdksi');
+		}
+		
+		function hapus_jadwal_sementara()
+		{
 			$this->db->where('status','sementara');
 			$this->db->delete('jadwal_prdksi');
-	
 		}
-		
-		
 	}
 	
 ?>

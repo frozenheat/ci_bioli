@@ -61,8 +61,8 @@ function konfirm_pesanan(hasil_konfirm, id_pesanan, id_pemesan, nama_barang)
 
 	if ($row2->perkiraan_waktu_selesai == '0000-00-00 00:00:00'|| $row2->perkiraan_waktu_selesai =='')
 	{
-		echo "<td>belum dilakukan pemrosesan penjadwalan _produksi</td>";
-		echo "<td>masih belum diproses</td>";
+		echo "<td>".$row2->sts_konfirm."</td>";
+		echo "<td>belum diproses</td>";
 	}
 	else
 	{
@@ -116,6 +116,16 @@ function konfirm_pesanan(hasil_konfirm, id_pesanan, id_pemesan, nama_barang)
 		if ($status == 'belum')
 		{
 		echo form_open(site_url().'/penjadwalan_produksi/penjadwalan_produksi_sementara');
+		?>
+		
+		<input type ='submit' style='margin-top:5px;' value='Penjadwalan produksi'>
+		</form>
+		
+		<?php
+		}
+		else if($status == 'telah')
+		{
+		echo form_open(site_url().'/penjadwalan_produksi/penjadwalan_produksi_real');
 		?>
 		
 		<input type ='submit' style='margin-top:5px;' value='Penjadwalan produksi'>

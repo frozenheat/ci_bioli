@@ -111,7 +111,23 @@ class m_pesanan_barang extends CI_Model
 		}
 	}
 	
-	
+	function pilih_pesanan_belum_dijadwalkan_sementara()
+	{
+		$this->db->select('*');
+		$this->db->from('pesanan_barang');
+		$this->db->where('status_pesanan','belum_konfirmasi');
+		$this->db->where('perkiraan_waktu_selesai','0000-00-00 00:00:00');
+		$query=$this->db->get();
+		
+		if($query->num_rows()>0)
+			{
+			return true;
+			}
+		else
+			{
+			return false;
+			}
+	}
 	
 	
 }

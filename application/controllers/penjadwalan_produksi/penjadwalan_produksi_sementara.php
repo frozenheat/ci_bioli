@@ -16,6 +16,11 @@ class penjadwalan_produksi_sementara extends CI_Controller
 	
 function index()
 {
+$result = $this->m_pesanan_barang->pilih_pesanan_belum_dijadwalkan_sementara();
+	
+if($result == true)
+{
+
 	$time = time();
 	$result = $this->m_jadwal_produksi->pilih_lot_size_dan_waktu_produksi_dari_pesanan_belum_konfirm();
 	$jumlah_result = $result['jumlah_row'];
@@ -67,6 +72,7 @@ function index()
 			'waktu_jdwl' => $waktu_jdwl,
 			'nm_brng' => $row->nm_brng,
 			'wkt_prdksi' => $waktu_proses,
+			'jumlah_batch' => $jumlah_batch_proses,
 			'status' =>'sementara'
 		);
 		
@@ -107,7 +113,9 @@ function index()
 		//echo $nama_barang_terakhir." ";
 		//echo $waktu_jadwal_terakhir." ";
 		//echo $jam_selesai_terakhir." ";
-		$waktu_pemrosesan = 3600 * $row->wkt_prdksi;
+		
+		
+		
 		
 		if (mdate('%H:%i',strtotime(substr($waktu_selesai_terakhir, -8))) <= mdate('%H:%i',strtotime('17:00:00')))
 		{
@@ -126,13 +134,75 @@ function index()
 		$waktu_mulai_produksi = $tommorow." ".$jam_mulai;
 		}
 		
-		$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_mulai_produksi)+$waktu_pemrosesan);
 		
-		$update = array(
-			'waktu_mulai' =>$waktu_mulai_produksi,
+	
+//bagian penghitungan waktu pemrosesan berdasarkan batch
+	$update_waktu_mulai_produksi = array(
+	'waktu_mulai' => $waktu_mulai_produksi
+	);	
+	$this->m_jadwal_produksi->update_waktu_mulai($update_waktu_mulai_produksi, $row->id_prdksi);
+	$waktu_pemrosesan = ($row->wkt_prdksi / $row->jumlah_batch) * 3600;
+	$id_prdksi = $row->id_prdksi;
+		$h=0;
+		for ($g=0;$g<$row->jumlah_batch;$g++)
+		{		
+		if ($h==0)
+		{
+			$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_mulai_produksi)+$waktu_pemrosesan);
+			
+			$update_waktu_selesai_produksi = array(
+			'waktu_selesai' => $waktu_selesai_produksi
+			);
+			$this->m_jadwal_produksi->update_waktu_selesai($update_waktu_selesai_produksi, $id_prdksi);
+			
+			$h=1;
+		}
+		else
+		{
+			if (mdate('%H:%i',strtotime(substr($waktu_selesai_produksi, -5))) <= mdate('%H:%i',strtotime('17:00')))
+			{
+			$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_selesai_produksi)+$waktu_pemrosesan);
+			
+			$update_waktu_selesai_produksi = array(
+			'waktu_selesai' => $waktu_selesai_produksi
+			);
+			$this->m_jadwal_produksi->update_waktu_selesai($update_waktu_selesai_produksi, $id_prdksi);
+			
+			}
+			else
+			{
+			$tanggal_selesai_terakhir = substr($waktu_selesai_produksi, 0, 10);
+			$tanggal_selesai_terakhir1 = str_replace('-','/', $tanggal_selesai_terakhir);
+			$tommorow = date('Y-m-d', strtotime($tanggal_selesai_terakhir1."+1 days"));
+			$jam_mulai = "07:00";
+			$waktu_mulai_produksi = $tommorow." ".$jam_mulai;
+			$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_mulai_produksi)+$waktu_pemrosesan);
+			
+			
+			$datestring = '%d%m%Y%H%i';
+		
+			$waktu = mdate($datestring,$time);
+		
+			$acak=$this->m_acak->jadwal_prdksi();
+			$id_prdksi = $id_jns.$waktu.$acak;
+			
+			
+			$insert2 = array(
+		
+			'id_prdksi' => $id_prdksi,
+			'nm_brng' => $row->nm_brng,
+			'status' =>'sementara',
+			'waktu_mulai' => $waktu_mulai_produksi,
 			'waktu_selesai' => $waktu_selesai_produksi
 		);
-		$this->m_jadwal_produksi->update_waktu_mulai($update, $row->id_prdksi);
+		
+		$this->m_jadwal_produksi->input_penjadwalan($insert2);
+			
+			}
+		}
+		}
+//selesai
+		
 		
 		
 		
@@ -169,7 +239,7 @@ function index()
 				);
 				
 				
-				$this->m_jadwal_produksi->delete_pesanan_telah_terpenuhi($row->nm_brng);
+				//$this->m_jadwal_produksi->delete_pesanan_telah_terpenuhi($row->id_prdksi);
 				
 			}
 			//untuk penjadwalan produksi sebenarnya tinggal ditambahkan cara pengurangan stock
@@ -180,14 +250,76 @@ function index()
 		}
 	else
 		{
-		$waktu_pemrosesan = 3600 * $row->wkt_prdksi;
+		
 		$waktu_mulai_produksi = date('Y-m-d H:i',time()+3600);
-		$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_mulai_produksi)+$waktu_pemrosesan);
-		$update = array(
-			'waktu_mulai' =>$waktu_mulai_produksi,
-			'waktu_selesai' =>$waktu_selesai_produksi
+		
+//bagian penghitungan waktu pemrosesan berdasarkan batch
+	$update_waktu_mulai_produksi = array(
+	'waktu_mulai' => $waktu_mulai_produksi
+	);	
+	$this->m_jadwal_produksi->update_waktu_mulai($update_waktu_mulai_produksi, $row->id_prdksi);
+	$waktu_pemrosesan = ($row->wkt_prdksi / $row->jumlah_batch) * 3600;
+	$id_prdksi = $row->id_prdksi;
+		$h=0;
+		for ($g=0;$g<$row->jumlah_batch;$g++)
+		{		
+		if ($h==0)
+		{
+			$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_mulai_produksi)+$waktu_pemrosesan);
+			
+			$update_waktu_selesai_produksi = array(
+			'waktu_selesai' => $waktu_selesai_produksi
+			);
+			$this->m_jadwal_produksi->update_waktu_selesai($update_waktu_selesai_produksi, $id_prdksi);
+			
+			$h=1;
+		}
+		else
+		{
+			if (mdate('%H:%i',strtotime(substr($waktu_selesai_produksi, -5))) <= mdate('%H:%i',strtotime('17:00')))
+			{
+			$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_selesai_produksi)+$waktu_pemrosesan);
+			
+			$update_waktu_selesai_produksi = array(
+			'waktu_selesai' => $waktu_selesai_produksi
+			);
+			$this->m_jadwal_produksi->update_waktu_selesai($update_waktu_selesai_produksi, $id_prdksi);
+			
+			}
+			else
+			{
+			
+			$tanggal_selesai_terakhir = substr($waktu_selesai_produksi, 0, 10);
+			$tanggal_selesai_terakhir1 = str_replace('-','/', $tanggal_selesai_terakhir);
+			$tommorow = date('Y-m-d', strtotime($tanggal_selesai_terakhir1."+1 days"));
+			$waktu_mulai_produksi = $tommorow." ".$jam_mulai;
+			$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_mulai_produksi)+$waktu_pemrosesan);
+			
+			
+			$datestring = '%d%m%Y%H%i';
+		
+			$waktu = mdate($datestring,$time);
+		
+			$acak=$this->m_acak->jadwal_prdksi();
+			$id_prdksi = $id_jns.$waktu.$acak;
+			
+			
+			$insert2 = array(
+		
+			'id_prdksi' => $id_prdksi,
+			'nm_brng' => $row->nm_brng,
+			'status' =>'sementara',
+			'waktu_mulai' => $waktu_mulai_produksi,
+			'waktu_selesai' => $waktu_selesai_produksi
 		);
-		$this->m_jadwal_produksi->update_waktu_mulai($update, $row->id_prdksi);
+		
+		$this->m_jadwal_produksi->input_penjadwalan($insert2);
+			
+			}
+		}
+		}
+//selesai
+		
 		
 		
 		$update2 = array(
@@ -223,7 +355,7 @@ function index()
 				);
 				
 				
-				$this->m_jadwal_produksi->delete_pesanan_telah_terpenuhi($row->nm_brng);
+				//$this->m_jadwal_produksi->delete_pesanan_telah_terpenuhi($row->id_prdksi);
 			}
 			//untuk penjadwalan produksi sebenarnya tinggal ditambahkan cara pengurangan stock
 		}
@@ -233,7 +365,7 @@ function index()
 		
 		
 		
-		$this->m_pesanan_barang->update_perkiraan_waktu_selesai($row->nm_brng, $update2);
+	$this->m_pesanan_barang->update_perkiraan_waktu_selesai($row->nm_brng, $update2);
 		
 		
 		
@@ -244,7 +376,7 @@ function index()
 		
 	else
 	{
-		$waktu_pemrosesan = 3600 * $row->wkt_prdksi;
+		
 		
 		
 		if (mdate('%H:%i',strtotime(substr($waktu_selesai_produksi, -5))) <= mdate('%H:%i',strtotime('17:00')))
@@ -265,15 +397,76 @@ function index()
 		
 		$waktu_mulai_produksi = $tommorow." ".$jam_mulai;
 		}
+
+//bagian penghitungan waktu pemrosesan berdasarkan batch
+	$update_waktu_mulai_produksi = array(
+	'waktu_mulai' => $waktu_mulai_produksi
+	);	
+	$this->m_jadwal_produksi->update_waktu_mulai($update_waktu_mulai_produksi, $row->id_prdksi);
+	$waktu_pemrosesan = ($row->wkt_prdksi / $row->jumlah_batch) * 3600;
+	$id_prdksi = $row->id_prdksi;
+		$h=0;
+		for ($g=0;$g<$row->jumlah_batch;$g++)
+		{		
+		if ($h==0)
+		{
+			$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_mulai_produksi)+$waktu_pemrosesan);
+			
+			$update_waktu_selesai_produksi = array(
+			'waktu_selesai' => $waktu_selesai_produksi
+			);
+			$this->m_jadwal_produksi->update_waktu_selesai($update_waktu_selesai_produksi, $id_prdksi);
+			
+			$h=1;
+		}
+		else
+		{
+			if (mdate('%H:%i',strtotime(substr($waktu_selesai_produksi, -5))) <= mdate('%H:%i',strtotime('17:00')))
+			{
+			$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_selesai_produksi)+$waktu_pemrosesan);
+			
+			$update_waktu_selesai_produksi = array(
+			'waktu_selesai' => $waktu_selesai_produksi
+			);
+			$this->m_jadwal_produksi->update_waktu_selesai($update_waktu_selesai_produksi, $id_prdksi);
 		
-		$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_mulai_produksi)+$waktu_pemrosesan);
-		$update = array(
-			'waktu_mulai' =>$waktu_mulai_produksi,
-			'waktu_selesai' =>$waktu_selesai_produksi
+			}
+			else
+			{
+			$tanggal_selesai_terakhir = substr($waktu_selesai_produksi, 0, 10);
+			$tanggal_selesai_terakhir1 = str_replace('-','/', $tanggal_selesai_terakhir);
+			$tommorow = date('Y-m-d', strtotime($tanggal_selesai_terakhir1."+1 days"));
+			$jam_mulai = "07:00";
+			$waktu_mulai_produksi = $tommorow." ".$jam_mulai;
+			$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_mulai_produksi)+$waktu_pemrosesan);
+			
+			
+			$datestring = '%d%m%Y%H%i';
+		
+			$waktu = mdate($datestring,$time);
+		
+			$acak=$this->m_acak->jadwal_prdksi();
+			$id_prdksi = $id_jns.$waktu.$acak;
+			
+			
+			$insert2 = array(
+		
+			'id_prdksi' => $id_prdksi,
+			'nm_brng' => $row->nm_brng,
+			'status' =>'sementara',
+			'waktu_mulai' => $waktu_mulai_produksi,
+			'waktu_selesai' => $waktu_selesai_produksi
 		);
-		$this->m_jadwal_produksi->update_waktu_mulai($update, $row->id_prdksi);
-		 //echo 'test';
-		 //echo '<br>';
+		
+		$this->m_jadwal_produksi->input_penjadwalan($insert2);
+			
+			}
+		}
+		}
+//selesai		
+
+		
+		
 		
 		$update2 = array(
 			'perkiraan_waktu_selesai' => $waktu_selesai_produksi
@@ -307,7 +500,7 @@ function index()
 					'perkiraan_waktu_selesai' => $tanggal_stock_tersedia
 				);
 				
-				$this->m_jadwal_produksi->delete_pesanan_telah_terpenuhi($row->nm_brng);
+				//$this->m_jadwal_produksi->delete_pesanan_telah_terpenuhi($row->id_prdksi);
 				
 			}
 			//untuk penjadwalan produksi sebenarnya tinggal ditambahkan cara pengurangan stock
@@ -319,9 +512,10 @@ function index()
 	 }
 	 
 	 
-	 redirect('master_pesanan_pelanggan/c_tampil_pesanan');
+	
 }
-
+ redirect('master_pesanan_pelanggan/c_tampil_pesanan');
+}
 }
 
 ?>
