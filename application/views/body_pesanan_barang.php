@@ -31,7 +31,7 @@ function konfirm_pesanan(hasil_konfirm, id_pesanan, id_pemesan, nama_barang)
 <center>
 <table class="table-form">
 <form action ='<?php echo site_url();?>/master_pesanan_pelanggan/c_tampil_pesanan/pilihan_form' method ='POST' id ='pilihan_form'>
-<tr><td><select name='status' onchange ='pilih_form()'><option></option><option value='semua'>Semua</option><option value='belum' >Belum konfirmasi</option><option value='telah'>Telah konfirmasi</option></select></td></tr>
+<tr><td><select name='status' onchange ='pilih_form()'><option></option><option value='semua'>Semua</option><option value='belum' >Belum konfirmasi</option><option value='telah'>Telah konfirmasi</option><option value="terpenuhi">Terpenuhi</option></select></td></tr>
 </form>
 </table>
 </center>
@@ -86,6 +86,14 @@ function konfirm_pesanan(hasil_konfirm, id_pesanan, id_pemesan, nama_barang)
 			{
 			echo "<td><select onchange='konfirm_pesanan(this.value, \"$row2->id_pesanan\", \"$row2->id_pemesan\", \"$row2->nama_barang\")'><option></option><option value='batal'>batal</option><option value='pesan'>pesan</option></select></td>";
 			}
+			else if($row2->status_pesanan =='terpenuhi')
+			{
+			echo "<td>".$row2->sts_konfirm."</td>";
+			}
+		}
+		else if ($status =='terpenuhi')
+		{
+		echo "<td>".$row2->sts_konfirm."</td>";
 		}
 	}
 	else

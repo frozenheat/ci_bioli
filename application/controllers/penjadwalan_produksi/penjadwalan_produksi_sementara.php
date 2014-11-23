@@ -16,6 +16,11 @@ class penjadwalan_produksi_sementara extends CI_Controller
 	
 function index()
 {
+
+
+
+
+
 $result = $this->m_pesanan_barang->pilih_pesanan_belum_dijadwalkan_sementara();
 	
 if($result == true)
@@ -37,9 +42,9 @@ if($result == true)
 		
 		foreach ($total_pesanan as $row2)
 		{
-			$row2->total_pesanan;
+			$jumlah_pesanan = $row2->total_pesanan;
 		}
-		$jumlah_batch_proses = ceil($row2->total_pesanan / $row->lot_size);
+		$jumlah_batch_proses = ceil($jumlah_pesanan / $row->lot_size);
 		
 		$waktu_proses = $jumlah_batch_proses * $row->wkt_prdksi;
 		
@@ -65,7 +70,47 @@ if($result == true)
 		$datestring = '%Y-%m-%d %H:%i';
 		$waktu_jdwl = mdate($datestring, $time);
 		
+		//pengecekan stock dan penginputah data pesanan yang belum terpenuhi kedalam jadwal produksi
+		$data_stock_terbaru = $this->m_stock_barang->cek_stock_awal($row->nm_brng);
 		
+		if ($data_stock_terbaru == true)
+		{
+			foreach ($data_stock_terbaru as $row3)
+			{
+				$jumlah_stock = $row3->jml_stock;
+				$tanggal_stock_tersedia = $row3->tgl_stock;
+			}
+			
+		
+			$jumlah_kekurangan_pesanan = $jumlah_pesanan - $jumlah_stock;
+			
+			if ($jumlah_kekurangan_pesanan <= 0)
+			{
+				$update2 = array(
+					'perkiraan_waktu_selesai' => $tanggal_stock_tersedia,
+					'status_pesanan' => 'terpenuhi',
+					'sts_konfirm' => 'terpenuhi'
+				);
+				$this->m_pesanan_barang->update_perkiraan_waktu_selesai($row->nm_brng, $update2);
+			}
+			else
+			{
+			$insert = array(
+		
+			'id_prdksi' => $id_prdksi,
+			'waktu_jdwl' => $waktu_jdwl,
+			'nm_brng' => $row->nm_brng,
+			'wkt_prdksi' => $waktu_proses,
+			'jumlah_batch' => $jumlah_batch_proses,
+			'status' =>'sementara'
+				);
+				$this->m_jadwal_produksi->input_penjadwalan($insert);
+			}
+			
+		}
+		else
+		{
+		//cek stock selesai
 		$insert = array(
 		
 			'id_prdksi' => $id_prdksi,
@@ -78,7 +123,7 @@ if($result == true)
 		
 	$this->m_jadwal_produksi->input_penjadwalan($insert);
 		
-		
+	}	
 		
 	 }
 	 }
@@ -214,36 +259,6 @@ if($result == true)
 		
 		
 		
-		$data_stock_terbaru = $this->m_stock_barang->cek_stock_awal($row->nm_brng);
-		
-		if ($data_stock_terbaru == true)
-		{
-			foreach ($data_stock_terbaru as $row3)
-			{
-				$jumlah_stock = $row3->jml_stock;
-				$tanggal_stock_tersedia = $row3->tgl_stock;
-			}
-			
-		$total_pesanan = $this->m_jadwal_produksi->penjumlahan_pesanan($row->nm_brng);
-		
-			foreach ($total_pesanan as $row3)
-			{
-			$jumlah_pesanan = $row3->total_pesanan;
-			}
-			$jumlah_kekurangan_pesanan = $jumlah_pesanan - $jumlah_stock;
-			
-			if ($jumlah_kekurangan_pesanan < 0)
-			{
-				$update2 = array(
-					'perkiraan_waktu_selesai' => $tanggal_stock_tersedia
-				);
-				
-				
-				//$this->m_jadwal_produksi->delete_pesanan_telah_terpenuhi($row->id_prdksi);
-				
-			}
-			//untuk penjadwalan produksi sebenarnya tinggal ditambahkan cara pengurangan stock
-		}
 		
 		
 		
@@ -330,35 +345,7 @@ if($result == true)
 		
 		
 		
-		$data_stock_terbaru = $this->m_stock_barang->cek_stock_awal($row->nm_brng);
 		
-		if ($data_stock_terbaru == true)
-		{
-			foreach ($data_stock_terbaru as $row3)
-			{
-				$jumlah_stock = $row3->jml_stock;
-				$tanggal_stock_tersedia = $row3->tgl_stock;
-			}
-			
-		$total_pesanan = $this->m_jadwal_produksi->penjumlahan_pesanan($row->nm_brng);
-		
-			foreach ($total_pesanan as $row3)
-			{
-			$jumlah_pesanan = $row3->total_pesanan;
-			}
-			$jumlah_kekurangan_pesanan = $jumlah_pesanan - $jumlah_stock;
-			
-			if ($jumlah_kekurangan_pesanan < 0)
-			{
-				$update2 = array(
-					'perkiraan_waktu_selesai' => $tanggal_stock_tersedia
-				);
-				
-				
-				//$this->m_jadwal_produksi->delete_pesanan_telah_terpenuhi($row->id_prdksi);
-			}
-			//untuk penjadwalan produksi sebenarnya tinggal ditambahkan cara pengurangan stock
-		}
 		
 		
 		}
@@ -476,35 +463,7 @@ if($result == true)
 		
 		
 		
-		$data_stock_terbaru = $this->m_stock_barang->cek_stock_awal($row->nm_brng);
 		
-		if ($data_stock_terbaru == true)
-		{
-			foreach ($data_stock_terbaru as $row3)
-			{
-				$jumlah_stock = $row3->jml_stock;
-				$tanggal_stock_tersedia = $row3->tgl_stock;
-			}
-			
-		$total_pesanan = $this->m_jadwal_produksi->penjumlahan_pesanan($row->nm_brng);
-		
-			foreach ($total_pesanan as $row3)
-			{
-			$jumlah_pesanan = $row3->total_pesanan;
-			}
-			$jumlah_kekurangan_pesanan = $jumlah_pesanan - $jumlah_stock;
-			
-			if ($jumlah_kekurangan_pesanan < 0)
-			{
-				$update2 = array(
-					'perkiraan_waktu_selesai' => $tanggal_stock_tersedia
-				);
-				
-				//$this->m_jadwal_produksi->delete_pesanan_telah_terpenuhi($row->id_prdksi);
-				
-			}
-			//untuk penjadwalan produksi sebenarnya tinggal ditambahkan cara pengurangan stock
-		}
 		$this->m_pesanan_barang->update_perkiraan_waktu_selesai($row->nm_brng, $update2);
 	}
 		

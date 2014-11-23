@@ -53,6 +53,10 @@ class m_pesanan_barang extends CI_Model
 		{
 		$this->db->where('status_pesanan','telah_konfirmasi');
 		}
+		else if($status == 'terpenuhi')
+		{
+		$this->db->where('status_pesanan','terpenuhi');
+		}
 		$query = $this->db->get();
 		
 		if ($query->num_rows()>0)
