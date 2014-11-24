@@ -10,7 +10,31 @@
 		{
 			$this->db->select('nama_barang');
 			$this->db->from('pesanan_barang');
-			$this->db->where('status_pesanan','belum_konfirmasi');
+			$this->db->where('sts_konfirm','belum_konfirmasi');
+			$this->db->where('status_pesanan','belum_diproses');
+			$this->db->group_by('nama_barang');
+			$query = $this->db->get();
+			$a =0;
+			//penghitungan jumlah row yang dihasilkan dari data barang yang belum konfirmasi
+			$query2['jumlah_row'] = $query->num_rows();
+			//end
+			foreach ($query->result() as $row)
+			{
+				$this->db->select('nm_brng, nm_jns_brng, lot_size, wkt_prdksi');
+				$this->db->from('barang');
+				$this->db->where('nm_brng',$row->nama_barang);
+				$query2[$a]= $this->db->get();
+				$a++;
+			}
+			return $query2;
+		}
+		
+		function pilih_lot_size_dan_waktu_produksi_dari_pesanan_telah_konfirm()
+		{
+			$this->db->select('nama_barang');
+			$this->db->from('pesanan_barang');
+			$this->db->where('sts_konfirm !=','belum_konfirmasi');
+			$this->db->where('status_pesanan','dalam_proses');
 			$this->db->group_by('nama_barang');
 			$query = $this->db->get();
 			$a =0;
@@ -33,7 +57,22 @@
 			$this->db->select('sum(jumlah_pesanan) as total_pesanan');
 			$this->db->from('pesanan_barang');
 			$this->db->where('nama_barang',$nama_barang);
-			$this->db->where('status_pesanan','belum_konfirmasi');
+			$this->db->where('sts_konfirm','belum_konfirmasi');
+			$this->db->where('status_pesanan','belum_diproses');
+			$query = $this->db->get();
+			if ($query->num_rows()>0)
+			{
+				return $query->result();
+			}
+		}
+		
+		function penjumlahan_pesanan_utama($nama_barang)
+		{
+			$this->db->select('sum(jumlah_pesanan) as total_pesanan');
+			$this->db->from('pesanan_barang');
+			$this->db->where('nama_barang',$nama_barang);
+			$this->db->where('sts_konfirm !=','belum_konfirmasi');
+			$this->db->where('status_pesanan','dalam_proses');
 			$query = $this->db->get();
 			if ($query->num_rows()>0)
 			{
@@ -105,11 +144,7 @@
 		}
 	
 	
-		function delete_pesanan_telah_terpenuhi($id_prdksi)
-		{
-			$this->db->where('id_prdksi',$id_prdksi);
-			$this->db->delete('jadwal_prdksi');
-		}
+	
 		
 		function hapus_jadwal_sementara()
 		{

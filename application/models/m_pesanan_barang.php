@@ -47,11 +47,11 @@ class m_pesanan_barang extends CI_Model
 		
 		if ($status == 'belum')
 		{
-		$this->db->where('status_pesanan','belum_konfirmasi');
+		$this->db->where('sts_konfirm','belum_konfirmasi');
 		}
 		else if($status == 'telah')
 		{
-		$this->db->where('status_pesanan','telah_konfirmasi');
+		$this->db->where('sts_konfirm !=','belum_konfirmasi');
 		}
 		else if($status == 'terpenuhi')
 		{
@@ -92,10 +92,19 @@ class m_pesanan_barang extends CI_Model
 		$this->db->insert('pesanan_barang',$insert);
 	}
 	
-	function update_perkiraan_waktu_selesai($nama_barang, $update2)
+	function update_perkiraan_waktu_selesai_sementara($nama_barang, $update2)
 	{
 		$this->db->where('nama_barang', $nama_barang);
-		$this->db->where('status_pesanan', 'belum_konfirmasi');
+		$this->db->where('status_pesanan', 'belum_diproses');
+		$this->db->where('sts_konfirm','belum_konfirmasi');
+		$this->db->update('pesanan_barang', $update2);
+	}
+	
+	function update_perkiraan_waktu_selesai_utama($nama_barang, $update2)
+	{
+		$this->db->where('nama_barang', $nama_barang);
+		$this->db->where('status_pesanan', 'dalam_proses');
+		$this->db->where('sts_konfirm','pesan');
 		$this->db->update('pesanan_barang', $update2);
 	}
 	
@@ -119,7 +128,7 @@ class m_pesanan_barang extends CI_Model
 	{
 		$this->db->select('*');
 		$this->db->from('pesanan_barang');
-		$this->db->where('status_pesanan','belum_konfirmasi');
+		$this->db->where('status_pesanan','belum_diproses');
 		$this->db->where('perkiraan_waktu_selesai','0000-00-00 00:00:00');
 		$query=$this->db->get();
 		
@@ -132,7 +141,23 @@ class m_pesanan_barang extends CI_Model
 			return false;
 			}
 	}
-	
+		function pilih_pesanan_belum_dijadwalkan_utama()
+	{
+		$this->db->select('*');
+		$this->db->from('pesanan_barang');
+		$this->db->where('status_pesanan','dalam_proses');
+		$this->db->where ('sts_konfirm','pesan');
+		$query=$this->db->get();
+		
+		if($query->num_rows()>0)
+			{
+			return true;
+			}
+		else
+			{
+			return false;
+			}
+	}
 	
 }
 		

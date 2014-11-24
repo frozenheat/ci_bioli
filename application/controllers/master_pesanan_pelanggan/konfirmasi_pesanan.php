@@ -12,7 +12,7 @@ class konfirmasi_pesanan extends CI_Controller
 
 		
 		$update = array(
-			'status_pesanan' => 'telah_konfirmasi',
+			
 			'sts_konfirm' => $this->input->post('hasil_konfirm')
 		);
 		

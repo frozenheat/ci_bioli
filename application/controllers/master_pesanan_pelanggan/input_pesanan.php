@@ -68,8 +68,8 @@ class input_pesanan extends CI_Controller
 					'tanggal_pemesanan' => $tanggalsistem,
 					'jam_pemesanan' => $jamsistem,
 					'jumlah_pesanan' => $this->input->post('jml_psn'),
-					'status_pesanan' => 'belum_konfirmasi',
-					'sts_konfirm' => 'belum_penjadwalan'
+					'status_pesanan' => 'belum_diproses',
+					'sts_konfirm' => 'belum_konfirmasi'
 				);
 				
 				$this->m_pesanan_barang->input_pesanan($insert);

@@ -78,18 +78,15 @@ function konfirm_pesanan(hasil_konfirm, id_pesanan, id_pemesan, nama_barang)
 		}
 		else if($status == 'semua')
 		{
-			if($row2->status_pesanan =="telah_konfirmasi")
+			if($row2->sts_konfirm !="belum_konfirmasi")
 			{
 			echo "<td>".$row2->sts_konfirm."</td>";
 			}
-			else if($row2->status_pesanan =="belum_konfirmasi")
+			else if($row2->sts_konfirm =="belum_konfirmasi")
 			{
 			echo "<td><select onchange='konfirm_pesanan(this.value, \"$row2->id_pesanan\", \"$row2->id_pemesan\", \"$row2->nama_barang\")'><option></option><option value='batal'>batal</option><option value='pesan'>pesan</option></select></td>";
 			}
-			else if($row2->status_pesanan =='terpenuhi')
-			{
-			echo "<td>".$row2->sts_konfirm."</td>";
-			}
+			
 		}
 		else if ($status =='terpenuhi')
 		{
@@ -98,14 +95,15 @@ function konfirm_pesanan(hasil_konfirm, id_pesanan, id_pemesan, nama_barang)
 	}
 	else
 	{
-			if($row2->status_pesanan =="telah_konfirmasi")
+			if($row2->sts_konfirm !="belum_konfirmasi")
 			{
 			echo "<td>".$row2->sts_konfirm."</td>";
 			}
-			else if($row2->status_pesanan =="belum_konfirmasi")
+			else if($row2->sts_konfirm =="belum_konfirmasi")
 			{
 			echo "<td><select onchange='konfirm_pesanan(this.value, \"$row2->id_pesanan\", \"$row2->id_pemesan\", \"$row2->nama_barang\")'><option></option><option value='batal'>batal</option><option value='pesan'>pesan</option></select></td>";
 			}
+		
 	}
 	
 	echo "<td>".$row2->perkiraan_waktu_selesai."</td>";
@@ -133,7 +131,7 @@ function konfirm_pesanan(hasil_konfirm, id_pesanan, id_pemesan, nama_barang)
 		}
 		else if($status == 'telah')
 		{
-		echo form_open(site_url().'/penjadwalan_produksi/penjadwalan_produksi_real');
+		echo form_open(site_url().'/penjadwalan_produksi/penjadwalan_produksi_utama');
 		?>
 		
 		<input type ='submit' style='margin-top:5px;' value='Penjadwalan produksi'>
