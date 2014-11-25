@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 22, 2014 at 03:28 AM
+-- Generation Time: Nov 26, 2014 at 01:05 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -39,13 +39,13 @@ CREATE TABLE IF NOT EXISTS `barang` (
 --
 
 INSERT INTO `barang` (`id_brng`, `nm_brng`, `nm_jns_brng`, `lot_size`, `wkt_prdksi`) VALUES
-('c001', 'cylinder_liner_(boring)_FR70', 'Cylinder_liner', 321321, 12),
+('c001', 'cylinder_liner_(boring)_FR70', 'Cylinder_liner', 50, 3),
 ('c002', 'cylinder_liner_(boring)_RC80', 'Cylinder_liner', 90, 4),
 ('g001', 'Guide_Valve_(Bosh_klep)_c700', 'Bosh_klep', 200, 2),
 ('g002', 'Guide_Valve_(Bosh_klep)_H90', 'Bosh_klep', 200, 2),
 ('v001', 'Valve_Seat_(Cincin_Setting)_Grand/Prima', 'Cincin_setting', 500, 1),
 ('v002', 'Valve_Seat_(Cincin_Setting)_Star/Astrea', 'Cincin_setting', 500, 1),
-('v003', 'vValve_Seat_(Cincin_Setting)_Shogun', 'Cincin_setting', 500, 1);
+('v003', 'vValve_Seat_(Cincin_Setting)_Shogun', 'Cincin_setting', 200, 3);
 
 -- --------------------------------------------------------
 
@@ -58,6 +58,7 @@ CREATE TABLE IF NOT EXISTS `jadwal_prdksi` (
   `waktu_jdwl` datetime NOT NULL,
   `nm_brng` varchar(50) NOT NULL,
   `wkt_prdksi` int(11) NOT NULL,
+  `jumlah_batch` int(11) NOT NULL,
   `waktu_mulai` datetime NOT NULL,
   `waktu_selesai` datetime NOT NULL,
   `status` varchar(10) NOT NULL
@@ -67,10 +68,11 @@ CREATE TABLE IF NOT EXISTS `jadwal_prdksi` (
 -- Dumping data for table `jadwal_prdksi`
 --
 
-INSERT INTO `jadwal_prdksi` (`id_prdksi`, `waktu_jdwl`, `nm_brng`, `wkt_prdksi`, `waktu_mulai`, `waktu_selesai`, `status`) VALUES
-('b221120140325183042', '2014-11-22 03:25:00', 'Guide_Valve_(Bosh_klep)_H90', 2, '2014-11-22 07:25:00', '2014-11-22 09:25:00', 'sementara'),
-('b221120140325287431', '2014-11-22 03:25:00', 'Guide_Valve_(Bosh_klep)_c700', 2, '2014-11-22 09:25:00', '2014-11-22 11:25:00', 'sementara'),
-('v221120140325216894', '2014-11-22 03:25:00', 'Valve_Seat_(Cincin_Setting)_Star/Astrea', 1, '2014-11-22 05:25:00', '2014-11-22 06:25:00', 'sementara');
+INSERT INTO `jadwal_prdksi` (`id_prdksi`, `waktu_jdwl`, `nm_brng`, `wkt_prdksi`, `jumlah_batch`, `waktu_mulai`, `waktu_selesai`, `status`) VALUES
+('b241120140958694852', '2014-11-24 09:58:00', 'Guide_Valve_(Bosh_klep)_H90', 6, 3, '2014-11-24 13:58:00', '2014-11-24 17:58:00', 'utama'),
+('b241120140958785396', '2014-11-24 09:58:00', 'Guide_Valve_(Bosh_klep)_c700', 2, 1, '2014-11-24 11:58:00', '2014-11-24 13:58:00', 'utama'),
+('v241120140958709124', '0000-00-00 00:00:00', 'Guide_Valve_(Bosh_klep)_H90', 0, 0, '2014-11-25 07:00:00', '2014-11-25 09:00:00', 'utama'),
+('v241120140958782951', '2014-11-24 09:58:00', 'Valve_Seat_(Cincin_Setting)_Star/Astrea', 1, 1, '2014-11-24 10:58:00', '2014-11-24 11:58:00', 'utama');
 
 -- --------------------------------------------------------
 
@@ -185,16 +187,14 @@ CREATE TABLE IF NOT EXISTS `pesanan_barang` (
 --
 
 INSERT INTO `pesanan_barang` (`id_pesanan`, `id_pemesan`, `nama_barang`, `tanggal_pemesanan`, `jam_pemesanan`, `jumlah_pesanan`, `status_pesanan`, `sts_konfirm`, `jumlah_ketersediaan_pesanan`, `jumlah_kekurangan_pesanan`, `perkiraan_waktu_selesai`) VALUES
-('b0111201407564', 'c5001', 'Guide_Valve_(Bosh_klep)_c700', '2014-11-01', '16:08:18', 30, 'belum_konfirmasi', '', 0, 0, '2014-11-22 11:25:00'),
-('b1211201494216', 'c5001', 'Guide_Valve_(Bosh_klep)_H90', '2014-11-12', '22:08:18', 20, 'belum_konfirmasi', '', 0, 0, '2014-11-22 09:25:00'),
-('b2211201456098', 'c0826459', 'Guide_Valve_(Bosh_klep)_H90', '2014-11-22', '03:18:25', 120, 'belum_konfirmasi', '', 0, 0, '2014-11-22 09:25:00'),
-('b3010201410679', 'c5001', 'Guide_Valve_(Bosh_klep)_c700', '2014-10-30', '12:47:29', 40, 'belum_konfirmasi', '', 0, 0, '2014-11-22 11:25:00'),
-('c2211201451830', 'c0826459', 'cylinder_liner_(boring)_RC80', '2014-11-22', '03:19:01', 30, 'belum_konfirmasi', '', 0, 0, '2014-11-19 00:00:00'),
-('c2211201494381', 'c0826459', 'cylinder_liner_(boring)_FR70', '2014-11-22', '03:19:18', 30, 'belum_konfirmasi', '', 0, 0, '2014-11-17 00:00:00'),
-('c2211201494786', 'c0826459', 'cylinder_liner_(boring)_RC80', '2014-11-22', '03:19:23', 40, 'belum_konfirmasi', '', 0, 0, '2014-11-19 00:00:00'),
-('v1211201496214', 'c5001', 'Valve_Seat_(Cincin_Setting)_Star/Astrea', '2014-11-12', '22:08:13', 40, 'belum_konfirmasi', '', 0, 0, '2014-11-22 06:25:00'),
-('v2211201476018', 'c0826459', 'vValve_Seat_(Cincin_Setting)_Shogun', '2014-11-22', '03:18:55', 210, 'belum_konfirmasi', '', 0, 0, '2014-11-19 00:00:00'),
-('v3010201403718', 'c5001', 'Valve_Seat_(Cincin_Setting)_Grand/Prima', '2014-10-30', '12:47:34', 60, 'belum_konfirmasi', '', 0, 0, '2014-11-19 00:00:00');
+('b2311201415794', 'c0826459', 'Guide_Valve_(Bosh_klep)_H90', '2014-11-23', '21:31:10', 341, 'dalam_penjadwalan', 'pesan', 0, 0, '2014-11-25 09:00:00'),
+('b2311201487192', 'c5001', 'Guide_Valve_(Bosh_klep)_c700', '2014-11-23', '21:30:27', 131, 'dalam_penjadwalan', 'pesan', 0, 0, '2014-11-24 13:58:00'),
+('b2311201495364', 'c5001', 'Guide_Valve_(Bosh_klep)_H90', '2014-11-23', '21:30:32', 141, 'dalam_penjadwalan', 'pesan', 0, 0, '2014-11-25 09:00:00'),
+('c2311201403561', 'c5001', 'cylinder_liner_(boring)_FR70', '2014-11-23', '21:30:19', 132, 'terpenuhi', 'pesan', 0, 0, '2014-11-17 00:00:00'),
+('c2311201447093', 'c5001', 'cylinder_liner_(boring)_RC80', '2014-11-23', '21:30:23', 333, 'terpenuhi', 'pesan', 0, 0, '2014-11-19 00:00:00'),
+('v2311201424903', 'c0826459', 'Valve_Seat_(Cincin_Setting)_Grand/Prima', '2014-11-23', '21:31:14', 221, 'terpenuhi', 'pesan', 0, 0, '2014-11-19 00:00:00'),
+('v2311201434926', 'c0826459', 'Valve_Seat_(Cincin_Setting)_Star/Astrea', '2014-11-23', '21:31:33', 444, 'dalam_penjadwalan', 'pesan', 0, 0, '2014-11-24 11:58:00'),
+('v2311201485961', 'c0826459', 'vValve_Seat_(Cincin_Setting)_Shogun', '2014-11-23', '21:31:36', 132, 'terpenuhi', 'pesan', 0, 0, '2014-11-19 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -214,7 +214,7 @@ CREATE TABLE IF NOT EXISTS `stock_barang` (
 --
 
 INSERT INTO `stock_barang` (`tgl_stock`, `id_brng`, `jml_stock`, `status`) VALUES
-('2014-11-17', 'c001', 380, 'terbaru'),
+('2014-11-17', 'c001', 400, 'terbaru'),
 ('2014-11-19', 'c002', 444, 'terbaru'),
 ('2014-11-19', 'g001', 0, 'terbaru'),
 ('2014-11-19', 'g002', 30, 'terbaru'),

@@ -43,6 +43,10 @@
 		{
 		$this->load->view('body_pesanan_barang');
 		}
+		else if($body=='jadwal_produksi')
+		{
+		$this->load->view('body_jadwal_produksi');
+		}
 		}
 
 ?>

@@ -4,7 +4,23 @@
 	{
 	
 		
-		
+		function tampil_jadwal_produksi()
+		{
+			$this->db->select('*');
+			$this->db->from('jadwal_prdksi');
+			$this->db->where('status','utama');
+			$this->db->order_by('waktu_mulai','asc');
+			$query = $this->db->get();
+			
+			if ($query->num_rows() > 0)
+			{
+				return $query->result();
+			}
+			else
+			{
+				return false;
+			}
+		}
 		
 		function pilih_lot_size_dan_waktu_produksi_dari_pesanan_belum_konfirm()
 		{
