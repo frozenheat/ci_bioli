@@ -192,6 +192,15 @@
 			$this->db->where('status','sementara');
 			$this->db->delete('jadwal_prdksi');
 		}
+		
+		function pemenuhan_jadwal($id_produksi)
+		{
+			$update = array(
+			'status' => 'terpenuhi'
+			);
+			$this->db->where('id_prdksi',$id_produksi);
+			$this->db->update('jadwal_prdksi',$update);
+		}
 	}
 	
 ?>

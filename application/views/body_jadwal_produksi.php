@@ -1,4 +1,10 @@
-
+<script>
+function konfirmasi(id_produksi)
+{
+	document.getElementById('id_produksi').value = id_produksi;
+	document.getElementById('konfirmasi_proses_produksi').submit();
+}
+</script>
 
 <center>
 <a style="font-size:24pt; color:#801515; letter-spacing:7px; display:inline-block;">Jadwal Produksi</a><br>
@@ -44,12 +50,16 @@ foreach ($jadwal_produksi as $row)
 	else
 	{
 	echo "<td>Awal</td>";
-	echo "<td><input type='checkbox'></td>";
+	echo "<td><input type='checkbox' onclick='konfirmasi(\"$row->id_prdksi\")'></td>";
 	}
 	
 	echo "</tr>";
 
+	
 }
+	echo "<form id='konfirmasi_proses_produksi' action='".site_url()."/penjadwalan_produksi/tampil_jadwal_produksi/update_status_pesanan' method='POST'>";
+	echo "<input type='hidden' name='id_produksi' id='id_produksi'>";
+	echo "</form>";
 }
 else
 {
@@ -62,5 +72,9 @@ else
 <?php
 }
 ?>
-</center>
+</center
+
+
+
+
 

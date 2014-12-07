@@ -23,6 +23,24 @@ class m_pesanan_barang extends CI_Model
 	}
 	}
 	
+	function tampil_pesanan_tiap_pelanggan($id_pelanggan)
+	{
+		$this->db->select('*');
+		$this->db->from('pesanan_barang');
+		$this->db->where('id_pemesan',$id_pelanggan);
+		$this->db->order_by('tanggal_pemesanan','asc');
+		$query = $this->db->get();
+		
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+		return false;
+		}
+	
+	}
 	
 	function nama_barang()
 	{
@@ -108,6 +126,16 @@ class m_pesanan_barang extends CI_Model
 		$this->db->where('status_pesanan', 'dalam_proses');
 		$this->db->where('sts_konfirm','pesan');
 		$this->db->update('pesanan_barang', $update2);
+	}
+	
+	function pemenuhan_pesanan($id_produksi)
+	{
+		$update = array(
+			'status_pesanan' => 'terpenuhi'
+		);
+		
+		$this->db->where('id_prdksi',$id_produksi);
+		$this->db->update('pesanan_barang',$update);
 	}
 	
 	function konfirmasi_barang($hasil_konfirm, $id_pesanan, $id_pemesan, $nama_barang, $update)

@@ -70,7 +70,22 @@ class c_tampil_pesanan extends CI_Controller
 	
 	function tampil_status()
 	{
-		echo "halaman_status_pesanan";
+		if ($this->session->userdata('logged_in'))
+		{
+		$session_data=$this->session->userdata('logged_in');
+		if ($session_data['database']=='pelanggan')
+		{
+		$data['body'] = 'status_pesanan';
+		$data['id_pelanggan']=$session_data['id_pelanggan'];
+		$data['nama_pelanggan']=$session_data['nama_pelanggan'];
+		$data['otoritas']=$session_data['otoritas'];
+		$data['database']=$session_data['database'];
+		//$data['nama_barang']=$this->m_pesanan_barang->nama_barang();
+		$data['pesanan_barang']=$this->m_pesanan_barang->tampil_pesanan_tiap_pelanggan($session_data['id_pelanggan']);
+		
+		$this->load->view('hlm_utm',$data);
+		}
+		}
 	}
 	
 }
