@@ -88,6 +88,7 @@ if($result == true)
 			{
 				
 				$update2 = array(
+					'id_prdksi' => $row->id_prdksi,
 					'perkiraan_waktu_selesai' => $tanggal_stock_tersedia,
 					'status_pesanan' => 'terpenuhi'
 				);
@@ -256,6 +257,7 @@ if($result == true)
 		
 		
 		$update2 = array(
+			'id_prdksi' => $row->id_prdksi,
 			'perkiraan_waktu_selesai' => $waktu_selesai_produksi,
 			'status_pesanan' => 'dalam_proses'
 		);
@@ -367,6 +369,7 @@ if($result == true)
 		
 		
 		$update2 = array(
+			'id_prdksi' => $row->id_prdksi,
 			'perkiraan_waktu_selesai' => $waktu_selesai_produksi,
 			'status_pesanan'=>'dalam_penjadwalan'
 		);
@@ -456,6 +459,7 @@ if($result == true)
 		
 		
 		$update2 = array(
+			'id_prdksi' => $row->id_prdksi,
 			'perkiraan_waktu_selesai' => $waktu_selesai_produksi,
 			'status_pesanan'=>'dalam_penjadwalan'
 		);
@@ -577,6 +581,7 @@ if($result == true)
 		
 		
 		$update2 = array(
+			'id_prdksi' => $row->id_prdksi,
 			'perkiraan_waktu_selesai' => $waktu_selesai_produksi,
 			'status_pesanan'=>'dalam_penjadwalan'
 		);
