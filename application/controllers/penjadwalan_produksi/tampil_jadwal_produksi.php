@@ -21,7 +21,10 @@ class tampil_jadwal_produksi Extends CI_Controller
 		$data['body']='jadwal_produksi';
 		$data['id_pegawai']=$session_data['id_pegawai'];
 		$data['otoritas']=$session_data['otoritas'];
+		if ($this->m_jadwal_produksi->tampil_jadwal_produksi() == true)
+		{
 		$data['jadwal_produksi']=$this->m_jadwal_produksi->tampil_jadwal_produksi();
+		}
 		$this->load->view('hlm_utm',$data);
 		}
 		}

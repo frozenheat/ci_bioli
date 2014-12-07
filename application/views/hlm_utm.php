@@ -47,6 +47,10 @@
 		{
 		$this->load->view('body_jadwal_produksi');
 		}
+		else if($body=="status_pesanan")
+		{
+		$this->load->view('body_status_pesanan');
+		}
 		}
 
 ?>

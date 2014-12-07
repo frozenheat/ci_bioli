@@ -45,6 +45,7 @@
 			return $query2;
 		}
 		
+		
 		function pilih_lot_size_dan_waktu_produksi_dari_pesanan_telah_konfirm()
 		{
 			$this->db->select('nama_barang');
@@ -67,6 +68,30 @@
 			}
 			return $query2;
 		}
+		
+		
+		function pilih_lot_size_dari_pesanan_telah_dijadwalkan($nama_barang)
+		{
+			
+			$this->db->select('lot_size');
+			$this->db->from('barang');
+			$this->db->where('nm_brng',$nama_barang);
+			$query = $this->db->get();
+			
+			if ($query->num_rows() > 0)
+			{
+				return $query->result();
+			}
+			else
+			{
+			return false;
+			}
+			
+		}
+		
+		
+		
+		
 		
 		function penjumlahan_pesanan($nama_barang)
 		{

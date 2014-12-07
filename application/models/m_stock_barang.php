@@ -108,6 +108,51 @@
 			
 		}
 		
+		function insert_new_stock($id_barang, $tanggal_lama , $tanggal_baru , $sisa_stock)
+		{
+		
+		if ($tanggal_lama == $tanggal_baru)
+		{
+			$update = array(
+				'jml_stock' => $sisa_stock
+			);
+			
+			$this->db->where('id_brng', $id_barang);
+			$this->db->where('status', 'terbaru');
+			$this->db->where('tgl_stock', $tanggal_baru);
+			$this->db->update('stock_barang', $update);
+			
+		}
+		else
+		{
+			$update = array(
+				'status' => 'lama'
+			);
+			
+			$this->db->where('id_brng',$id_barang);
+			$this->db->where('tgl_stock',$tanggal_lama);
+			$this->db->update('stock_barang',$update);
+			
+			$insert = array(
+			
+				'tgl_stock' => $tanggal_baru,
+				'id_brng' => $id_barang,
+				'jml_stock' => $sisa_stock,
+				'status' => 'terbaru'
+			
+			);
+			
+			$this->db->insert('stock_barang',$insert);
+			
+			
+			
+		}
+			
+			
+			
+		}
+		
+		
 	}
 
 ?>

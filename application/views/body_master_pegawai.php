@@ -45,7 +45,7 @@ echo form_open(site_url().'/master_pegawai/input_pegawai');
 </div>
 
 <center>
-<div class="scroll">
+<div class="scroll" style="width:891px;">
 <table border=1 class="table-data">
 <tr><td>id_pegawai</td><td>nama_pegawai</td><td>alamat_email</td><td>alamat pegawai</td><td>telp_pegawai</td><td>otoritas</td></tr>
 

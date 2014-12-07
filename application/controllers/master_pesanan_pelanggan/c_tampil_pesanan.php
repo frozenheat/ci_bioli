@@ -68,5 +68,10 @@ class c_tampil_pesanan extends CI_Controller
 		}
 	}
 	
+	function tampil_status()
+	{
+		echo "halaman_status_pesanan";
+	}
+	
 }
 ?>

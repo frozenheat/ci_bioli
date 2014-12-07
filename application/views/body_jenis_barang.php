@@ -16,7 +16,7 @@ echo form_open(site_url().'/master_barang/c_input_barang/jenis_barang');
 </div>
 
 <center>
-<div class="scroll">
+<div class="scroll" style="width:321px;">
 <table border=1 class="table-data">
 <tr><td>Nama_Jenis_barang</td><td>Id_jenis_barang</td></tr>
 

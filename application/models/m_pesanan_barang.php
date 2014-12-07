@@ -8,6 +8,7 @@ class m_pesanan_barang extends CI_Model
 	
 	$this->db->select('*');
 	$this->db->from('pesanan_barang');
+	$this->db->order_by('tanggal_pemesanan','asc');
 	$query=$this->db->get();
 	
 	if($query->num_rows()>0)
@@ -57,6 +58,7 @@ class m_pesanan_barang extends CI_Model
 		{
 		$this->db->where('status_pesanan','terpenuhi');
 		}
+		$this->db->order_by('tanggal_pemesanan','asc');
 		$query = $this->db->get();
 		
 		if ($query->num_rows()>0)

@@ -58,7 +58,7 @@ echo form_open(site_url().'/master_barang/input_stock_barang');
 		
 		?>
 		<center>
-	<div class="scroll">
+	<div class="scroll" style="width:404px;">
 	<table border=1 class="table-data">
 	<tr><td>Tanggal stock</td><td>id barang</td><td>jumlah stock</td><td>status</td></tr>
 

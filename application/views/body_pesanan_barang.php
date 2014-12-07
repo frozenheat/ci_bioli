@@ -42,7 +42,7 @@ function konfirm_pesanan(hasil_konfirm, id_pesanan, id_pemesan, nama_barang)
 	if ($data_pesanan)
 	{
 ?>
-	<div class="scroll">
+	<div class="scroll" style="width:1306px;">
 	<table border=1 class="table-data">
 	<tr><td>id pesanan</td><td>id pemesan</td><td>nama barang</td><td>tanggal pemesanan</td><td>jam pemesanan</td><td>jumlah pesanan</td><td>status pesanan</td><td>konfirmasi pesanan</td><td>perkiraan waktu selesai</td></tr>
 <?php
