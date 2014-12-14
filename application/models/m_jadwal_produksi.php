@@ -9,6 +9,7 @@
 			$this->db->select('*');
 			$this->db->from('jadwal_prdksi');
 			$this->db->where('status','utama');
+			$this->db->or_where('status','lanjutan');
 			$this->db->order_by('waktu_mulai','asc');
 			$query = $this->db->get();
 			
@@ -50,8 +51,8 @@
 		{
 			$this->db->select('nama_barang');
 			$this->db->from('pesanan_barang');
-			$this->db->where('sts_konfirm !=','belum_konfirmasi');
-			$this->db->where('status_pesanan','dalam_proses');
+			$this->db->where('sts_konfirm','pesan');
+			$this->db->where('status_pesanan !=','belum_diproses');
 			$this->db->group_by('nama_barang');
 			$query = $this->db->get();
 			$a =0;
@@ -112,8 +113,8 @@
 			$this->db->select('sum(jumlah_pesanan) as total_pesanan');
 			$this->db->from('pesanan_barang');
 			$this->db->where('nama_barang',$nama_barang);
-			$this->db->where('sts_konfirm !=','belum_konfirmasi');
-			$this->db->where('status_pesanan','dalam_proses');
+			$this->db->where('sts_konfirm ','pesan');
+			$this->db->where('status_pesanan !=','dalam_penjadwalan');
 			$query = $this->db->get();
 			if ($query->num_rows()>0)
 			{
@@ -198,8 +199,33 @@
 			$update = array(
 			'status' => 'terpenuhi'
 			);
+			
 			$this->db->where('id_prdksi',$id_produksi);
 			$this->db->update('jadwal_prdksi',$update);
+			
+			$this->db->select('nm_brng, waktu_jdwl');
+			$this->db->from('jadwal_prdksi');
+			$this->db->where('id_prdksi',$id_produksi);
+			$query = $this->db->get();
+			
+			if ($query->num_rows() > 0)
+			{
+			
+			foreach ($query->result() as $row)
+			{
+				$nama_barang = $row->nm_brng;
+				$waktu_jdwl = $row->waktu_jdwl;
+			}
+			
+			$this->db->where('nm_brng',$nama_barang);
+			$this->db->where('waktu_jdwl',$waktu_jdwl);
+			$this->db->where('status','lanjutan');
+			$this->db->update('jadwal_prdksi',$update);
+			}
+			else
+			{
+			return false;
+			}
 		}
 	}
 	

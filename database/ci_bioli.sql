@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 07, 2014 at 10:49 PM
+-- Generation Time: Dec 14, 2014 at 07:16 PM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -63,25 +63,6 @@ CREATE TABLE IF NOT EXISTS `jadwal_prdksi` (
   `waktu_selesai` datetime NOT NULL,
   `status` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `jadwal_prdksi`
---
-
-INSERT INTO `jadwal_prdksi` (`id_prdksi`, `waktu_jdwl`, `nm_brng`, `wkt_prdksi`, `jumlah_batch`, `waktu_mulai`, `waktu_selesai`, `status`) VALUES
-('b071220142245652071', '2014-12-07 22:45:00', 'Guide_Valve_(Bosh_klep)_c700', 6, 3, '2014-12-08 07:45:00', '2014-12-08 13:45:00', 'utama'),
-('b071220142245843759', '2014-12-07 22:45:00', 'Guide_Valve_(Bosh_klep)_H90', 4, 2, '2014-12-08 03:45:00', '2014-12-08 07:45:00', 'utama'),
-('c071220142245108243', '0000-00-00 00:00:00', 'cylinder_liner_(boring)_FR70', 0, 0, '2014-12-14 07:00:00', '2014-12-14 10:00:00', 'utama'),
-('c071220142245341927', '2014-12-07 22:45:00', 'cylinder_liner_(boring)_RC80', 28, 7, '2014-12-09 13:00:00', '2014-12-09 21:00:00', 'utama'),
-('c071220142245485632', '0000-00-00 00:00:00', 'cylinder_liner_(boring)_RC80', 0, 0, '2014-12-10 07:00:00', '2014-12-10 19:00:00', 'utama'),
-('c071220142245498065', '0000-00-00 00:00:00', 'cylinder_liner_(boring)_FR70', 0, 0, '2014-12-13 07:00:00', '2014-12-13 19:00:00', 'utama'),
-('c071220142245586347', '0000-00-00 00:00:00', 'cylinder_liner_(boring)_RC80', 0, 0, '2014-12-11 07:00:00', '2014-12-11 15:00:00', 'utama'),
-('c071220142245769234', '2014-12-07 22:45:00', 'cylinder_liner_(boring)_FR70', 30, 10, '2014-12-11 15:00:00', '2014-12-11 18:00:00', 'utama'),
-('c071220142245918756', '0000-00-00 00:00:00', 'cylinder_liner_(boring)_FR70', 0, 0, '2014-12-12 07:00:00', '2014-12-12 19:00:00', 'utama'),
-('v071220142245136245', '0000-00-00 00:00:00', 'vValve_Seat_(Cincin_Setting)_Shogun', 0, 0, '2014-12-09 07:00:00', '2014-12-09 13:00:00', 'utama'),
-('v071220142245205196', '2014-12-07 22:45:00', 'Valve_Seat_(Cincin_Setting)_Grand/Prima', 1, 1, '2014-12-07 23:45:00', '2014-12-08 00:45:00', 'utama'),
-('v071220142245217493', '2014-12-07 22:45:00', 'vValve_Seat_(Cincin_Setting)_Shogun', 12, 4, '2014-12-08 13:45:00', '2014-12-08 19:45:00', 'utama'),
-('v071220142245401365', '2014-12-07 22:45:00', 'Valve_Seat_(Cincin_Setting)_Star/Astrea', 3, 3, '2014-12-08 00:45:00', '2014-12-08 03:45:00', 'utama');
 
 -- --------------------------------------------------------
 
@@ -190,20 +171,6 @@ CREATE TABLE IF NOT EXISTS `pesanan_barang` (
   `perkiraan_waktu_selesai` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `pesanan_barang`
---
-
-INSERT INTO `pesanan_barang` (`id_pesanan`, `id_pemesan`, `nama_barang`, `tanggal_pemesanan`, `jam_pemesanan`, `jumlah_pesanan`, `status_pesanan`, `sts_konfirm`, `id_prdksi`, `perkiraan_waktu_selesai`) VALUES
-('b0712201403891', 'c5001', 'Guide_Valve_(Bosh_klep)_c700', '2014-12-07', '22:43:18', 800, 'dalam_penjadwalan', 'pesan', 'b071220142245652071', '2014-12-08 13:45:00'),
-('b0712201415032', 'c5001', 'Guide_Valve_(Bosh_klep)_H90', '2014-12-07', '22:43:22', 800, 'dalam_penjadwalan', 'pesan', 'b071220142245843759', '2014-12-08 07:45:00'),
-('c0712201436079', 'c5001', 'cylinder_liner_(boring)_RC80', '2014-12-07', '22:43:14', 800, 'dalam_penjadwalan', 'pesan', 'c071220142245341927', '2014-12-11 15:00:00'),
-('c0712201448297', 'c5001', 'cylinder_liner_(boring)_FR70', '2014-12-07', '22:43:09', 800, 'dalam_penjadwalan', 'pesan', 'c071220142245769234', '2014-12-14 10:00:00'),
-('v0712201402487', 'c5001', 'Valve_Seat_(Cincin_Setting)_Star/Astrea', '2014-12-07', '22:43:31', 800, 'dalam_penjadwalan', 'pesan', 'v071220142245401365', '2014-12-08 03:45:00'),
-('v0712201427543', 'c5001', 'Valve_Seat_(Cincin_Setting)_Star/Astrea', '2014-12-07', '22:43:36', 800, 'dalam_penjadwalan', 'pesan', 'v071220142245401365', '2014-12-08 03:45:00'),
-('v0712201489256', 'c5001', 'Valve_Seat_(Cincin_Setting)_Grand/Prima', '2014-12-07', '22:43:27', 800, 'dalam_penjadwalan', 'pesan', 'v071220142245205196', '2014-12-08 00:45:00'),
-('v0712201489764', 'c5001', 'vValve_Seat_(Cincin_Setting)_Shogun', '2014-12-07', '22:43:44', 800, 'dalam_penjadwalan', 'pesan', 'v071220142245217493', '2014-12-09 13:00:00');
-
 -- --------------------------------------------------------
 
 --
@@ -222,29 +189,13 @@ CREATE TABLE IF NOT EXISTS `stock_barang` (
 --
 
 INSERT INTO `stock_barang` (`tgl_stock`, `id_brng`, `jml_stock`, `status`) VALUES
-('2014-11-17', 'c001', 400, 'lama'),
-('2014-11-19', 'c002', 444, 'lama'),
-('2014-11-19', 'g001', 0, 'lama'),
-('2014-11-19', 'g002', 30, 'lama'),
-('2014-11-19', 'v001', 335, 'lama'),
-('2014-11-19', 'v002', 23, 'lama'),
-('2014-11-19', 'v003', 465, 'lama'),
-('2014-11-30', 'v001', 235, 'lama'),
-('2014-11-30', 'v002', 423, 'lama'),
-('2014-12-01', 'g002', 30, 'lama'),
-('2014-12-01', 'v003', 65, 'lama'),
-('2014-12-02', 'c002', 24, 'lama'),
-('2014-12-02', 'g001', 0, 'lama'),
-('2014-12-03', 'c001', 0, 'lama'),
-('2014-12-08', 'c002', 204, 'lama'),
-('2014-12-08', 'g001', 0, 'terbaru'),
-('2014-12-08', 'g002', 30, 'terbaru'),
-('2014-12-08', 'v001', 435, 'terbaru'),
-('2014-12-08', 'v002', 1123, 'terbaru'),
-('2014-12-09', 'v003', 65, 'terbaru'),
-('2014-12-10', 'c001', 300, 'lama'),
-('2014-12-11', 'c002', 34, 'terbaru'),
-('2014-12-14', 'c001', 0, 'terbaru');
+('2014-12-15', 'g001', 0, 'terbaru'),
+('2014-12-15', 'v001', 400, 'terbaru'),
+('2014-12-15', 'v002', 400, 'terbaru'),
+('2014-12-16', 'g002', 30, 'terbaru'),
+('2014-12-16', 'v003', 65, 'terbaru'),
+('2014-12-19', 'c002', 14, 'terbaru'),
+('2014-12-23', 'c001', 0, 'terbaru');
 
 --
 -- Indexes for dumped tables

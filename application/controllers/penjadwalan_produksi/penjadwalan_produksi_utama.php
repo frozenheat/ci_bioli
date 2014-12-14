@@ -78,23 +78,41 @@ if($result == true)
 			{
 				$jumlah_stock = $row3->jml_stock;
 				$tanggal_stock_tersedia = $row3->tgl_stock;
+				$id_barang = $row3->id_brng;
 			}
 			
 			$jumlah_kekurangan_pesanan = $jumlah_pesanan - $jumlah_stock;
 			
+			//echo $jumlah_kekurangan_pesanan." ";
+			//echo $jumlah_pesanan." ";
+			//echo $jumlah_stock."<br>";
 			
 			
 			if ($jumlah_kekurangan_pesanan <= 0)
 			{
 				
 				$update2 = array(
-					'id_prdksi' => $row->id_prdksi,
 					'perkiraan_waktu_selesai' => $tanggal_stock_tersedia,
-					'status_pesanan' => 'terpenuhi'
+					'status_pesanan' => 'terpenuhi',
+					'sts_konfirm' => 'terpenuhi'
 				);
-				//$this->m_pesanan_barang->update_perkiraan_waktu_selesai($row->nm_brng, $update2);
 				
-				//tambahkan pengurangan stock
+				$this->m_pesanan_barang->update_perkiraan_waktu_selesai_utama($row->nm_brng, $update2);
+
+				
+				//pengurangan stock
+				$sisa_stock = $jumlah_stock - $jumlah_pesanan;
+				
+				$datestring = '%Y-%m-%d';
+		
+				$tanggal_stock_terbaru = mdate($datestring,$time);
+				
+				
+				
+				$this->m_stock_barang->insert_new_stock($id_barang , $tanggal_stock_tersedia, $tanggal_stock_terbaru, $sisa_stock);
+				
+				
+				//-- pengurangan stock
 			}
 			else
 			{
@@ -241,8 +259,9 @@ if($result == true)
 			$insert2 = array(
 		
 			'id_prdksi' => $id_prdksi,
+			'waktu_jdwl' => $row->waktu_jdwl,
 			'nm_brng' => $row->nm_brng,
-			'status' =>'sementara',
+			'status' =>'lanjutan',
 			'waktu_mulai' => $waktu_mulai_produksi,
 			'waktu_selesai' => $waktu_selesai_produksi
 		);
@@ -352,8 +371,9 @@ if($result == true)
 			$insert2 = array(
 		
 			'id_prdksi' => $id_prdksi,
+			'waktu_jdwl' => $row->waktu_jdwl,
 			'nm_brng' => $row->nm_brng,
-			'status' =>'utama',
+			'status' =>'lanjutan',
 			'waktu_mulai' => $waktu_mulai_produksi,
 			'waktu_selesai' => $waktu_selesai_produksi
 		);
@@ -426,6 +446,7 @@ if($result == true)
 			$tanggal_selesai_terakhir = substr($waktu_selesai_produksi, 0, 10);
 			$tanggal_selesai_terakhir1 = str_replace('-','/', $tanggal_selesai_terakhir);
 			$tommorow = date('Y-m-d', strtotime($tanggal_selesai_terakhir1."+1 days"));
+			$jam_mulai = "07:00";
 			$waktu_mulai_produksi = $tommorow." ".$jam_mulai;
 			$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_mulai_produksi)+$waktu_pemrosesan);
 			
@@ -443,8 +464,9 @@ if($result == true)
 			$insert2 = array(
 		
 			'id_prdksi' => $id_prdksi,
+			'waktu_jdwl' => $row->waktu_jdwl,
 			'nm_brng' => $row->nm_brng,
-			'status' =>'utama',
+			'status' =>'lanjutan',
 			'waktu_mulai' => $waktu_mulai_produksi,
 			'waktu_selesai' => $waktu_selesai_produksi
 		);
@@ -564,8 +586,9 @@ if($result == true)
 			$insert2 = array(
 		
 			'id_prdksi' => $id_prdksi,
+			'waktu_jdwl' => $row->waktu_jdwl,
 			'nm_brng' => $row->nm_brng,
-			'status' =>'utama',
+			'status' =>'lanjutan',
 			'waktu_mulai' => $waktu_mulai_produksi,
 			'waktu_selesai' => $waktu_selesai_produksi
 		);

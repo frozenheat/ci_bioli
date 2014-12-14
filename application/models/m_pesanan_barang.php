@@ -70,7 +70,7 @@ class m_pesanan_barang extends CI_Model
 		}
 		else if($status == 'telah')
 		{
-		$this->db->where('sts_konfirm !=','belum_konfirmasi');
+		$this->db->where('sts_konfirm','pesan');
 		}
 		else if($status == 'terpenuhi')
 		{
@@ -131,7 +131,8 @@ class m_pesanan_barang extends CI_Model
 	function pemenuhan_pesanan($id_produksi)
 	{
 		$update = array(
-			'status_pesanan' => 'terpenuhi'
+			'status_pesanan' => 'terpenuhi',
+			'sts_konfirm' =>'terpenuhi'
 		);
 		
 		$this->db->where('id_prdksi',$id_produksi);
