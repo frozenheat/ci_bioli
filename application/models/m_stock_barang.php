@@ -144,7 +144,7 @@
 			
 			$this->db->insert('stock_barang',$insert);
 			
-			
+			return $tanggal_baru;
 			
 		}
 			

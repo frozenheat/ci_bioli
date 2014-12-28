@@ -11,7 +11,7 @@
 
 /*slideshow*/	
 #slider {
-    width:535px;height:300px;/* Make it the same size as your images */
+    width:403px;height:300px;/* Make it the same size as your images */
 	background:#fff url(loading.gif) no-repeat 50% 50%;
 	position:relative;
 	margin:0 auto;/*make the image slider center-aligned */
@@ -23,6 +23,7 @@
 	position:absolute;
 	border:none;
 	display:none;
+	width:100%;
 	
 }
 

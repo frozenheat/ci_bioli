@@ -71,6 +71,7 @@ class m_pesanan_barang extends CI_Model
 		else if($status == 'telah')
 		{
 		$this->db->where('sts_konfirm','pesan');
+		$this->db->where('status_pesanan','dalam_proses');
 		}
 		else if($status == 'terpenuhi')
 		{
@@ -124,6 +125,7 @@ class m_pesanan_barang extends CI_Model
 	{
 		$this->db->where('nama_barang', $nama_barang);
 		$this->db->where('status_pesanan', 'dalam_proses');
+		$this->db->or_where('status_pesanan', 'terpenuhi');
 		$this->db->where('sts_konfirm','pesan');
 		$this->db->update('pesanan_barang', $update2);
 	}
@@ -177,6 +179,7 @@ class m_pesanan_barang extends CI_Model
 		$this->db->select('*');
 		$this->db->from('pesanan_barang');
 		$this->db->where('status_pesanan','dalam_proses');
+		$this->db->or_where('status_pesanan','terpenuhi');
 		$this->db->where ('sts_konfirm','pesan');
 		$query=$this->db->get();
 		

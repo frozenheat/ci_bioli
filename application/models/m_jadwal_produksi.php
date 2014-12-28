@@ -29,6 +29,7 @@
 			$this->db->from('pesanan_barang');
 			$this->db->where('sts_konfirm','belum_konfirmasi');
 			$this->db->where('status_pesanan','belum_diproses');
+			$this->db->where('perkiraan_waktu_selesai','0000-00-00 00:00:00');
 			$this->db->group_by('nama_barang');
 			$query = $this->db->get();
 			$a =0;

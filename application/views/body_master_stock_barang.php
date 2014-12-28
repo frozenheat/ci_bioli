@@ -60,7 +60,7 @@ echo form_open(site_url().'/master_barang/input_stock_barang');
 		<center>
 	<div class="scroll" style="width:404px;">
 	<table border=1 class="table-data">
-	<tr><td>Tanggal stock</td><td>id barang</td><td>jumlah stock</td><td>status</td></tr>
+	<tr><td>Tanggal stock</td><td>id barang</td><td>jumlah stock</td></tr>
 
 		<?php
 		 foreach ($stock_barang as $row)
@@ -70,7 +70,6 @@ echo form_open(site_url().'/master_barang/input_stock_barang');
 		echo "<td>".$row->tgl_stock."</td>";
 		echo "<td>".$row->id_brng."</td>";
 		echo "<td>".$row->jml_stock."</td>";
-		echo "<td>".$row->status."</td>";
 		//echo "<td><select onchange='pilihtindakan(this.value, \"$row->id_brng\", \"$row->nm_brng\" , \"$row->lot_size\" , \"$row->wkt_prdksi\")'><option></option><option value='hapus'>hapus</option><option value='ubah'>ubah</option></td>";
 		echo "</tr>";
 

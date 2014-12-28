@@ -26,7 +26,14 @@ foreach ($jadwal_produksi as $row)
 {
 
 	echo "<tr>";
+	if ($row->wkt_prdksi == 0 && $row->jumlah_batch == 0)
+	{
+	echo "<td><center>-</center></td>";
+	}
+	else
+	{
 	echo "<td>".$row->id_prdksi."</td>";
+	}
 	echo "<td>".$row->nm_brng."</td>";
 	if ($row->wkt_prdksi == 0 && $row->jumlah_batch == 0)
 	{

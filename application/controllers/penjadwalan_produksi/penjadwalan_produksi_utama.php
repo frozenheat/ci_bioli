@@ -108,7 +108,7 @@ if($result == true)
 				$tanggal_stock_terbaru = mdate($datestring,$time);
 				
 				
-				
+				//echo $tanggal_stock_tersedia." ".$tanggal_stock_terbaru."<br>";
 				$this->m_stock_barang->insert_new_stock($id_barang , $tanggal_stock_tersedia, $tanggal_stock_terbaru, $sisa_stock);
 				
 				
@@ -636,7 +636,7 @@ if($result == true)
 		
 		foreach ($total_pesanan as $row4)
 		{
-			$jumlah_pesanan = $row2->total_pesanan;
+			$jumlah_pesanan = $row4->total_pesanan;
 		}
 	 $jumlah_stock_tersisa = $jumlah_stock_barang - $jumlah_pesanan;
 	 
@@ -648,9 +648,10 @@ if($result == true)
 	 }
 	 
 	 
-	 
-	 
-	$this->m_stock_barang->insert_new_stock($id_barang, $tanggal_stock_terbaru, substr($waktu_selesai_produksi, 0, 10), $jumlah_stock_tersisa);
+		//echo $tanggal_stock_terbaru." ".substr($waktu_selesai_produksi, 0, 10)."<br>".substr($waktu_selesai_produksi, 0, 7);
+	
+	$hasil = $this->m_stock_barang->insert_new_stock($id_barang, $tanggal_stock_terbaru, substr($waktu_selesai_produksi, 0, 10), $jumlah_stock_tersisa);
+	
 	 //echo "jumlah stock = ".$jumlah_stock_barang." jumlah_pesanan = ".$jumlah_pesanan." jumlah stock yang tersisa=".$jumlah_stock_tersisa."<br>";
 	 //penghitungan stock selesai
 	
