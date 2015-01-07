@@ -141,7 +141,7 @@ class m_pesanan_barang extends CI_Model
 		$this->db->update('pesanan_barang',$update);
 	}
 	
-	function konfirmasi_barang($hasil_konfirm, $id_pesanan, $id_pemesan, $nama_barang, $update)
+	function konfirmasi_barang($hasil_konfirm, $id_pesanan, $id_pemesan, $nama_barang, $update, $jml_pesanan, $tgl_pemesanan)
 	{
 		if($hasil_konfirm =='pesan')
 		{

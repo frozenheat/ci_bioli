@@ -16,7 +16,8 @@ class konfirmasi_pesanan extends CI_Controller
 			'sts_konfirm' => $this->input->post('hasil_konfirm')
 		);
 		
-		$this->m_pesanan_barang->konfirmasi_barang($this->input->post('hasil_konfirm'), $this->input->post('id_pesanan'), $this->input->post('id_pemesan'), $this->input->post('nama_barang'), $update);
+	
+		$this->m_pesanan_barang->konfirmasi_barang($this->input->post('hasil_konfirm'), $this->input->post('id_pesanan'), $this->input->post('id_pemesan'), $this->input->post('nama_barang'), $update, $this->input->post('jml_pesanan'), $this->input->post('tgl_pemesanan'));
 			
 		redirect('master_pesanan_pelanggan/c_tampil_pesanan');
 	}

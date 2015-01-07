@@ -11,14 +11,15 @@ function pilih_form()
 	document.getElementById('pilihan_form').submit();
 }
 
-function konfirm_pesanan(hasil_konfirm, id_pesanan, id_pemesan, nama_barang)
+function konfirm_pesanan(hasil_konfirm, id_pesanan, id_pemesan, nama_barang, jumlah_pesanan, tgl_pemesanan)
 {
 	
 	document.getElementById('id_pesanan').value = id_pesanan;
 	document.getElementById('id_pemesan').value = id_pemesan;
 	document.getElementById('nama_barang').value = nama_barang;
 	document.getElementById('hasil_konfirm').value = hasil_konfirm;
-	
+	document.getElementById('jml_pesanan').value = jumlah_pesanan;
+	document.getElementById('tgl_pemesanan').value = tgl_pemesanan;
 	document.getElementById('con').submit();
 
 }
@@ -70,7 +71,7 @@ function konfirm_pesanan(hasil_konfirm, id_pesanan, id_pemesan, nama_barang)
 	{
 		if ($status =='belum')
 		{
-		echo "<td><select onchange='konfirm_pesanan(this.value, \"$row2->id_pesanan\", \"$row2->id_pemesan\", \"$row2->nama_barang\")'><option></option><option value='batal'>batal</option><option value='pesan'>pesan</option></select></td>";
+		echo "<td><select onchange='konfirm_pesanan(this.value, \"$row2->id_pesanan\", \"$row2->id_pemesan\", \"$row2->nama_barang\", \"$row2->tanggal_pemesanan\")'><option></option><option value='batal'>batal</option><option value='pesan'>pesan</option></select></td>";
 		}
 		else if($status =='telah')
 		{
@@ -84,7 +85,7 @@ function konfirm_pesanan(hasil_konfirm, id_pesanan, id_pemesan, nama_barang)
 			}
 			else if($row2->sts_konfirm =="belum_konfirmasi")
 			{
-			echo "<td><select onchange='konfirm_pesanan(this.value, \"$row2->id_pesanan\", \"$row2->id_pemesan\", \"$row2->nama_barang\")'><option></option><option value='batal'>batal</option><option value='pesan'>pesan</option></select></td>";
+			echo "<td><select onchange='konfirm_pesanan(this.value, \"$row2->id_pesanan\", \"$row2->id_pemesan\", \"$row2->nama_barang\", \"$row2->jumlah_pesanan\")'><option></option><option value='batal'>batal</option><option value='pesan'>pesan</option></select></td>";
 			}
 			
 		}
@@ -147,6 +148,8 @@ function konfirm_pesanan(hasil_konfirm, id_pesanan, id_pemesan, nama_barang)
 		<input type='hidden' name="id_pemesan" id="id_pemesan">
 		<input type='hidden' name="nama_barang" id="nama_barang">
 		<input type='hidden' name="hasil_konfirm" id="hasil_konfirm">
+		<input type='hidden' name="jml_pesanan" id="jml_pesanan">
+		<input type='hidden' name="tgl_pemesanan" id="tgl_pemesanan">
 		</form>
 		<?php
 		
