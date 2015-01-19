@@ -34,7 +34,7 @@ echo form_open(site_url().'/master_pelanggan/c_input_pelanggan');
 <tr><td>alamat pelanggan:</td><td><input type ="text" name="alamat_pelanggan"></td></tr>
 <tr><td>alamat email:</td><td><input type ="text" name="alamat_email"></td></tr>
 <tr><td>no telp:</td><td><input type ="text" name="no_telp"></td></tr>
-<tr><td>password:</td><td><input type ="text" name="password"></td></tr>
+<tr><td>password:</td><td><input type ="password" name="password"></td></tr>
 <tr><td></td><td><input type="submit" name="tambah" value="tambah" class="submit"></td></tr>
 </form>
 </table>

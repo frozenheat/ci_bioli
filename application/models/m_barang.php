@@ -8,7 +8,7 @@ class m_barang extends CI_Model{
 	$query = $this->db->get();
 	
 	$result=array();
-	if ($query->num_rows() >0)
+	if ($query->num_rows() > 0)
 	{
 	$result=$query->result();
 	return $result;

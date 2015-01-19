@@ -32,28 +32,44 @@ echo form_open(site_url().'/master_barang/c_input_barang/master_barang');
 <tr><td>nama barang:</td><td><input type ="text" name="nama_barang"></td></tr>
 <tr><td>lot size:</td><td><input type ="text" name="lot_size"></td></tr>
 <tr><td>waktu produksi:</td><td><input type ="text" name="waktu_produksi"></td></tr>
-<tr><td>jenis barang:</td><td><select name="jenis_barang">
+<tr><td>jenis barang:</td>
 <?php
+if ($jenis_barang)
+{
+?>
+<td><select name="jenis_barang">
+<?php
+
 foreach ($jenis_barang as $row)
 {
 	echo '<option value = "'.$row->nm_jns_brng.'">'.$row->nm_jns_brng.'</option>';
 }
 ?>
 </select></td></tr>
-
+<?php 
+}
+else
+{
+ echo "<td>Tidak ada jenis barang </td>";
+}
+?>
 <tr><td></td><td><input type="submit" name="tambah" value="tambah" class="submit"></td></tr>
 </form>
 </table>
 </center>
 </div>
-
+<?php
+if ($barang)
+{
+?>
 <center>
 <div class="scroll">
 <table border=1 class="table-data">
-<tr><td>id_barang</td><td>nama_barang</td><td>nama_jenis_barang</td><td>lot_size</td><td>waktu_produksi</td></tr>
+<tr><td>Id barang</td><td>Nama barang</td><td>Jenis barang</td><td>Lot size</td><td>Waktu produksi (jam)</td></tr>
 
 <?php if ($otoritas=='admin_utama'||$otoritas=='admin_produksi')
 {
+
 foreach ($barang as $row)
 {
 
@@ -62,13 +78,15 @@ foreach ($barang as $row)
 	echo "<td>".$row->nm_brng."</td>";
 	echo "<td>".$row->nm_jns_brng."</td>";
 	echo "<td>".$row->lot_size."</td>";
-	echo "<td>".$row->wkt_prdksi."</td>";
+	echo "<td style='text-align:center;'>".$row->wkt_prdksi."</td>";
 	echo "<td><select onchange='pilihtindakan(this.value, \"$row->id_brng\", \"$row->nm_brng\" , \"$row->lot_size\" , \"$row->wkt_prdksi\")'><option></option><option value='hapus'>hapus</option><option value='ubah'>ubah</option></td>";
 	echo "</tr>";
 
 }	
 	echo "</table>";
 }
+
+
 else
 {
 	return false;
@@ -86,3 +104,10 @@ else
 </div>
 </center>
 
+<?php
+}
+else
+{
+echo "<center> Tidak ada data barang </center>";
+}
+?>

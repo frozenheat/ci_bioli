@@ -15,6 +15,10 @@ echo form_open(site_url().'/master_barang/c_input_barang/jenis_barang');
 </center>
 </div>
 
+<?php
+if ($jenis_barang)
+{
+?>
 <center>
 <div class="scroll" style="width:321px;">
 <table border=1 class="table-data">
@@ -41,4 +45,10 @@ else
 </table>
 </div>
 </center>
-
+<?php
+}
+else
+{
+ echo "<center>tidak ada jenis barang</center>";
+}
+?>
