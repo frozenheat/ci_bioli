@@ -619,9 +619,16 @@ if($result == true)
 	
 	 //tempat penghitungan stock
 	 $stock_perusahaan = $this->m_stock_barang->cek_stock_awal($row->nm_brng);
+	 if ($stock_perusahaan == true)
+	 {
 	 foreach ($stock_perusahaan as $row4)
 	 {
 		$jumlah_stock_barang = $row4->jml_stock;	
+	 }
+	 }
+	 else
+	 {
+		$jumlah_stock_barang = 0;
 	 }
 	 $result4 = $this->m_jadwal_produksi->pilih_lot_size_dari_pesanan_telah_dijadwalkan($row->nm_brng);
 	 
