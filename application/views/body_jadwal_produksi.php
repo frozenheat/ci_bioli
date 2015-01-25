@@ -22,6 +22,7 @@ else
 
 <?php if ($otoritas=='admin_utama'||$otoritas=='admin_produksi')
 {
+$a = 0;
 foreach ($jadwal_produksi as $row)
 {
 
@@ -57,7 +58,11 @@ foreach ($jadwal_produksi as $row)
 	else
 	{
 	echo "<td>Awal</td>";
+	if ($a == 0)
+	{
 	echo "<td><input type='checkbox' onclick='konfirmasi(\"$row->id_prdksi\")'></td>";
+	$a++;
+	}
 	}
 	
 	echo "</tr>";

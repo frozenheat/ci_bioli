@@ -3,7 +3,8 @@
 <center>
 <a style="font-size:24pt; color:#801515; letter-spacing:7px; display:inline-block;">PESANAN PELANGGAN</a><br>
 
-<?php if (!isset($pesanan_barang))
+<?php 
+if (!$pesanan_barang)
 {
 echo "<a style='padding-top:60px; display:inline-block;'> tidak ada pesanan</a>";
 }
