@@ -77,6 +77,46 @@ class m_barang extends CI_Model{
 		$this->db->insert('jenis_barang',$insert);
 	}
 	
+	function pencarian_id_barang($nama_barang)
+	{
+		$this->db->select('id_brng');
+		$this->db->from('barang');
+		$this->db->where('nm_brng',$nama_barang);
+		$query = $this->db->get();
+		
+		if($query->num_rows() > 0)
+		{
+		foreach ($query->result() as $row)
+		{
+			$id_barang = $row->id_brng;
+		}
+		return $id_barang;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	function pencarian_nama_barang($id_barang)
+	{
+		$this->db->select('nm_brng');
+		$this->db->from('barang');
+		$this->db->where('id_brng',$id_barang);
+		$query = $this->db->get();
+		
+		if($query->num_rows() > 0)
+		{
+		foreach ($query->result() as $row)
+		{
+			$nama_barang = $row->nm_brng;
+		}
+		return $nama_barang;
+		}
+		else
+		{
+			return false;
+		}
+	}
 
 	
 }

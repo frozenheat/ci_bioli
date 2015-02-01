@@ -5,12 +5,12 @@
 			{
 				$this->db->select('*');
 				$this->db->from('stock_barang');
-				$this->db->where('status','terbaru');
+				$this->db->join('barang','barang.id_brng = stock_barang.id_brng');
 				$query=$this->db->get();
 				
 				if($query->num_rows()>0 )
 				{
-					return $query->result();
+				return $query->result();
 				}
 				else
 				{
