@@ -6,6 +6,7 @@
 				$this->db->select('*');
 				$this->db->from('stock_barang');
 				$this->db->join('barang','barang.id_brng = stock_barang.id_brng');
+				$this->db->where('status','terbaru');
 				$query=$this->db->get();
 				
 				if($query->num_rows()>0 )

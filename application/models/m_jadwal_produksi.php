@@ -122,6 +122,20 @@
 				return $query->result();
 			}
 		}
+		function penjumlahan_pesanan_utama_after($nama_barang)
+		{
+			$this->db->select('sum(jumlah_pesanan) as total_pesanan');
+			$this->db->from('pesanan_barang');
+			$this->db->where('nama_barang',$nama_barang);
+			$this->db->where('sts_konfirm ','pesan');
+			$this->db->where('status_pesanan','dalam_penjadwalan');
+			$this->db->where('penghitungan_stock','');
+			$query = $this->db->get();
+			if ($query->num_rows()>0)
+			{
+				return $query->result();
+			}
+		}
 		
 		function input_penjadwalan($insert)
 		{

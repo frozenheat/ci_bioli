@@ -192,6 +192,13 @@ class m_pesanan_barang extends CI_Model
 			return false;
 			}
 	}
+	function update_status_penghitungan_stock($nama_barang, $update)
+	{
+		$this->db->where('nama_barang', $nama_barang);
+		$this->db->where('status_pesanan', 'dalam_penjadwalan');
+		$this->db->where('penghitungan_stock', '');
+		$this->db->update('pesanan_barang', $update);
+	}
 	
 }
 		

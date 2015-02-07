@@ -103,9 +103,7 @@ if($result == true)
 				//pengurangan stock
 				$sisa_stock = $jumlah_stock - $jumlah_pesanan;
 				
-				$datestring = '%Y-%m-%d';
-		
-				$tanggal_stock_terbaru = mdate($datestring,$time);
+				$tanggal_stock_terbaru = $tanggal_stock_tersedia;
 				
 				
 				//echo $tanggal_stock_tersedia." ".$tanggal_stock_terbaru."<br>";
@@ -630,6 +628,7 @@ if($result == true)
 	 {
 		$jumlah_stock_barang = 0;
 	 }
+	 
 	 $result4 = $this->m_jadwal_produksi->pilih_lot_size_dari_pesanan_telah_dijadwalkan($row->nm_brng);
 	 
 	 foreach ($result4 as $row4)
@@ -639,7 +638,7 @@ if($result == true)
 	 
 	$jumlah_stock_barang = $jumlah_stock_barang + ($jumlah_lot_size * $row->jumlah_batch);
 	 
-	 $total_pesanan = $this->m_jadwal_produksi->penjumlahan_pesanan_utama($row->nm_brng);
+	 $total_pesanan = $this->m_jadwal_produksi->penjumlahan_pesanan_utama_after($row->nm_brng);
 		
 		foreach ($total_pesanan as $row4)
 		{
@@ -653,11 +652,19 @@ if($result == true)
 		$id_barang = $row4->id_brng;
 		$tanggal_stock_terbaru = $row4->tgl_stock;
 	 }
-	 
+	 echo $jumlah_pesanan." ".$jumlah_stock_barang." ".$id_barang." ".$jumlah_stock_barang." ".$tanggal_stock_terbaru." ".$jumlah_stock_tersisa." ".substr($waktu_selesai_produksi, 0, 10)."<br>";
 	 
 		//echo $tanggal_stock_terbaru." ".substr($waktu_selesai_produksi, 0, 10)."<br>".substr($waktu_selesai_produksi, 0, 7);
 	
-	$hasil = $this->m_stock_barang->insert_new_stock($id_barang, $tanggal_stock_terbaru, substr($waktu_selesai_produksi, 0, 10), $jumlah_stock_tersisa);
+	$this->m_stock_barang->insert_new_stock($id_barang, $tanggal_stock_terbaru, substr($waktu_selesai_produksi, 0, 10), $jumlah_stock_tersisa);
+	
+	$update_status_penghitungan_stock = array(
+	
+		'penghitungan_stock' =>'telah'
+		
+	);
+	
+	$this->m_pesanan_barang->update_status_penghitungan_stock($row->nm_brng, $update_status_penghitungan_stock);
 	
 	 //echo "jumlah stock = ".$jumlah_stock_barang." jumlah_pesanan = ".$jumlah_pesanan." jumlah stock yang tersisa=".$jumlah_stock_tersisa."<br>";
 	 //penghitungan stock selesai
