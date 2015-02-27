@@ -11,7 +11,26 @@
 
 <div id="body">
 
-
+<?php 
+if(!isset($body))
+{
+?>
+<div class="welcome-message">
+<h2>Beranda</h2>
+<?php
+	if(isset($nm_pegawai))
+	{?>
+	Selamat Datang <?php echo $nm_pegawai; ?>
+	<?php }
+	else if(isset($nm_pelanggan))
+	{
+	?>
+	Selamat Datang <?php echo $nm_pelanggan; ?>
+	<?php 
+	}
+}
+?>
+</div>
 <?php
 		if (isset($body))
 		{
@@ -60,6 +79,7 @@
 
 
 </body>
+<div class="clear"></div>
 <footer>
 <?php $this->load->view('footer'); ?>
 </footer>

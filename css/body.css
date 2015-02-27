@@ -1,4 +1,9 @@
-#body{min-height:395px; margin:80 0 0px; position:relative;}
+/*======================== GENERAL ===================== */
+#body{ margin:80 0 0px; text-align:center; display:inline-block;width:100%;}
+.clear{clear:both;}
+/*======================== BERANDA===================== */
+.welcome-message{display:inline-block; font-size:15px;}
+.welcome-message h2{font-size:30px; font-weight:bold; text-transform:uppercase; margin:0; color:#3a0700; letter-spacing:4px; margin-bottom:20px;}
 
 /*untuk penampilan tabel data*/
 .table-data tr td{padding:0 11px;}

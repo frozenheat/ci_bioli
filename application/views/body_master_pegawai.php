@@ -29,7 +29,7 @@ if (tindakan == 'hapus' || tindakan=='ubah')
 
 <?php
 echo validation_errors();
-echo form_open(site_url().'/master_pegawai/input_pegawai');
+echo  form_open_multipart(site_url().'/master_pegawai/input_pegawai');
 ?>
 
 <tr><td>nama pegawai:</td><td><input type ="text" name="nama_pegawai"></td></tr>
@@ -38,6 +38,7 @@ echo form_open(site_url().'/master_pegawai/input_pegawai');
 <tr><td>no telp:</td><td><input type ="text" name="telp"></td></tr>
 <tr><td>otoritas:</td><td><select name="otoritas"><option value = "admin_pelanggan">admin_pelanggan</option><option value="admin_produksi">admin_produksi</option></select></td></tr>
 <tr><td>password:</td><td><input type ="password" name="password"></td></tr>
+<tr><td>Upload foto:</td><td><input type ="file" name="foto"></td></tr>
 <tr><td></td><td><input type="submit" name="tambah" value="tambah" class="submit"></td></tr>
 </table>
 </form>

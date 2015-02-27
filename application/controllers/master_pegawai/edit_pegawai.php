@@ -53,6 +53,30 @@ class edit_pegawai extends CI_Controller
 	
 	function ubah_pegawai()
 	{
+	$id_pegawai = $this->input->post('id_pegawai');
+	$nama_file = $_FILES['foto']['name'];
+	echo $_FILES['foto']['name'];
+	$directory= "./uploads/".$id_pegawai;
+	$check = file_exists($directory);
+	if($check == true)
+	{
+
+		$files = glob($directory.'/*'); // get all file names
+		foreach($files as $filez){ // iterate files
+		if(is_file($filez))
+		{
+		unlink($filez); // delete file
+		}
+		}
+	$upload = $directory."/".$nama_file;
+	move_uploaded_file($_FILES['foto']['tmp_name'], $upload);
+	}
+	else
+	{
+	mkdir($directory);
+	$upload = $directory."/".$nama_file;
+	move_uploaded_file($_FILES['foto']['tmp_name'], $upload);
+	}
 	
 	$ubah = array(
 		
@@ -60,7 +84,8 @@ class edit_pegawai extends CI_Controller
 		'almt_pgw' => $this->input->POST('almt_pgw'),
 		'telp_pgw' => $this->input->POST('telp'),
 		'almt_email_pgw' => $this->input->POST('almt_email'),
-		'otoritas' => $this->input->POST('otoritas'),	
+		'otoritas' => $this->input->POST('otoritas'),
+		'image_path' => base_url().substr($directory,2)."/".$nama_file
 	);
 
 	if ($this->input->POST('password')=='')

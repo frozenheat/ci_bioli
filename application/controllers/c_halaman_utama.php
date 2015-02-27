@@ -19,12 +19,14 @@
 			if ($data['database']=='pegawai')
 			{
 			$data['id_pegawai']=$session_data['id_pegawai'];
+			$data['nm_pegawai']=$session_data['nama_pegawai'];
 			$data['otoritas']=$session_data['otoritas'];
 			$this->load->view('hlm_utm',$data);
 			}
 			else if($data['database']=='pelanggan')
 			{
 			$data['id_pelanggan']=$session_data['id_pelanggan'];
+			$data['nm_pelanggan']=$session_data['nama_pelanggan'];
 			$data['otoritas']=$session_data['otoritas'];
 			$this->load->view('hlm_utm',$data);
 			}

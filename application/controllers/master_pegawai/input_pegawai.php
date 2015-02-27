@@ -21,6 +21,8 @@ class input_pegawai extends CI_Controller
 	$this->form_validation->set_rules('telp','Telp','trim|required|xss_clean');
 	$this->form_validation->set_rules('password','Password','trim|required|xss_clean');
 	
+
+	
 	if($this->form_validation->run()==true)
 	{
 	
@@ -32,8 +34,36 @@ class input_pegawai extends CI_Controller
 		$id = $row->id_otoritas;
 	}
 	
+
 	
 	$id_pegawai= $id.$acak;
+	$nama_file = $_FILES['foto']['name'];
+	echo $_FILES['foto']['name'];
+	$directory= "./uploads/".$id_pegawai;
+	$check = file_exists($directory);
+	if($check == true)
+	{
+		$files = glob($directory.'/*'); // get all file names
+		foreach($files as $filez){ // iterate files
+		if(is_file($filez))
+		{
+		unlink($filez); // delete file
+		}
+		}
+	$upload = $directory."/".$nama_file;
+	move_uploaded_file($_FILES['foto']['tmp_name'], $upload);
+	}
+	else
+	{
+	mkdir($directory);
+	$upload = $directory."/".$nama_file;
+	move_uploaded_file($_FILES['foto']['tmp_name'], $upload);
+	}
+	
+	
+ 
+	
+	
 	$insert=array(
 	'id_pgw' => $id_pegawai,
 	'nm_pgw' => $this->input->post('nama_pegawai'),
@@ -42,6 +72,7 @@ class input_pegawai extends CI_Controller
 	'telp_pgw' => $this->input->post('telp'),
 	'otoritas' => $this->input->post('otoritas'),
 	'password' => $this->input->post('password'),
+	'image_path' => base_url().substr($directory,2)."/".$nama_file
 	);
 	
 	$this->m_pegawai->input_pegawai($insert);
