@@ -72,7 +72,8 @@ function index()
 						'id_pelanggan' => $row->id_pln,
 						'nama_pelanggan'=>$row->nm_pln,
 						'otoritas'=>'pelanggan',
-						'database'=>'pelanggan'
+						'database'=>'pelanggan',
+						'image_path'=> $row->image_path
 						//database dipakai apabila ada 1 halaman yang dipakai oleh pegawai atau pelanggan
 					);
 					}

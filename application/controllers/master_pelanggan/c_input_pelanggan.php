@@ -19,12 +19,37 @@ class c_input_pelanggan extends CI_Controller{
 		
 	if($this->form_validation->run()==true)
 	{
+	
 		$acak = $this->m_acak->input_pelanggan();
 		$this->m_waktu->setting_waktu_local();
 		$time = time();
 		$datestring ='%d%m%Y';
 		$tanggalsistem = mdate($datestring,$time);
 		$id_pelanggan = 'c'.$tanggalsistem.$acak;
+		
+		$nama_file = $_FILES['foto']['name'];
+	echo $_FILES['foto']['name'];
+	$directory= "./uploads/pelanggan/".$id_pelanggan;
+	$check = file_exists($directory);
+	if($check == true)
+	{
+		$files = glob($directory.'/*'); // get all file names
+		foreach($files as $filez){ // iterate files
+		if(is_file($filez))
+		{
+		unlink($filez); // delete file
+		}
+		}
+	$upload = $directory."/".$nama_file;
+	move_uploaded_file($_FILES['foto']['tmp_name'], $upload);
+	}
+	else
+	{
+	mkdir($directory);
+	$upload = $directory."/".$nama_file;
+	move_uploaded_file($_FILES['foto']['tmp_name'], $upload);
+	}
+		
 		
 		$insert=array(
 		
@@ -34,6 +59,7 @@ class c_input_pelanggan extends CI_Controller{
 			'almt_email' => $this->input->post('alamat_email'),
 			'no_telp' => $this->input->post('no_telp'),
 			'password' => $this->input->post('password'),
+			'image_path' => base_url().substr($directory,2)."/".$nama_file
 		
 		);
 		

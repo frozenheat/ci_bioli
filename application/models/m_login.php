@@ -19,7 +19,7 @@
 		}
 		else
 		{
-			$this->db->select('id_pln, password, nm_pln');
+			$this->db->select('id_pln, password, nm_pln, image_path');
 			$this->db->from('pelanggan');
 			$this->db->where('id_pln',$username);
 			$this->db->where('password',$password);

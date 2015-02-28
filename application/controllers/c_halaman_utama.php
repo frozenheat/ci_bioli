@@ -29,6 +29,7 @@
 			$data['id_pelanggan']=$session_data['id_pelanggan'];
 			$data['nm_pelanggan']=$session_data['nama_pelanggan'];
 			$data['otoritas']=$session_data['otoritas'];
+			$data['image_path']=$session_data['image_path'];
 			$this->load->view('hlm_utm',$data);
 			}
 		}

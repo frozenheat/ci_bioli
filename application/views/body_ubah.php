@@ -57,7 +57,7 @@ else if($bagian=='master_pelanggan')
 <table  class="table-form">
 <?php
 echo validation_errors();
-echo form_open(site_url().'/master_pelanggan/edit_pelanggan/ubah_pelanggan');
+echo form_open_multipart(site_url().'/master_pelanggan/edit_pelanggan/ubah_pelanggan');
 ?>
 <input type="hidden" name="id_pelanggan" value="<?php echo $id_pelanggan;?>">
 <tr><td>nama pelanggan:</td><td><input type ="text" name="nama_pelanggan" value=<?php echo $nama_pelanggan;?>></td></tr>
@@ -65,6 +65,7 @@ echo form_open(site_url().'/master_pelanggan/edit_pelanggan/ubah_pelanggan');
 <tr><td>alamat email:</td><td><input type ="text" name="alamat_email" value=<?php echo $alamat_email;?>></td></tr>
 <tr><td>telp pelanggan:</td><td><input type ="text" name="telp_pelanggan" value=<?php echo $telp_pelanggan;?>></td></tr>
 <tr><td>password:</td><td><input type ="password" name="password"></td></tr>
+<tr><td>Upload foto:</td><td><input type ="file" name="foto"></td></tr>
 <tr><td></td><td><input type="submit" name="ubah" value="ubah" class="submit"></td></tr>
 </table>
 </form>

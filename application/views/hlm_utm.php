@@ -22,14 +22,36 @@ if(!isset($body))
 	{?>
 	Selamat Datang <?php echo $nm_pegawai; ?>
 	<br/>
-	<div class="profpic" style="background:url(<?php echo $image_path?>) no-repeat center / 100%;"></div>
-	
-	<?php }
+	<?php 
+		if($image_path != "")
+		{
+		?>
+		<div class="profpic" style="background:url(<?php echo $image_path?>) no-repeat center / 100% 100%;"></div>
+		<?php 
+		}
+		else
+		{?>
+		<div class="profpic" style="background:url(<?php echo base_url()?>/image/no-pic.jpg) no-repeat center / 100% 100%;"></div>
+		<?php 
+		}
+	}
 	else if(isset($nm_pelanggan))
 	{
 	?>
 	Selamat Datang <?php echo $nm_pelanggan; ?>
-	<?php 
+	<br/>
+	<?php
+		if($image_path != "")
+		{
+		?>
+		<div class="profpic" style="background:url(<?php echo $image_path?>) no-repeat center / 100% 100%;"></div>
+		<?php 
+		}
+		else
+		{?>
+		<div class="profpic" style="background:url(<?php echo base_url()?>/image/no-pic.jpg) no-repeat center / 100% 100%;"></div>
+		<?php 
+		}
 	}
 	?>
 	</div>
