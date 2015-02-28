@@ -58,7 +58,8 @@ function index()
 						'id_pegawai' => $row->id_pgw,
 						'nama_pegawai'=>$row->nm_pgw,
 						'otoritas'=>$row->otoritas,
-						'database'=>'pegawai'
+						'database'=>'pegawai',
+						'image_path'=> $row->image_path
 					);
 					$this->session->set_userdata('logged_in',$sess_array);
 				}

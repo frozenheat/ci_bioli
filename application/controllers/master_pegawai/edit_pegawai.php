@@ -56,7 +56,7 @@ class edit_pegawai extends CI_Controller
 	$id_pegawai = $this->input->post('id_pegawai');
 	$nama_file = $_FILES['foto']['name'];
 	echo $_FILES['foto']['name'];
-	$directory= "./uploads/".$id_pegawai;
+	$directory= "./uploads/pegawai/".$id_pegawai;
 	$check = file_exists($directory);
 	if($check == true)
 	{

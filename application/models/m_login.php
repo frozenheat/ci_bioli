@@ -4,7 +4,7 @@
 	{
 		function login($username,$password)
 		{
-			$this->db->select('id_pgw, password, nm_pgw, otoritas');
+			$this->db->select('id_pgw, password, nm_pgw, otoritas , image_path');
 			$this->db->from('pegawai');
 			$this->db->where('id_pgw',$username);
 			$this->db->where('password',$password);

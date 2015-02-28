@@ -30,7 +30,7 @@ function konfirm_pesanan(hasil_konfirm, id_pesanan, id_pemesan, nama_barang, jum
 
 
 <center>
-<table class="table-form">
+<table class="table-form pesanan-pelanggan">
 <form action ='<?php echo site_url();?>/master_pesanan_pelanggan/c_tampil_pesanan/pilihan_form' method ='POST' id ='pilihan_form'>
 <tr><td><select name='status' onchange ='pilih_form()'><option></option><option value='semua'>Semua</option><option value='belum' >Belum konfirmasi</option><option value='telah'>Telah konfirmasi</option><option value="terpenuhi">Terpenuhi</option></select></td></tr>
 </form>

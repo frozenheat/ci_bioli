@@ -22,7 +22,7 @@ if (tindakan == 'hapus' || tindakan=='ubah')
 
 
 <div class="wrapper-form">
-<center>
+
 <table  class="table-form">
 
 <?php 
@@ -38,10 +38,10 @@ echo form_open(site_url().'/master_pelanggan/c_input_pelanggan');
 <tr><td></td><td><input type="submit" name="tambah" value="tambah" class="submit"></td></tr>
 </form>
 </table>
-</center>
+
 </div>
 
-<center>
+
 <div class="scroll">
 <table border=1 class="table-data">
 <tr><td>id_pelanggan</td><td>nama_pelanggan</td><td>alamat_pelanggan</td><td>alamat_email</td><td>no_telp</td></tr>
@@ -70,7 +70,7 @@ else
 ?>
 </table>
 </div>
-</center>
+
 
 <?php
 	echo "<form id='tindakan' method='POST' action='".site_url()."/master_pelanggan/edit_pelanggan'>";

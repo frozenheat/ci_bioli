@@ -21,6 +21,9 @@ if(!isset($body))
 	if(isset($nm_pegawai))
 	{?>
 	Selamat Datang <?php echo $nm_pegawai; ?>
+	<br/>
+	<div class="profpic" style="background:url(<?php echo $image_path?>) no-repeat center / 100%;"></div>
+	
 	<?php }
 	else if(isset($nm_pelanggan))
 	{
@@ -28,9 +31,12 @@ if(!isset($body))
 	Selamat Datang <?php echo $nm_pelanggan; ?>
 	<?php 
 	}
+	?>
+	</div>
+	<?php
 }
 ?>
-</div>
+
 <?php
 		if (isset($body))
 		{

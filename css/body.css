@@ -4,6 +4,7 @@
 /*======================== BERANDA===================== */
 .welcome-message{display:inline-block; font-size:15px;}
 .welcome-message h2{font-size:30px; font-weight:bold; text-transform:uppercase; margin:0; color:#3a0700; letter-spacing:4px; margin-bottom:20px;}
+.welcome-message .profpic{margin-top:30px; width:174px; height:208px; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;}
 
 /*untuk penampilan tabel data*/
 .table-data tr td{padding:0 11px;}
@@ -12,7 +13,12 @@
 
 
 /*untuk penampilan form*/
-.wrapper-form{width : 400px; min-height:200px; margin:0 auto 14px;}
-.table-form tr td{padding:5 8px; width:auto;}
+.wrapper-form{ margin:0 auto 14px; text-align:center;}
+.table-form{display:inline-block;}
+.table-form tr td{padding:5 8px; width:113px; }
+.table-form tr td:nth-child(2n){width:200px;}
+.table-form input[type="text"], .table-form  input[type="password"]{border-radius:5px; background-color:#bdc4cb; width:100%;}
+select{border-radius:5px; background-color:#bdc4cb; display:inline-block; }
+.pesanan-pelanggan select{margin-left:0;}
 /*untuk penampilan form - end*/
 

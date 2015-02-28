@@ -21,6 +21,7 @@
 			$data['id_pegawai']=$session_data['id_pegawai'];
 			$data['nm_pegawai']=$session_data['nama_pegawai'];
 			$data['otoritas']=$session_data['otoritas'];
+			$data['image_path']=$session_data['image_path'];
 			$this->load->view('hlm_utm',$data);
 			}
 			else if($data['database']=='pelanggan')
