@@ -8,7 +8,7 @@ class m_pesanan_barang extends CI_Model
 	
 	$this->db->select('*');
 	$this->db->from('pesanan_barang');
-	$this->db->order_by('tanggal_pemesanan','asc');
+	$this->db->order_by('tanggal_pemesanan','DESC');
 	$query=$this->db->get();
 	
 	if($query->num_rows()>0)
@@ -60,8 +60,23 @@ class m_pesanan_barang extends CI_Model
 	
 	function pilih_status($status)
 	{
-		
-		$this->db->select('*');
+						if($status == 'semua')
+						{
+						$this->db->select('*');
+						$this->db->from('pesanan_barang');
+						$query = $this->db->get();
+						if ($query->num_rows()>0)
+						{
+						return $query->result();
+						}
+						else
+						{
+						return false;
+						}
+		}
+		else
+		{
+		$this->db->select('nama_barang, tanggal_pemesanan ,jam_pemesanan, sum(jumlah_pesanan) as total_pesanan');
 		$this->db->from('pesanan_barang');
 		
 		if ($status == 'belum')
@@ -78,6 +93,7 @@ class m_pesanan_barang extends CI_Model
 		$this->db->where('status_pesanan','terpenuhi');
 		}
 		$this->db->order_by('tanggal_pemesanan','asc');
+		$this->db->group_by('nama_barang');
 		$query = $this->db->get();
 		
 		if ($query->num_rows()>0)
@@ -88,7 +104,7 @@ class m_pesanan_barang extends CI_Model
 		{
 			return false;
 		}
-	
+	}
 	}
 	
 	function pilih_jenis_barang($nama_barang)

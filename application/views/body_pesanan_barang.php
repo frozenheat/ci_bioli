@@ -43,10 +43,22 @@ function konfirm_pesanan(hasil_konfirm, id_pesanan, id_pemesan, nama_barang, jum
 	if ($data_pesanan)
 	{
 ?>
+	
+	<?php if(!isset($status) || $status == 'semua')
+	{ ?>
 	<div class="scroll" style="width:1306px;">
 	<table border=1 class="table-data">
 	<tr><td>id pesanan</td><td>id pemesan</td><td>nama barang</td><td>tanggal pemesanan</td><td>jam pemesanan</td><td>jumlah pesanan</td><td>status pesanan</td><td>konfirmasi pesanan</td><td>perkiraan waktu selesai</td></tr>
-<?php
+	<?php }
+	else
+	{?>
+	<div class="scroll" style="width:423px;">
+	<table border=1 class="table-data">
+	<tr><td>Nama Barang</td><td>Tanggal Pemesanan</td><td>Jam Pemesanan</td><td>Total Pesanan</td></tr>
+	<?php
+	}
+	if(!isset($status) || $status =='semua')
+	{
 	foreach ($data_pesanan as $row2)
 	{
 
@@ -67,35 +79,7 @@ function konfirm_pesanan(hasil_konfirm, id_pesanan, id_pemesan, nama_barang, jum
 	}
 	else
 	{
-	if (isset($status))
-	{
-		if ($status =='belum')
-		{
-		echo "<td><select onchange='konfirm_pesanan(this.value, \"$row2->id_pesanan\", \"$row2->id_pemesan\", \"$row2->nama_barang\", \"$row2->tanggal_pemesanan\")'><option></option><option value='batal'>batal</option><option value='pesan'>pesan</option></select></td>";
-		}
-		else if($status =='telah')
-		{
-		echo "<td>".$row2->sts_konfirm."</td>";
-		}
-		else if($status == 'semua')
-		{
-			if($row2->sts_konfirm !="belum_konfirmasi")
-			{
-			echo "<td>".$row2->sts_konfirm."</td>";
-			}
-			else if($row2->sts_konfirm =="belum_konfirmasi")
-			{
-			echo "<td><select onchange='konfirm_pesanan(this.value, \"$row2->id_pesanan\", \"$row2->id_pemesan\", \"$row2->nama_barang\", \"$row2->jumlah_pesanan\")'><option></option><option value='batal'>batal</option><option value='pesan'>pesan</option></select></td>";
-			}
-			
-		}
-		else if ($status =='terpenuhi')
-		{
-		echo "<td>".$row2->sts_konfirm."</td>";
-		}
-	}
-	else
-	{
+	
 			if($row2->sts_konfirm !="belum_konfirmasi")
 			{
 			echo "<td>".$row2->sts_konfirm."</td>";
@@ -105,7 +89,7 @@ function konfirm_pesanan(hasil_konfirm, id_pesanan, id_pemesan, nama_barang, jum
 			echo "<td><select onchange='konfirm_pesanan(this.value, \"$row2->id_pesanan\", \"$row2->id_pemesan\", \"$row2->nama_barang\")'><option></option><option value='batal'>batal</option><option value='pesan'>pesan</option></select></td>";
 			}
 		
-	}
+	
 	
 	echo "<td>".$row2->perkiraan_waktu_selesai."</td>";
 	}
@@ -115,6 +99,19 @@ function konfirm_pesanan(hasil_konfirm, id_pesanan, id_pemesan, nama_barang, jum
 	//echo "<td><select><option>batal</option><option>pesan</option></select></td>";
 	//echo "<td><select onchange='pilihtindakan(this.value, \"$row->id_pgw\", \"$row->nm_pgw\" , \"$row->almt_email_pgw\" , \"$row->almt_pgw\", \"$row->telp_pgw\", \"$row->otoritas\")'><option></option><option value='hapus'>hapus</option><option value='ubah'>ubah</option></td>";
 	echo "</tr>";
+	}
+	}
+	else
+	{
+		foreach($data_pesanan as $row2)
+		{
+		echo "<tr>";
+		echo "<td>".$row2->nama_barang."</td>";
+		echo "<td>".$row2->tanggal_pemesanan."</td>";
+		echo "<td>".$row2->jam_pemesanan."</td>";
+		echo "<td>".$row2->total_pesanan."</td>";
+		echo "</tr>";
+		}
 	}
 	echo '</table>';
 	echo '</div>';

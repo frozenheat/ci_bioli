@@ -22,3 +22,6 @@ select{border-radius:5px; background-color:#bdc4cb; display:inline-block; }
 .pesanan-pelanggan select{margin-left:0;}
 /*untuk penampilan form - end*/
 
+/*======================== TABLE DALAM SCROLL ===================== */
+
+table.table-data tr:first-child{background-color:#515d91;}
