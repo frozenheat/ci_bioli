@@ -13,7 +13,7 @@ function index()
 	
 	if($this->session->userdata('logged_in'))
 		{
-			$session_data=$this->session->userdata('logged_in');;
+			$session_data=$this->session->userdata('logged_in');
 			$data['database']=$session_data['database'];
 			$data['id_pegawai']=$session_data['id_pegawai'];
 			$data['otoritas']=$session_data['otoritas'];

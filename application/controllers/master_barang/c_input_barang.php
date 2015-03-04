@@ -7,6 +7,7 @@
 	
 		$this->load->model('m_barang');
 		$this->load->model('m_acak');
+		$this->load->model('m_mesin');
 	}
  
  
@@ -46,12 +47,38 @@
 		);
 		
 		$this->m_barang->input_master_barang($insert);
+		$alter=array(
+			$this->input->post('nama_barang').'_waktu_proses' => array(
+			
+				'type' => 'INT'
+			),
+			$this->input->post('nama_barang').'_lot_size' => array(
+			
+				'type' => 'INT'
+			)
+		);
+		$this->m_mesin->add_column($alter);
+		
+			$data['jenis_mesin'] = $this->m_mesin->jenis_mesin();
+			$data['nama_barang'] = $this->input->post('nama_barang');
+			if($data['jenis_mesin'] == true)
+			{
+			$session_data=$this->session->userdata('logged_in');
+			$data['otoritas']=$session_data['otoritas'];
+			$data['body'] = "waktu_produksi";
+			$this->load->view('hlm_utm',$data);
+			}
+			else
+			{
+			redirect('master_barang/c_tampil_barang');
+			}
 		}
 		else
 		{
 		return false;
-		}
 		redirect('master_barang/c_tampil_barang');
+		}
+		
 	
 	}
 	

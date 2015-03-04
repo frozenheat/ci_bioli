@@ -1,5 +1,7 @@
 /*======================== GENERAL ===================== */
 #body{ margin:80 0 0px; text-align:center; display:inline-block;width:100%;}
+table{display:inline-block;}
+table td{padding:5 8px;}
 .clear{clear:both;}
 /*======================== BERANDA===================== */
 .welcome-message{display:inline-block; font-size:15px;}
@@ -9,6 +11,8 @@
 /*untuk penampilan tabel data*/
 .table-data tr td{padding:0 11px;}
 .scroll {border: 1px solid #777777; height:auto; max-height: 200px; overflow: scroll; width: 792px; margin:0 auto;}
+.scroll td, .scroll th{border:1px solid #000; padding:2px;}
+
 /*untuk penampilan tabel data - end*/
 
 
@@ -17,7 +21,7 @@
 .table-form{display:inline-block;}
 .table-form tr td{padding:5 8px; width:113px; }
 .table-form tr td:nth-child(2n){width:200px;}
-.table-form input[type="text"], .table-form  input[type="password"]{border-radius:5px; background-color:#bdc4cb; width:100%;}
+.table-form input[type="text"], .table-form  input[type="password"]{border-radius:5px; background-color:#bdc4cb; width:200px;;}
 select{border-radius:5px; background-color:#bdc4cb; display:inline-block; }
 .pesanan-pelanggan select{margin-left:0;}
 /*untuk penampilan form - end*/

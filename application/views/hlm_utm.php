@@ -98,6 +98,14 @@ if(!isset($body))
 		{
 		$this->load->view('body_status_pesanan');
 		}
+		else if($body=="master_mesin")
+		{
+		$this->load->view('body_master_mesin');
+		}
+		else if($body=="waktu_produksi")
+		{
+		$this->load->view('body_waktu_produksi');
+		}
 		}
 
 ?>

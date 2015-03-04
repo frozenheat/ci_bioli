@@ -7,6 +7,7 @@ class edit_barang extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('m_barang');
+		$this->load->model('m_mesin');
 	}
 
 	function index()
@@ -18,7 +19,10 @@ class edit_barang extends CI_Controller
 				'id_brng' => $this->input->POST('id_barang')
 			);
 			$this->m_barang->delete_master_barang($delete);
-			
+			$waktu_proses = $this->input->POST('nama_barang')."_waktu_proses";
+			$lot_size = $this->input->POST('nama_barang')."_lot_size";
+			$this->m_mesin->delete_column($waktu_proses);
+			$this->m_mesin->delete_column($lot_size);
 			redirect('master_barang/c_tampil_barang');
 			
 		}
