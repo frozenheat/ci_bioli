@@ -16,6 +16,7 @@
 
 ?>
 <input type="hidden" name="nama_barang" value="<?php echo $nama_barang; ?>" >
+<input type="hidden" name="id_barang" value="<?php echo $id_brng?>" >
 <tr><td></td><td><input type="submit" value="submit"></td>
 </table>
 </form>

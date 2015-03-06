@@ -94,5 +94,26 @@ function __construct(){
 	
 	}
 	
+	function pencarian_lot_size($nama_barang){
+		$this->db->select('jenis_mesin,'.$nama_barang.'_lot_size');
+		$this->db->from('mesin');
+		$query = $this->db->get();
+		
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return false;
+		}
+	
+	}
+	
+	function  input_jadwal($insert){
+		
+		$this->db->insert('jadwal_mesin',$insert);
+	}
+	
 }
 ?>

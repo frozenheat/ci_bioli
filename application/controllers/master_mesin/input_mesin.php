@@ -41,6 +41,8 @@ class input_mesin extends CI_Controller{
 	function update_mesin(){
 	
 		$banyak_mesin = $this->m_mesin->penghitungan_mesin();
+		$waktu_produksi = 0;
+		$lot_size = 0;
 		for($a=1;$a <= $banyak_mesin; $a++)
 		{
 			
@@ -53,8 +55,16 @@ class input_mesin extends CI_Controller{
 			$jenis_mesin = $this->input->POST('jenis_mesin'.$a);
 			
 			$this->m_mesin->update_waktu_lot($jenis_mesin, $update);
-		
+			
+			$waktu_produksi = $waktu_produksi + $this->input->POST('waktu_produksi'.$a);
+			$lot_size = $lot_size + $this->input->POST('lot_size'.$a);
 		}
+		
+		$update2 = array(
+				'wkt_prdksi' => $waktu_produksi,
+				'lot_size' => $lot_size
+			);
+			$this->m_barang->update_waktu_lot($this->input->POST('id_barang'), $update2);
 	redirect('master_barang/c_tampil_barang');
 		
 	}

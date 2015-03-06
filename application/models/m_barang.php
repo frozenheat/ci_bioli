@@ -117,6 +117,13 @@ class m_barang extends CI_Model{
 			return false;
 		}
 	}
+	
+	function update_waktu_lot($id_barang, $update){
+		
+		$this->db->where('id_brng',$id_barang);
+		$this->db->update('barang',$update);
+		
+	}
 
 	
 }

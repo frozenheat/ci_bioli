@@ -15,9 +15,6 @@
 	{
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('nama_barang','Nama_barang','trim|required|xss_clean');
-		$this->form_validation->set_rules('lot_size','Lot_size','trim|required|xss_clean');
-		$this->form_validation->set_rules('waktu_produksi','Waktu_produksi','trim|required|xss_clean');
-		
 		if($this->form_validation->run()==true)
 		{
 		
@@ -41,37 +38,18 @@
 				'id_brng' => $id_barang,
 				'nm_brng' => $this->input->post('nama_barang'),
 				'nm_jns_brng' => $this->input->post('jenis_barang'),
-				'lot_size' => $this->input->post('lot_size'),
-				'wkt_prdksi' => $this->input->post('waktu_produksi')
+				'lot_size_cetak' => $this->input->post('lot_cetak'),
+				'lot_size_bubut' => $this->input->post('lot_bubut'),
+				'lot_size_milling' => $this->input->post('lot_milling'),
+				'wkt_prdksi_cetak' => $this->input->post('waktu_cetak'),
+				'wkt_prdksi_bubut' => $this->input->post('waktu_bubut'),
+				'wkt_prdksi_milling' => $this->input->post('waktu_milling')
 		
 		);
 		
 		$this->m_barang->input_master_barang($insert);
-		$alter=array(
-			$this->input->post('nama_barang').'_waktu_proses' => array(
-			
-				'type' => 'INT'
-			),
-			$this->input->post('nama_barang').'_lot_size' => array(
-			
-				'type' => 'INT'
-			)
-		);
-		$this->m_mesin->add_column($alter);
 		
-			$data['jenis_mesin'] = $this->m_mesin->jenis_mesin();
-			$data['nama_barang'] = $this->input->post('nama_barang');
-			if($data['jenis_mesin'] == true)
-			{
-			$session_data=$this->session->userdata('logged_in');
-			$data['otoritas']=$session_data['otoritas'];
-			$data['body'] = "waktu_produksi";
-			$this->load->view('hlm_utm',$data);
-			}
-			else
-			{
-			redirect('master_barang/c_tampil_barang');
-			}
+		redirect('master_barang/c_tampil_barang');
 		}
 		else
 		{

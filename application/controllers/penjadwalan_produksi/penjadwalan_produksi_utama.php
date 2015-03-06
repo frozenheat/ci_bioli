@@ -49,7 +49,7 @@ if($result == true)
 		
 		$this->m_waktu->setting_waktu_local();
 		
-		$datestring = '%d%m%Y%H%i';
+		$datestring = '%Y';
 		
 		$waktu = mdate($datestring,$time);
 		
@@ -244,7 +244,7 @@ if($result == true)
 			$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_mulai_produksi)+$waktu_pemrosesan);
 			
 			
-			$datestring = '%d%m%Y%H%i';
+			$datestring = '%Y';
 		
 			$waktu = mdate($datestring,$time);
 			
@@ -356,7 +356,7 @@ if($result == true)
 			$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_mulai_produksi)+$waktu_pemrosesan);
 			
 			
-			$datestring = '%d%m%Y%H%i';
+			$datestring = '%Y';
 		
 			$waktu = mdate($datestring,$time);
 			
@@ -449,7 +449,7 @@ if($result == true)
 			$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_mulai_produksi)+$waktu_pemrosesan);
 			
 			
-			$datestring = '%d%m%Y%H%i';
+			$datestring = '%Y';
 		
 			$waktu = mdate($datestring,$time);
 		
@@ -571,7 +571,7 @@ if($result == true)
 			$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_mulai_produksi)+$waktu_pemrosesan);
 			
 			
-			$datestring = '%d%m%Y%H%i';
+			$datestring = '%Y';
 		
 			$waktu = mdate($datestring,$time);
 		
@@ -679,7 +679,7 @@ if($result == true)
 	 
 	
 }
- redirect('master_pesanan_pelanggan/c_tampil_pesanan');
+ //redirect('master_pesanan_pelanggan/c_tampil_pesanan');
 	
 	
 	
