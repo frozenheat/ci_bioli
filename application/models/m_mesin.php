@@ -115,5 +115,181 @@ function __construct(){
 		$this->db->insert('jadwal_mesin',$insert);
 	}
 	
+	
+	function cari_id_pro_mesin($id_produksi, $jenis_mesin)
+	{
+	 $this->db->select('id_jadwal_mesin');
+	 $this->db->from('jadwal_mesin');
+	 $this->db->where('id_prdksi',$id_produksi);
+	 $this->db->where('jenis_mesin',$jenis_mesin);
+	 $query = $this->db->get();
+	 
+	 if($query->num_rows() > 0)
+	 {
+		foreach($query->result() as $row)
+		{
+			$id_jadwal_mesin = $row->id_jadwal_mesin;
+		}
+		return $id_jadwal_mesin;
+	 }
+	 else
+	 {
+	 return false;
+	 }
+	}
+	
+	
+	
+	
+	function pengecekan_jam_selesai_mesin_cetak($wkt_jdwl)
+		{
+			$this->db->select('waktu_jdwl');
+			$this->db->from('jadwal_mesin');
+			$this->db->where('waktu_jdwl <',$wkt_jdwl);
+			$this->db->where('jenis_mesin','cetak');
+			$this->db->order_by('waktu_jdwl','asc');
+			$query = $this->db->get();
+			
+			if ($query->num_rows() > 0)
+			{
+				foreach ($query->result() as $row)
+				{
+					$waktu_jadwal = $row->waktu_jdwl;
+				}
+				$this->db->select('*');
+				$this->db->from('jadwal_mesin');
+				$this->db->where('waktu_jdwl',$waktu_jadwal);
+				$this->db->where('jenis_mesin','cetak');
+				$this->db->order_by('waktu_selesai','asc');
+				$query = $this->db->get();
+				
+				return $query ->result();
+			}
+			else
+			{
+			return false;
+			}
+		}
+		function pengecekan_jam_selesai_mesin_bubut($wkt_jdwl)
+		{
+			$this->db->select('waktu_jdwl');
+			$this->db->from('jadwal_mesin');
+			$this->db->where('waktu_jdwl <',$wkt_jdwl);
+			$this->db->where('jenis_mesin','bubut');
+			$this->db->order_by('waktu_jdwl','asc');
+			$query = $this->db->get();
+			
+			if ($query->num_rows() > 0)
+			{
+				foreach ($query->result() as $row)
+				{
+					$waktu_jadwal = $row->waktu_jdwl;
+				}
+				$this->db->select('*');
+				$this->db->from('jadwal_mesin');
+				$this->db->where('waktu_jdwl',$waktu_jadwal);
+				$this->db->where('jenis_mesin','bubut');
+				$this->db->order_by('waktu_selesai','asc');
+				$query = $this->db->get();
+				
+				return $query ->result();
+			}
+			else
+			{
+			return false;
+			}
+		}
+	
+	function pengecekan_jam_selesai_mesin_milling($wkt_jdwl)
+		{
+			$this->db->select('waktu_jdwl');
+			$this->db->from('jadwal_mesin');
+			$this->db->where('waktu_jdwl <',$wkt_jdwl);
+			$this->db->where('jenis_mesin','milling');
+			$this->db->order_by('waktu_jdwl','asc');
+			$query = $this->db->get();
+			
+			if ($query->num_rows() > 0)
+			{
+				foreach ($query->result() as $row)
+				{
+					$waktu_jadwal = $row->waktu_jdwl;
+				}
+				$this->db->select('*');
+				$this->db->from('jadwal_mesin');
+				$this->db->where('waktu_jdwl',$waktu_jadwal);
+				$this->db->where('jenis_mesin','milling');
+				$this->db->order_by('waktu_selesai','asc');
+				$query = $this->db->get();
+				
+				return $query ->result();
+			}
+			else
+			{
+			return false;
+			}
+		}
+	
+	function update_waktu_mulai_mesin($update_waktu_mulai, $id_jadwal)
+	{
+		$this->db->where('id_jadwal_mesin',$id_jadwal);
+		$this->db->update('jadwal_mesin',$update_waktu_mulai);
+	}
+	
+	function update_waktu_selesai($update_waktu_selesai, $id_jadwal)
+	{
+		$this->db->where('id_jadwal_mesin',$id_jadwal);
+		$this->db->update('jadwal_mesin',$update_waktu_selesai);
+	}
+	
+	function ambil_data_mesin($id_jadwal)
+	{
+		$this->db->select('*');
+		$this->db->from('jadwal_mesin');
+		$this->db->where('id_jadwal_mesin',$id_jadwal);
+		$query = $this->db->get();
+		
+		if($query->num_rows() >0)
+		{
+			foreach($query->result() as $row)
+			{
+				$data['waktu_jadwal'] = $row->waktu_jdwl;
+				$data['jenis_mesin'] = $row->jenis_mesin;
+				$data['waktu_proses'] = $row->waktu_prdksi;
+				$data['jumlah_batch'] = $row->jumlah_batch;
+			}
+			return $data;
+		}
+		else
+		{
+			return false;
+		}
+		
+	}
+	
+	function pengecekan_waktu_selesai($jenis_mesin)
+	{
+		$this->db->select('*');
+		$this->db->from('jadwal_mesin');
+		$this->db->where('jenis_mesin',$jenis_mesin);
+		$this->db->order_by('waktu_selesai');
+		$query = $this->db->get();
+		
+		if($query->num_rows())
+		{
+			foreach($query->result() as $row)
+			{
+				$waktu_selesai = $row->waktu_selesai;
+			}
+			return $waktu_selesai;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+
+	
 }
 ?>

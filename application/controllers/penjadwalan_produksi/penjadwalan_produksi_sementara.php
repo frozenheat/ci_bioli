@@ -130,29 +130,37 @@ if($result == true)
 			
 			
 				
-				for($a=0;$a < 3; $a++)
+				for($b=0;$b < 3; $b++)
 				{
-				if($a==0)
+				if($b==0)
 				{
-				$id_prdksi_mesin_cetak = $id_jns.'c'.$acak_cetak;
-				$jenis_mesin = 'Mesin cetak';
+				$id_prdksi_mesin = $id_jns.'c'.$acak_cetak;
+				$jenis_mesin = 'cetak';
+				$waktu_proses = $waktu_proses_cetak;
+				$jumlah_batch = $jumlah_batch_cetak;
 				}
-				else if($a==1)
+				else if($b==1)
 				{
-				$id_prdksi_mesin_bubut= $id_jns.'b'.$acak_bubut;
-				$jenis_mesin = 'Mesin bubut';
+				$id_prdksi_mesin= $id_jns.'b'.$acak_bubut;
+				$jenis_mesin = 'bubut';
+				$waktu_proses = $waktu_proses_bubut;
+				$jumlah_batch = $jumlah_batch_bubut;
 				}
-				else if($a==2)
+				else if($b==2)
 				{
-				$id_prdksi_mesin_milling = $id_jns.'m'.$acak_milling;
-				$jenis_mesin = 'Mesin milling';
+				$id_prdksi_mesin = $id_jns.'m'.$acak_milling;
+				$jenis_mesin = 'milling';
+				$waktu_proses = $waktu_proses_milling;
+				$jumlah_batch = $jumlah_batch_milling;
 				}
 				
 				$insert_mesin = array(
-				'id_jadwal_mesin' => $id_prdksi_mesin_cetak,
+				'id_jadwal_mesin' => $id_prdksi_mesin,
 				'waktu_jdwl'=> $waktu_jdwl,
 				'jenis_mesin' => $jenis_mesin,
 				'id_prdksi' => $id_prdksi,
+				'waktu_prdksi' => $waktu_proses,
+				'jumlah_batch' => $jumlah_batch ,
 				'nama_barang' => $row->nm_brng,
 				'status_jadwal' => 'sementara'
 				);
@@ -188,36 +196,36 @@ if($result == true)
 			
 			
 				
-				for($a=0;$a < 3; $a++)
+				for($b=0;$b < 3; $b++)
 				{
 				$acak_cetak =$this->m_acak->jadwal_cetak();
 			$acak_bubut =$this->m_acak->jadwal_bubut();
 			$acak_milling =$this->m_acak->jadwal_milling();
-				if($a==0)
+				if($b==0)
 				{
-				$id_prdksi_mesin_cetak = $id_jns.'c'.$acak_cetak;
-				$jenis_mesin = 'Mesin cetak';
+				$id_prdksi_mesin = $id_jns.'c'.$acak_cetak;
+				$jenis_mesin = 'cetak';
 				}
-				else if($a==1)
+				else if($b==1)
 				{
-				$id_prdksi_mesin_bubut= $id_jns.'b'.$acak_bubut;
-				$jenis_mesin = 'Mesin bubut';
+				$id_prdksi_mesin= $id_jns.'b'.$acak_bubut;
+				$jenis_mesin = 'bubut';
 				}
-				else if($a==2)
+				else if($b==2)
 				{
-				$id_prdksi_mesin_milling = $id_jns.'m'.$acak_milling;
-				$jenis_mesin = 'Mesin milling';
+				$id_prdksi_mesin = $id_jns.'m'.$acak_milling;
+				$jenis_mesin = 'milling';
 				}
 				
 				$insert_mesin = array(
-				'id_jadwal_mesin' => $id_prdksi_mesin_cetak,
+				'id_jadwal_mesin' => $id_prdksi_mesin,
 				'waktu_jdwl'=> $waktu_jdwl,
 				'jenis_mesin' => $jenis_mesin,
 				'id_prdksi' => $id_prdksi,
 				'nama_barang' => $row->nm_brng,
 				'status_jadwal' => 'sementara'
 				);
-				
+
 				$this->m_mesin->input_jadwal($insert_mesin);
 				
 				}
@@ -235,7 +243,9 @@ if($result == true)
 	 
 	 if ($result)
 	 {
-	 $b=0;
+
+	$b=0;
+
 	 foreach ($result as $row)
 	 {
 	
@@ -246,16 +256,20 @@ if($result == true)
 		//echo $row->wkt_prdksi." ";
 		//echo $row->waktu_jdwl;
 		//echo '<br>';
-		
-		
+
 	if($b==0)
 	{
-		$result2 = $this->m_jadwal_produksi->pengecekan_jam_selesai($waktu_jdwl);
-		
+	//====================================== revisi + ========================================//
+		//$result2 = $this->m_jadwal_produksi->pengecekan_jam_selesai($waktu_jdwl);
+	
+		$result2 = $this->m_mesin->pengecekan_jam_selesai_mesin_cetak($waktu_jdwl);
+		//====================================== revisi - ========================================//
 		if ($result2 == true)
 		{
+		
 			foreach ($result2 as $row2)
 			{
+			$id_prdksi_barang = $row2->id_prdksi;
 			$nama_barang_terakhir = $row2->nm_brng;
 			$waktu_jadwal_terakhir = $row2->waktu_jdwl;
 			$waktu_selesai_terakhir = $row2->waktu_selesai;
@@ -470,18 +484,72 @@ if($result == true)
 		}
 	else
 		{
-		
+		echo 'false';
 		$waktu_mulai_produksi = date('Y-m-d H:i',time()+3600);
+	
+
+//====================================== revisi + ========================================//
+	for($j=0; $j<3; $j++)
+	{
+	if($j==0)
+		{
+		$mesin= 'cetak';
+		}
+		else if($j==1)
+		{
+		$mesin= 'bubut';
+		$waktu_selesai_terakhir_mesin = substr($this->m_mesin->pengecekan_waktu_selesai($mesin),0,15);
+		if( mdate('Y-m-d %H:%i',strtotime($waktu_selesai_produksi)) >= mdate('Y-m-d %H:%i',strtotime($waktu_selesai_terakhir_mesin)))
+		{
+		$waktu_mulai_produksi = $waktu_selesai_produksi;
+		}
+		else
+		{
+			$waktu_mulai_produksi = $waktu_selesai_terakhir_mesin;
+		}
+		}
+		else if($j==2)
+		{
+		$mesin= 'milling';
+	$waktu_selesai_terakhir_mesin = substr($this->m_mesin->pengecekan_waktu_selesai($mesin),0,15);
+		if( mdate('Y-m-d %H:%i',strtotime($waktu_selesai_produksi)) >= mdate('Y-m-d %H:%i',strtotime($waktu_selesai_terakhir_mesin)))
+		{
+		$waktu_mulai_produksi = $waktu_selesai_produksi;
+		}
+		else
+		{
+			$waktu_mulai_produksi = $waktu_selesai_terakhir_mesin;
+		}
+		}
+		echo $waktu_mulai_produksi."<br/>";
+	$id_pro_mesin = $this->m_mesin->cari_id_pro_mesin($row->id_prdksi, $mesin);
+		//====================================== revisi - ========================================//
+	
 		
 //bagian penghitungan waktu pemrosesan berdasarkan batch
 	$update_waktu_mulai_produksi = array(
 	'waktu_mulai' => $waktu_mulai_produksi
 	);	
 	$this->m_jadwal_produksi->update_waktu_mulai($update_waktu_mulai_produksi, $row->id_prdksi);
-	$waktu_pemrosesan = ($row->wkt_prdksi / $row->jumlah_batch) * 3600;
+	//====================================== revisi + ========================================//
+	
+	$this->m_mesin->update_waktu_mulai_mesin($update_waktu_mulai_produksi, $id_pro_mesin);
+	$data_jadwal_mesin = $this->m_mesin->ambil_data_mesin($id_pro_mesin);
+	$data_waktu_jadwal_mesin = $data_jadwal_mesin['waktu_jadwal'];
+	$data_jenis_mesin = $data_jadwal_mesin['jenis_mesin'];
+	$data_waktu_proses_mesin = $data_jadwal_mesin['waktu_proses'];
+	$data_batch_mesin = $data_jadwal_mesin['jumlah_batch'];
+	$waktu_pemrosesan = ($data_waktu_proses_mesin/ $data_batch_mesin) * 3600;
+
+	//====================================== revisi - ========================================//
+		
+	//$waktu_pemrosesan = ($row->wkt_prdksi / $row->jumlah_batch) * 3600;
 	$id_prdksi = $row->id_prdksi;
 		$h=0;
-		for ($g=0;$g<$row->jumlah_batch;$g++)
+		//for ($g=0;$g<$row->jumlah_batch;$g++)
+		//====================================== revisi + ========================================//
+		for ($g=0;$g<$data_batch_mesin;$g++)
+		//====================================== revisi - ========================================//
 		{		
 		if ($h==0)
 		{
@@ -490,8 +558,12 @@ if($result == true)
 			$update_waktu_selesai_produksi = array(
 			'waktu_selesai' => $waktu_selesai_produksi
 			);
-			$this->m_jadwal_produksi->update_waktu_selesai($update_waktu_selesai_produksi, $id_prdksi);
+			//$this->m_jadwal_produksi->update_waktu_selesai($update_waktu_selesai_produksi, $id_prdksi);
+			//====================================== revisi + ========================================//
 			
+			$this->m_mesin->update_waktu_selesai($update_waktu_selesai_produksi, $id_pro_mesin);
+			
+			//====================================== revisi - ========================================//
 			$h=1;
 		}
 		else
@@ -503,7 +575,12 @@ if($result == true)
 			$update_waktu_selesai_produksi = array(
 			'waktu_selesai' => $waktu_selesai_produksi
 			);
-			$this->m_jadwal_produksi->update_waktu_selesai($update_waktu_selesai_produksi, $id_prdksi);
+			//$this->m_jadwal_produksi->update_waktu_selesai($update_waktu_selesai_produksi, $id_prdksi);
+			//====================================== revisi + ========================================//
+			
+			$this->m_mesin->update_waktu_selesai($update_waktu_selesai_produksi, $id_pro_mesin);
+			
+			//====================================== revisi - ========================================//
 			
 			}
 			else
@@ -520,23 +597,37 @@ if($result == true)
 		
 			$waktu = mdate($datestring,$time);
 			
-			$id_jns = substr($row->id_prdksi, 0 ,1);
-			
-			$acak=$this->m_acak->jadwal_prdksi();
+			//$id_jns = substr($row->id_prdksi, 0 ,1);
+			//====================================== revisi + ========================================//
+			$id_jns = substr($id_pro_mesin, 0 ,2);
+			$acak=$this->m_acak->jadwal_cetak();
+			//====================================== revisi - ========================================//
+			//$acak=$this->m_acak->jadwal_prdksi();
 			$id_prdksi = $id_jns.$waktu.$acak;
 			
 			
-			$insert2 = array(
+			//$insert2 = array(
 		
-			'id_prdksi' => $id_prdksi,
-			'nm_brng' => $row->nm_brng,
-			'status' =>'sementara',
+			//'id_prdksi' => $id_prdksi,
+			//'nm_brng' => $row->nm_brng,
+			//'status' =>'sementara',
+			//'waktu_mulai' => $waktu_mulai_produksi,
+			//'waktu_selesai' => $waktu_selesai_produksi
+		//);
+		//====================================== revisi + ========================================//
+		$insert2 = array(
+		
+			'id_jadwal_mesin' => $id_prdksi,
+			'jenis_mesin' => $mesin,
+			'nama_barang' => $row->nm_brng,
+			'status_jadwal' =>'sementara',
 			'waktu_mulai' => $waktu_mulai_produksi,
 			'waktu_selesai' => $waktu_selesai_produksi
 		);
+		$this->m_mesin->input_jadwal($insert2);	
+		//====================================== revisi - ========================================//
+		//$this->m_jadwal_produksi->input_penjadwalan($insert2);
 		
-		$this->m_jadwal_produksi->input_penjadwalan($insert2);
-			
 			}
 		}
 		}
@@ -554,8 +645,9 @@ if($result == true)
 		
 		
 		
-		
-		
+	//====================================== revisi + ========================================//	
+		}
+	//====================================== revisi - ========================================//
 		}
 		
 		
@@ -565,6 +657,7 @@ if($result == true)
 		
 		
 		$b=1;
+		
 	}
 		
 		
@@ -678,7 +771,6 @@ if($result == true)
 		
 		//$this->m_pesanan_barang->update_perkiraan_waktu_selesai_sementara($row->nm_brng, $update2);
 	}
-		
 	 }
 	 }
 	 
