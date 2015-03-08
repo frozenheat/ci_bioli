@@ -272,7 +272,7 @@ function __construct(){
 		$this->db->select('*');
 		$this->db->from('jadwal_mesin');
 		$this->db->where('jenis_mesin',$jenis_mesin);
-		$this->db->order_by('waktu_selesai');
+		$this->db->order_by('waktu_selesai','ASC');
 		$query = $this->db->get();
 		
 		if($query->num_rows())

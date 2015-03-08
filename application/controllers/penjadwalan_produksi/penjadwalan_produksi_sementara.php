@@ -100,13 +100,11 @@ if($result == true)
 			$nama_barang = $row->nm_brng;
 			
 		
-			$waktu_proses_cetak = $jumlah_batch_cetak * $row->wkt_prdksi_cetak;
-			$waktu_proses_bubut = $jumlah_batch_bubut * $row->wkt_prdksi_bubut;
-			$waktu_proses_milling = $jumlah_batch_milling * $row->wkt_prdksi_milling;
+			$waktu_proses_cetak = $jumlah_batch_cetak * ceil($row->wkt_prdksi_cetak / 60);
+			$waktu_proses_bubut = $jumlah_batch_bubut * ceil($row->wkt_prdksi_bubut / 60);
+			$waktu_proses_milling = $jumlah_batch_milling * ceil($row->wkt_prdksi_milling / 60);
 			
-			$waktu_proses_cetak = ceil($waktu_proses_cetak / 60);
-			$waktu_proses_bubut = ceil($waktu_proses_bubut / 60);
-			$waktu_proses_milling = ceil($waktu_proses_milling / 60);
+			
 			
 
 			$total_waktu_proses = $waktu_proses_cetak + $waktu_proses_bubut + $waktu_proses_milling;
@@ -485,7 +483,7 @@ if($result == true)
 	else
 		{
 		echo 'false';
-		$waktu_mulai_produksi = date('Y-m-d H:i',time()+3600);
+		
 	
 
 //====================================== revisi + ========================================//
@@ -494,43 +492,121 @@ if($result == true)
 	if($j==0)
 		{
 		$mesin= 'cetak';
+		$waktu_mulai_produksi = date('Y-m-d H:i',time()+3600);
+		$update_waktu_mulai_produksi = array(
+		'waktu_mulai' => $waktu_mulai_produksi
+		);	
+	$this->m_jadwal_produksi->update_waktu_mulai($update_waktu_mulai_produksi, $row->id_prdksi);
 		}
 		else if($j==1)
 		{
+		echo $waktu_selesai_produksi."    ";
 		$mesin= 'bubut';
-		$waktu_selesai_terakhir_mesin = substr($this->m_mesin->pengecekan_waktu_selesai($mesin),0,15);
-		if( mdate('Y-m-d %H:%i',strtotime($waktu_selesai_produksi)) >= mdate('Y-m-d %H:%i',strtotime($waktu_selesai_terakhir_mesin)))
+		$waktu_selesai_terakhir_mesin = substr($this->m_mesin->pengecekan_waktu_selesai($mesin),0,16);
+	
+		if( strtotime($waktu_selesai_produksi) >= strtotime($waktu_selesai_terakhir_mesin))
 		{
-		$waktu_mulai_produksi = $waktu_selesai_produksi;
+			if (mdate('%H:%i',strtotime(substr($waktu_selesai_produksi, -5))) <= mdate('%H:%i',strtotime('17:00')))
+			{
+		
+			$waktu_mulai_produksi = $waktu_selesai_produksi;
+		 
+			}
+			else
+			{
+		
+			//apabila pemroduksian telah melebihi jam 17:00 pemroduksian akan dialihkan pada hari berikutnya dengan jam mulai produksi adalah jam 07:00
+			$tanggal_selesai_terakhir = substr($waktu_selesai_produksi, 0, 10);
+			$tanggal_selesai_terakhir1 = str_replace('-','/', $tanggal_selesai_terakhir);
+			$tommorow = date('Y-m-d', strtotime($tanggal_selesai_terakhir1."+1 days"));
+		
+			$jam_mulai = "07:00";
+		
+			$waktu_mulai_produksi = $tommorow." ".$jam_mulai;
+			}
+
 		}
 		else
-		{
-			$waktu_mulai_produksi = $waktu_selesai_terakhir_mesin;
+		{	
+			if (mdate('%H:%i',strtotime(substr( $waktu_selesai_terakhir_mesin, -5))) <= mdate('%H:%i',strtotime('17:00')))
+			{
+		
+			$waktu_mulai_produksi =  $waktu_selesai_terakhir_mesin;
+		 
+			}
+			else
+			{
+		
+			//apabila pemroduksian telah melebihi jam 17:00 pemroduksian akan dialihkan pada hari berikutnya dengan jam mulai produksi adalah jam 07:00
+			$tanggal_selesai_terakhir = substr( $waktu_selesai_terakhir_mesin, 0, 10);
+			$tanggal_selesai_terakhir1 = str_replace('-','/', $tanggal_selesai_terakhir);
+			$tommorow = date('Y-m-d', strtotime($tanggal_selesai_terakhir1."+1 days"));
+		
+			$jam_mulai = "07:00";
+		
+			$waktu_mulai_produksi = $tommorow." ".$jam_mulai;
+			}
+
 		}
 		}
 		else if($j==2)
 		{
 		$mesin= 'milling';
-	$waktu_selesai_terakhir_mesin = substr($this->m_mesin->pengecekan_waktu_selesai($mesin),0,15);
-		if( mdate('Y-m-d %H:%i',strtotime($waktu_selesai_produksi)) >= mdate('Y-m-d %H:%i',strtotime($waktu_selesai_terakhir_mesin)))
+	$waktu_selesai_terakhir_mesin = substr($this->m_mesin->pengecekan_waktu_selesai($mesin),0,16);
+		if( strtotime($waktu_selesai_produksi) >= strtotime($waktu_selesai_terakhir_mesin))
 		{
-		$waktu_mulai_produksi = $waktu_selesai_produksi;
+			
+			if (mdate('%H:%i',strtotime(substr($waktu_selesai_produksi, -5))) <= mdate('%H:%i',strtotime('17:00')))
+			{
+		
+			$waktu_mulai_produksi = $waktu_selesai_produksi;
+		 
+			}
+			else
+			{
+		
+			//apabila pemroduksian telah melebihi jam 17:00 pemroduksian akan dialihkan pada hari berikutnya dengan jam mulai produksi adalah jam 07:00
+			$tanggal_selesai_terakhir = substr($waktu_selesai_produksi, 0, 10);
+			$tanggal_selesai_terakhir1 = str_replace('-','/', $tanggal_selesai_terakhir);
+			$tommorow = date('Y-m-d', strtotime($tanggal_selesai_terakhir1."+1 days"));
+		
+			$jam_mulai = "07:00";
+		
+			$waktu_mulai_produksi = $tommorow." ".$jam_mulai;
+			}
 		}
 		else
 		{
-			$waktu_mulai_produksi = $waktu_selesai_terakhir_mesin;
+			if (mdate('%H:%i',strtotime(substr( $waktu_selesai_terakhir_mesin, -5))) <= mdate('%H:%i',strtotime('17:00')))
+			{
+		
+			$waktu_mulai_produksi =  $waktu_selesai_terakhir_mesin;
+		 
+			}
+			else
+			{
+		
+			//apabila pemroduksian telah melebihi jam 17:00 pemroduksian akan dialihkan pada hari berikutnya dengan jam mulai produksi adalah jam 07:00
+			$tanggal_selesai_terakhir = substr( $waktu_selesai_terakhir_mesin, 0, 10);
+			$tanggal_selesai_terakhir1 = str_replace('-','/', $tanggal_selesai_terakhir);
+			$tommorow = date('Y-m-d', strtotime($tanggal_selesai_terakhir1."+1 days"));
+		
+			$jam_mulai = "07:00";
+		
+			$waktu_mulai_produksi = $tommorow." ".$jam_mulai;
+			}
 		}
 		}
-		echo $waktu_mulai_produksi."<br/>";
+		
 	$id_pro_mesin = $this->m_mesin->cari_id_pro_mesin($row->id_prdksi, $mesin);
 		//====================================== revisi - ========================================//
 	
 		
 //bagian penghitungan waktu pemrosesan berdasarkan batch
-	$update_waktu_mulai_produksi = array(
-	'waktu_mulai' => $waktu_mulai_produksi
-	);	
-	$this->m_jadwal_produksi->update_waktu_mulai($update_waktu_mulai_produksi, $row->id_prdksi);
+	//$update_waktu_mulai_produksi = array(
+	//'waktu_mulai' => $waktu_mulai_produksi
+	//);	
+	//$this->m_jadwal_produksi->update_waktu_mulai($update_waktu_mulai_produksi, $row->id_prdksi);
 	//====================================== revisi + ========================================//
 	
 	$this->m_mesin->update_waktu_mulai_mesin($update_waktu_mulai_produksi, $id_pro_mesin);
@@ -560,7 +636,10 @@ if($result == true)
 			);
 			//$this->m_jadwal_produksi->update_waktu_selesai($update_waktu_selesai_produksi, $id_prdksi);
 			//====================================== revisi + ========================================//
-			
+			if($j==2)
+			{
+			$this->m_jadwal_produksi->update_waktu_selesai($update_waktu_selesai_produksi, $id_prdksi);
+			}
 			$this->m_mesin->update_waktu_selesai($update_waktu_selesai_produksi, $id_pro_mesin);
 			
 			//====================================== revisi - ========================================//
@@ -576,8 +655,12 @@ if($result == true)
 			'waktu_selesai' => $waktu_selesai_produksi
 			);
 			//$this->m_jadwal_produksi->update_waktu_selesai($update_waktu_selesai_produksi, $id_prdksi);
-			//====================================== revisi + ========================================//
 			
+			//====================================== revisi + ========================================//
+			if($j==2)
+			{
+			$this->m_jadwal_produksi->update_waktu_selesai($update_waktu_selesai_produksi, $id_prdksi);
+			}
 			$this->m_mesin->update_waktu_selesai($update_waktu_selesai_produksi, $id_pro_mesin);
 			
 			//====================================== revisi - ========================================//
@@ -589,6 +672,7 @@ if($result == true)
 			$tanggal_selesai_terakhir = substr($waktu_selesai_produksi, 0, 10);
 			$tanggal_selesai_terakhir1 = str_replace('-','/', $tanggal_selesai_terakhir);
 			$tommorow = date('Y-m-d', strtotime($tanggal_selesai_terakhir1."+1 days"));
+			$jam_mulai = "07:00";
 			$waktu_mulai_produksi = $tommorow." ".$jam_mulai;
 			$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_mulai_produksi)+$waktu_pemrosesan);
 			
@@ -604,7 +688,7 @@ if($result == true)
 			//====================================== revisi - ========================================//
 			//$acak=$this->m_acak->jadwal_prdksi();
 			$id_prdksi = $id_jns.$waktu.$acak;
-			
+			$id_pro_mesin = $id_prdksi;
 			
 			//$insert2 = array(
 		
@@ -625,6 +709,14 @@ if($result == true)
 			'waktu_selesai' => $waktu_selesai_produksi
 		);
 		$this->m_mesin->input_jadwal($insert2);	
+		$id_prdksi = $row->id_prdksi;
+		$update_waktu_selesai_produksi = array(
+			'waktu_selesai' => $waktu_selesai_produksi
+			);
+			if($j==2)
+			{
+			$this->m_jadwal_produksi->update_waktu_selesai($update_waktu_selesai_produksi, $id_prdksi);
+			}
 		//====================================== revisi - ========================================//
 		//$this->m_jadwal_produksi->input_penjadwalan($insert2);
 		
@@ -667,34 +759,163 @@ if($result == true)
 		
 		
 		
-		if (mdate('%H:%i',strtotime(substr($waktu_selesai_produksi, -5))) <= mdate('%H:%i',strtotime('17:00')))
+		//====================================== revisi + ========================================//
+	for($j=0; $j<3; $j++)
+	{
+	if($j==0)
 		{
+		$mesin= 'cetak';
+		$waktu_selesai_terakhir_mesin = substr($this->m_mesin->pengecekan_waktu_selesai($mesin),0,16);
+		if (mdate('%H:%i',strtotime(substr( $waktu_selesai_terakhir_mesin, -5))) <= mdate('%H:%i',strtotime('17:00')))
+			{
 		
-		$waktu_mulai_produksi = $waktu_selesai_produksi;
+			$waktu_mulai_produksi =  $waktu_selesai_terakhir_mesin;
 		 
+			}
+			else
+			{
+		
+			//apabila pemroduksian telah melebihi jam 17:00 pemroduksian akan dialihkan pada hari berikutnya dengan jam mulai produksi adalah jam 07:00
+			$tanggal_selesai_terakhir = substr( $waktu_selesai_terakhir_mesin, 0, 10);
+			$tanggal_selesai_terakhir1 = str_replace('-','/', $tanggal_selesai_terakhir);
+			$tommorow = date('Y-m-d', strtotime($tanggal_selesai_terakhir1."+1 days"));
+		
+			$jam_mulai = "07:00";
+		
+			$waktu_mulai_produksi = $tommorow." ".$jam_mulai;
+			}
+		$update_waktu_mulai_produksi = array(
+	'waktu_mulai' => $waktu_mulai_produksi
+	);	
+	$this->m_jadwal_produksi->update_waktu_mulai($update_waktu_mulai_produksi, $row->id_prdksi);	
+
+		}
+		else if($j==1)
+		{
+		echo $waktu_selesai_produksi."    ";
+		$mesin= 'bubut';
+		$waktu_selesai_terakhir_mesin = substr($this->m_mesin->pengecekan_waktu_selesai($mesin),0,16);
+	
+		if( strtotime($waktu_selesai_produksi) >= strtotime($waktu_selesai_terakhir_mesin))
+		{
+			if (mdate('%H:%i',strtotime(substr($waktu_selesai_produksi, -5))) <= mdate('%H:%i',strtotime('17:00')))
+			{
+		
+			$waktu_mulai_produksi = $waktu_selesai_produksi;
+		 
+			}
+			else
+			{
+		
+			//apabila pemroduksian telah melebihi jam 17:00 pemroduksian akan dialihkan pada hari berikutnya dengan jam mulai produksi adalah jam 07:00
+			$tanggal_selesai_terakhir = substr($waktu_selesai_produksi, 0, 10);
+			$tanggal_selesai_terakhir1 = str_replace('-','/', $tanggal_selesai_terakhir);
+			$tommorow = date('Y-m-d', strtotime($tanggal_selesai_terakhir1."+1 days"));
+		
+			$jam_mulai = "07:00";
+		
+			$waktu_mulai_produksi = $tommorow." ".$jam_mulai;
+			}
+
+		}
+		else
+		{	
+			if (mdate('%H:%i',strtotime(substr( $waktu_selesai_terakhir_mesin, -5))) <= mdate('%H:%i',strtotime('17:00')))
+			{
+		
+			$waktu_mulai_produksi =  $waktu_selesai_terakhir_mesin;
+		 
+			}
+			else
+			{
+		
+			//apabila pemroduksian telah melebihi jam 17:00 pemroduksian akan dialihkan pada hari berikutnya dengan jam mulai produksi adalah jam 07:00
+			$tanggal_selesai_terakhir = substr( $waktu_selesai_terakhir_mesin, 0, 10);
+			$tanggal_selesai_terakhir1 = str_replace('-','/', $tanggal_selesai_terakhir);
+			$tommorow = date('Y-m-d', strtotime($tanggal_selesai_terakhir1."+1 days"));
+		
+			$jam_mulai = "07:00";
+		
+			$waktu_mulai_produksi = $tommorow." ".$jam_mulai;
+			}
+
+		}
+		}
+		else if($j==2)
+		{
+		$mesin= 'milling';
+	$waktu_selesai_terakhir_mesin = substr($this->m_mesin->pengecekan_waktu_selesai($mesin),0,16);
+		if( strtotime($waktu_selesai_produksi) >= strtotime($waktu_selesai_terakhir_mesin))
+		{
+			
+			if (mdate('%H:%i',strtotime(substr($waktu_selesai_produksi, -5))) <= mdate('%H:%i',strtotime('17:00')))
+			{
+		
+			$waktu_mulai_produksi = $waktu_selesai_produksi;
+		 
+			}
+			else
+			{
+		
+			//apabila pemroduksian telah melebihi jam 17:00 pemroduksian akan dialihkan pada hari berikutnya dengan jam mulai produksi adalah jam 07:00
+			$tanggal_selesai_terakhir = substr($waktu_selesai_produksi, 0, 10);
+			$tanggal_selesai_terakhir1 = str_replace('-','/', $tanggal_selesai_terakhir);
+			$tommorow = date('Y-m-d', strtotime($tanggal_selesai_terakhir1."+1 days"));
+		
+			$jam_mulai = "07:00";
+		
+			$waktu_mulai_produksi = $tommorow." ".$jam_mulai;
+			}
 		}
 		else
 		{
+			if (mdate('%H:%i',strtotime(substr( $waktu_selesai_terakhir_mesin, -5))) <= mdate('%H:%i',strtotime('17:00')))
+			{
 		
-		//apabila pemroduksian telah melebihi jam 17:00 pemroduksian akan dialihkan pada hari berikutnya dengan jam mulai produksi adalah jam 07:00
-		$tanggal_selesai_terakhir = substr($waktu_selesai_produksi, 0, 10);
-		$tanggal_selesai_terakhir1 = str_replace('-','/', $tanggal_selesai_terakhir);
-		$tommorow = date('Y-m-d', strtotime($tanggal_selesai_terakhir1."+1 days"));
+			$waktu_mulai_produksi =  $waktu_selesai_terakhir_mesin;
+		 
+			}
+			else
+			{
 		
-		$jam_mulai = "07:00";
+			//apabila pemroduksian telah melebihi jam 17:00 pemroduksian akan dialihkan pada hari berikutnya dengan jam mulai produksi adalah jam 07:00
+			$tanggal_selesai_terakhir = substr( $waktu_selesai_terakhir_mesin, 0, 10);
+			$tanggal_selesai_terakhir1 = str_replace('-','/', $tanggal_selesai_terakhir);
+			$tommorow = date('Y-m-d', strtotime($tanggal_selesai_terakhir1."+1 days"));
 		
-		$waktu_mulai_produksi = $tommorow." ".$jam_mulai;
+			$jam_mulai = "07:00";
+		
+			$waktu_mulai_produksi = $tommorow." ".$jam_mulai;
+			}
 		}
+		}
+		
+	$id_pro_mesin = $this->m_mesin->cari_id_pro_mesin($row->id_prdksi, $mesin);
+		//====================================== revisi - ========================================//
 
 //bagian penghitungan waktu pemrosesan berdasarkan batch
-	$update_waktu_mulai_produksi = array(
-	'waktu_mulai' => $waktu_mulai_produksi
-	);	
-	$this->m_jadwal_produksi->update_waktu_mulai($update_waktu_mulai_produksi, $row->id_prdksi);
-	$waktu_pemrosesan = ($row->wkt_prdksi / $row->jumlah_batch) * 3600;
+	//$update_waktu_mulai_produksi = array(
+	//'waktu_mulai' => $waktu_mulai_produksi
+	//);	
+	//$this->m_jadwal_produksi->update_waktu_mulai($update_waktu_mulai_produksi, $row->id_prdksi);
+	//====================================== revisi + ========================================//
+	
+	$this->m_mesin->update_waktu_mulai_mesin($update_waktu_mulai_produksi, $id_pro_mesin);
+	$data_jadwal_mesin = $this->m_mesin->ambil_data_mesin($id_pro_mesin);
+	$data_waktu_jadwal_mesin = $data_jadwal_mesin['waktu_jadwal'];
+	$data_jenis_mesin = $data_jadwal_mesin['jenis_mesin'];
+	$data_waktu_proses_mesin = $data_jadwal_mesin['waktu_proses'];
+	$data_batch_mesin = $data_jadwal_mesin['jumlah_batch'];
+	$waktu_pemrosesan = ($data_waktu_proses_mesin/ $data_batch_mesin) * 3600;
+
+	//====================================== revisi - ========================================//
+	//$waktu_pemrosesan = ($row->wkt_prdksi / $row->jumlah_batch) * 3600;
 	$id_prdksi = $row->id_prdksi;
 		$h=0;
-		for ($g=0;$g<$row->jumlah_batch;$g++)
+		//for ($g=0;$g<$row->jumlah_batch;$g++)
+		//====================================== revisi + ========================================//
+		for ($g=0;$g<$data_batch_mesin;$g++)
+		//====================================== revisi - ========================================//
 		{		
 		if ($h==0)
 		{
@@ -703,7 +924,15 @@ if($result == true)
 			$update_waktu_selesai_produksi = array(
 			'waktu_selesai' => $waktu_selesai_produksi
 			);
+			//$this->m_jadwal_produksi->update_waktu_selesai($update_waktu_selesai_produksi, $id_prdksi);
+			//====================================== revisi + ========================================//
+			if($j==2)
+			{
 			$this->m_jadwal_produksi->update_waktu_selesai($update_waktu_selesai_produksi, $id_prdksi);
+			}
+			$this->m_mesin->update_waktu_selesai($update_waktu_selesai_produksi, $id_pro_mesin);
+			
+			//====================================== revisi - ========================================//
 			
 			$h=1;
 		}
@@ -716,8 +945,15 @@ if($result == true)
 			$update_waktu_selesai_produksi = array(
 			'waktu_selesai' => $waktu_selesai_produksi
 			);
+			//$this->m_jadwal_produksi->update_waktu_selesai($update_waktu_selesai_produksi, $id_prdksi);
+			//====================================== revisi + ========================================//
+			if($j==2)
+			{
 			$this->m_jadwal_produksi->update_waktu_selesai($update_waktu_selesai_produksi, $id_prdksi);
-		
+			}
+			$this->m_mesin->update_waktu_selesai($update_waktu_selesai_produksi, $id_pro_mesin);
+			
+			//====================================== revisi - ========================================//
 			}
 			else
 			{
@@ -733,23 +969,45 @@ if($result == true)
 		
 			$waktu = mdate($datestring,$time);
 			
-			$id_jns = substr($row->id_prdksi, 0 ,1);
+			//$id_jns = substr($row->id_prdksi, 0 ,1);
+			//====================================== revisi + ========================================//
+			$id_jns = substr($id_pro_mesin, 0 ,2);
+			$acak=$this->m_acak->jadwal_cetak();
+			//====================================== revisi - ========================================//
 			
-			
-			$acak=$this->m_acak->jadwal_prdksi();
+			//$acak=$this->m_acak->jadwal_prdksi();
 			$id_prdksi = $id_jns.$waktu.$acak;
+			$id_pro_mesin = $id_prdksi;
 			
-			
-			$insert2 = array(
+			//$insert2 = array(
 		
-			'id_prdksi' => $id_prdksi,
-			'nm_brng' => $row->nm_brng,
-			'status' =>'sementara',
+			//'id_prdksi' => $id_prdksi,
+			//'nm_brng' => $row->nm_brng,
+			//'status' =>'sementara',
+			//'waktu_mulai' => $waktu_mulai_produksi,
+			//'waktu_selesai' => $waktu_selesai_produksi
+		//);
+		//====================================== revisi + ========================================//
+		$insert2 = array(
+		
+			'id_jadwal_mesin' => $id_prdksi,
+			'jenis_mesin' => $mesin,
+			'nama_barang' => $row->nm_brng,
+			'status_jadwal' =>'sementara',
 			'waktu_mulai' => $waktu_mulai_produksi,
 			'waktu_selesai' => $waktu_selesai_produksi
 		);
-		
-		$this->m_jadwal_produksi->input_penjadwalan($insert2);
+		$this->m_mesin->input_jadwal($insert2);	
+		$id_prdksi = $row->id_prdksi;
+		$update_waktu_selesai_produksi = array(
+			'waktu_selesai' => $waktu_selesai_produksi
+			);
+			if($j==2)
+			{
+			$this->m_jadwal_produksi->update_waktu_selesai($update_waktu_selesai_produksi, $id_prdksi);
+			}
+		//====================================== revisi - ========================================//
+		//$this->m_jadwal_produksi->input_penjadwalan($insert2);
 			
 			}
 		}
@@ -771,6 +1029,7 @@ if($result == true)
 		
 		//$this->m_pesanan_barang->update_perkiraan_waktu_selesai_sementara($row->nm_brng, $update2);
 	}
+	 }
 	 }
 	 }
 	 
