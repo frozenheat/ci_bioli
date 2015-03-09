@@ -291,9 +291,20 @@ function __construct(){
 	
 	function hapus_jadwal_sementara()
 		{
-			$this->db->where('status','sementara');
+			$this->db->where('status_jadwal','sementara');
 			$this->db->delete('jadwal_mesin');
 		}
+	
+	function pilih_mesin_berdasarkan_form($jenis_mesin)
+	{
+		$this->db->select('*');
+		$this->db->from('jadwal_mesin');
+		$this->db->where('jenis_mesin',$jenis_mesin);
+		$this->db->order_by('waktu_mulai','ASC');
+		$query = $this->db->get();
+		
+		return $query->result();
+	}
 	
 }
 ?>

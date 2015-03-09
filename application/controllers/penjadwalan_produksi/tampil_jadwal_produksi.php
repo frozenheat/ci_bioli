@@ -7,7 +7,7 @@ class tampil_jadwal_produksi Extends CI_Controller
 		parent::__construct();
 		$this->load->model('m_jadwal_produksi');
 		$this->load->model('m_pesanan_barang');
-	
+		$this->load->model('m_mesin');
 	
 	}
 	
@@ -53,6 +53,21 @@ class tampil_jadwal_produksi Extends CI_Controller
 		}
 		}
 	}
+	
+	function pilih_mesin()
+	{
+		if ($this->session->userdata('logged_in'))
+		{
+		$session_data=$this->session->userdata('logged_in');
+		$data['body']='jadwal_produksi';
+		$data['otoritas']=$session_data['otoritas'];
+		//echo $this->input->POST('jenis_mesin');
+		$data['data_mesin'] = $this->m_mesin->pilih_mesin_berdasarkan_form($this->input->POST('jenis_mesin'));
+		$this->load->view('hlm_utm',$data);
+		}
+		
+	}
+	
 }
 
 

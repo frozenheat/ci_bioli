@@ -1,24 +1,31 @@
 <script>
-function konfirmasi(id_produksi)
+function pilih_mesin()
 {
-	document.getElementById('id_produksi').value = id_produksi;
-	document.getElementById('konfirmasi_proses_produksi').submit();
+	document.getElementById('pilihan_mesin').submit();
 }
 </script>
+
+
+
+
+<table>
+<form id ='pilihan_mesin' method ='POST' action ='<?php echo site_url();?>/penjadwalan_produksi/tampil_jadwal_produksi/pilih_mesin' >
+<tr><td>Jenis Mesin :</td><td><select name="jenis_mesin" onchange ='pilih_mesin()'><option></option><option value="cetak">Mesin cetak</option><option value="bubut">Mesin bubut</option><option value="milling">Mesin milling</option></select></td></tr>
+</form>
+</table>
+
 
 <center>
 <a style="font-size:24pt; color:#801515; letter-spacing:7px; display:inline-block;">Jadwal Produksi</a><br>
 
-<?php if (!isset($jadwal_produksi))
-{
-echo "<a style='padding-top:60px; display:inline-block;'> tidak ada jadwal produksi</a>";
-}
-else
+<?php 
+
+if(isset($jadwal_produksi))
 {
 ?>
-<div class="scroll" style="margin-top:30px; width:1176px;">
+<div class="scroll" style="margin-top:30px; width:778px;">
 <table border=1 class="table-data">
-<tr><td>Id produksi</td><td>Nama barang</td><td>Waktu produksi</td><td>Jumlah batch produksi</td><td>Waktu mulai produksi</td><td>Waktu selesai produksi</td><td>Keterangan</td><td>Terpenuhi</td></tr>
+<tr><td>Id produksi</td><td>Nama barang</td><td>Waktu produksi</td><td>Waktu mulai produksi</td><td>Waktu selesai produksi</td></tr>
 
 <?php if ($otoritas=='admin_utama'||$otoritas=='admin_produksi')
 {
@@ -39,12 +46,12 @@ foreach ($jadwal_produksi as $row)
 	if ($row->wkt_prdksi == 0 && $row->jumlah_batch == 0)
 	{
 	echo "<td><center>-</center></td>";
-	echo "<td><center>-</center></td>";
+
 	}
 	else
 	{
 	echo "<td>".$row->wkt_prdksi." jam</td>";
-	echo "<td>".$row->jumlah_batch." kali</td>";
+
 	}
 	
 	echo "<td>".$row->waktu_mulai."</td>";
@@ -55,15 +62,7 @@ foreach ($jadwal_produksi as $row)
 	echo "<td>Lanjutan</td>";
 	
 	}
-	else
-	{
-	echo "<td>Awal</td>";
-	if ($a == 0)
-	{
-	echo "<td><input type='checkbox' onclick='konfirmasi(\"$row->id_prdksi\")'></td>";
-	$a++;
-	}
-	}
+
 	
 	echo "</tr>";
 
@@ -82,6 +81,35 @@ else
 </table>
 </div>
 <?php
+}
+else if(isset($data_mesin))
+{?>
+	<div class="scroll" style="margin-top:30px; width:778px;">
+		<table border=1 class="table-data">
+		<tr><td>Id Jadwal</td><td>Jenis Mesin</td><td>Id Produksi</td><td>Nama Barang</td><td>Waktu Produksi</td><td>Jumlah Batch</td><td>Waktu Mulai</td><td>Waktu Selesai</td></tr>
+		<?php
+			foreach($data_mesin as $row)
+			{ ?>
+			<tr>
+			<td><?php echo $row->id_jadwal_mesin; ?></td>
+			<td><?php echo $row->jenis_mesin; ?></td>
+			<td><?php echo $row->id_prdksi; ?></td>
+			<td><?php echo $row->nama_barang; ?></td>
+			<td><?php echo $row->waktu_prdksi ?></td>
+			<td><?php echo $row->jumlah_batch; ?></td>
+			<td><?php echo $row->waktu_mulai; ?></td>
+			<td><?php echo $row->waktu_selesai; ?></td>
+			</tr>
+			<?php
+			}
+		?>
+		</table>
+	</div>
+<?php
+}
+else
+{
+echo "<a style='padding-top:60px; display:inline-block;'> tidak ada jadwal produksi</a>";
 }
 ?>
 </center

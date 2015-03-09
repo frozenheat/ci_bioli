@@ -62,7 +62,7 @@
 			//end
 			foreach ($query->result() as $row)
 			{
-				$this->db->select('nm_brng, nm_jns_brng, lot_size, wkt_prdksi');
+				$this->db->select('*');
 				$this->db->from('barang');
 				$this->db->where('nm_brng',$row->nama_barang);
 				$query2[$a]= $this->db->get();
