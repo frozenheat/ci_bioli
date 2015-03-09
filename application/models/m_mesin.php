@@ -289,7 +289,11 @@ function __construct(){
 		}
 	}
 	
-
+	function hapus_jadwal_sementara()
+		{
+			$this->db->where('status','sementara');
+			$this->db->delete('jadwal_mesin');
+		}
 	
 }
 ?>
