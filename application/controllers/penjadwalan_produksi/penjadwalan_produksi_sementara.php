@@ -337,9 +337,10 @@ if($result == true)
 		}
 		else
 		{	
+	
 			if (mdate('%H:%i',strtotime(substr( $waktu_selesai_terakhir_mesin, -5))) <= mdate('%H:%i',strtotime('17:00')))
 			{
-		
+			$waktu_selesai_terakhir_mesin = date('Y-m-d H:i',strtotime($waktu_selesai_terakhir_mesin)+1800);
 			$waktu_mulai_produksi =  $waktu_selesai_terakhir_mesin;
 		 
 			}
@@ -388,7 +389,7 @@ if($result == true)
 		{
 			if (mdate('%H:%i',strtotime(substr( $waktu_selesai_terakhir_mesin, -5))) <= mdate('%H:%i',strtotime('17:00')))
 			{
-		
+			$waktu_selesai_terakhir_mesin = date('Y-m-d H:i',strtotime($waktu_selesai_terakhir_mesin)+1800);
 			$waktu_mulai_produksi =  $waktu_selesai_terakhir_mesin;
 		 
 			}
@@ -537,7 +538,7 @@ if($result == true)
 		}
 //selesai
 		//====================================== revisi + ========================================//
-		$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_selesai_produksi)+1800);	
+		//$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_selesai_produksi)+1800);	
 		}
 		//====================================== revisi - ========================================//
 		$update2 = array(
@@ -623,7 +624,7 @@ if($result == true)
 		{	
 			if (mdate('%H:%i',strtotime(substr( $waktu_selesai_terakhir_mesin, -5))) <= mdate('%H:%i',strtotime('17:00')))
 			{
-		
+			$waktu_selesai_terakhir_mesin = date('Y-m-d H:i',strtotime($waktu_selesai_terakhir_mesin)+1800);
 			$waktu_mulai_produksi =  $waktu_selesai_terakhir_mesin;
 		 
 			}
@@ -672,7 +673,7 @@ if($result == true)
 		{
 			if (mdate('%H:%i',strtotime(substr( $waktu_selesai_terakhir_mesin, -5))) <= mdate('%H:%i',strtotime('17:00')))
 			{
-		
+			$waktu_selesai_terakhir_mesin = date('Y-m-d H:i',strtotime($waktu_selesai_terakhir_mesin)+1800);
 			$waktu_mulai_produksi =  $waktu_selesai_terakhir_mesin;
 		 
 			}
@@ -819,7 +820,7 @@ if($result == true)
 		
 		
 	//====================================== revisi + ========================================//
-$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_selesai_produksi)+1800);		
+//$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_selesai_produksi)+1800);		
 		}
 	//====================================== revisi - ========================================//	
 		
@@ -886,7 +887,7 @@ $waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_selesai_produksi)+18
 		{	
 			if (mdate('%H:%i',strtotime(substr( $waktu_selesai_terakhir_mesin, -5))) <= mdate('%H:%i',strtotime('17:00')))
 			{
-		
+			$waktu_selesai_terakhir_mesin = date('Y-m-d H:i',strtotime($waktu_selesai_terakhir_mesin)+1800);
 			$waktu_mulai_produksi =  $waktu_selesai_terakhir_mesin;
 		 
 			}
@@ -1084,7 +1085,7 @@ $waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_selesai_produksi)+18
 		
 		
 	//====================================== revisi + ========================================//
-	$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_selesai_produksi)+1800);	
+	//$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_selesai_produksi)+1800);	
 		}
 	//====================================== revisi - ========================================//	
 		$update2 = array(
@@ -1181,7 +1182,7 @@ $waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_selesai_produksi)+18
 		{	
 			if (mdate('%H:%i',strtotime(substr( $waktu_selesai_terakhir_mesin, -5))) <= mdate('%H:%i',strtotime('17:00')))
 			{
-		
+		$waktu_selesai_terakhir_mesin = date('Y-m-d H:i',strtotime($waktu_selesai_terakhir_mesin)+1800);
 			$waktu_mulai_produksi =  $waktu_selesai_terakhir_mesin;
 		 
 			}
@@ -1230,7 +1231,7 @@ $waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_selesai_produksi)+18
 		{
 			if (mdate('%H:%i',strtotime(substr( $waktu_selesai_terakhir_mesin, -5))) <= mdate('%H:%i',strtotime('17:00')))
 			{
-		
+		$waktu_selesai_terakhir_mesin = date('Y-m-d H:i',strtotime($waktu_selesai_terakhir_mesin)+1800);
 			$waktu_mulai_produksi =  $waktu_selesai_terakhir_mesin;
 		 
 			}
@@ -1377,7 +1378,7 @@ $waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_selesai_produksi)+18
 		
 		
 	//====================================== revisi + ========================================//
-	$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_selesai_produksi)+1800);		
+	//$waktu_selesai_produksi = date('Y-m-d H:i',strtotime($waktu_selesai_produksi)+1800);		
 		}
 	//====================================== revisi - ========================================//		
 		$update2 = array(
