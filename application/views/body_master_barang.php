@@ -42,12 +42,12 @@ foreach ($jenis_barang as $row)
 }
 ?>
 </select></td></tr>
-<tr><td>Lot size cetak:</td><td><input type ="text" name="lot_cetak"></td></tr>
-<tr><td>Lot size bubut:</td><td><input type ="text" name="lot_bubut"></td></tr>
-<tr><td>Lot size milling:</td><td><input type ="text" name="lot_milling"></td></tr>
-<tr><td>Waktu cetak:</td><td><input type ="text" name="waktu_cetak"></td></tr>
-<tr><td>Waktu bubut:</td><td><input type ="text" name="waktu_bubut"></td></tr>
-<tr><td>Waktu milling:</td><td><input type ="text" name="waktu_milling"></td></tr>
+<tr style='display:none'><td>Lot size cetak:</td><td><input type ="text" name="lot_cetak"></td></tr>
+<tr style='display:none'><td>Lot size bubut:</td><td><input type ="text" name="lot_bubut"></td></tr>
+<tr style='display:none'><td>Lot size milling:</td><td><input type ="text" name="lot_milling"></td></tr>
+<tr style='display:none'><td>Waktu cetak:</td><td><input type ="text" name="waktu_cetak"></td></tr>
+<tr style='display:none'><td>Waktu bubut:</td><td><input type ="text" name="waktu_bubut"></td></tr>
+<tr style='display:none'><td>Waktu milling:</td><td><input type ="text" name="waktu_milling"></td></tr>
 <?php 
 }
 else
@@ -67,7 +67,7 @@ if ($barang)
 <center>
 <div class="scroll">
 <table border=1 class="table-data">
-<tr><td>Id barang</td><td>Nama barang</td><td>Jenis barang</td><td>Lot size cetak</td><td>Lot size bubut</td><td>Lot size milling</td><td>Waktu cetak (menit)</td><td>Waktu bubut (menit)</td><td>Waktu milling (menit)</td></tr>
+<tr><td>Id barang</td><td>Nama barang</td><td>Jenis barang</td><td style='display:none'>Lot size cetak</td><td style='display:none'>Lot size bubut</td><td style='display:none'>Lot size milling</td><td style='display:none'>Waktu cetak</td><td style='display:none'>Waktu bubut</td><td style='display:none'>Waktu milling</td></tr>
 
 <?php if ($otoritas=='admin_utama'||$otoritas=='admin_produksi')
 {
@@ -79,12 +79,12 @@ foreach ($barang as $row)
 	echo "<td>".$row->id_brng."</td>";
 	echo "<td>".$row->nm_brng."</td>";
 	echo "<td>".$row->nm_jns_brng."</td>";
-	echo "<td>".$row->lot_size_cetak."</td>";
-	echo "<td>".$row->lot_size_bubut."</td>";
-	echo "<td>".$row->lot_size_milling."</td>";
-	echo "<td>".$row->wkt_prdksi_cetak."</td>";
-	echo "<td>".$row->wkt_prdksi_bubut."</td>";
-	echo "<td>".$row->wkt_prdksi_milling."</td>";
+	echo "<td style='display:none'>".$row->lot_size_cetak."</td>";
+	echo "<td style='display:none'>".$row->lot_size_bubut."</td>";
+	echo "<td style='display:none'>".$row->lot_size_milling."</td>";
+	echo "<td style='display:none'>".$row->wkt_prdksi_cetak."</td>";
+	echo "<td style='display:none'>".$row->wkt_prdksi_bubut."</td>";
+	echo "<td style='display:none'>".$row->wkt_prdksi_milling."</td>";
 	echo "</tr>";
 
 }	

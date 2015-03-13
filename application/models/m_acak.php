@@ -72,7 +72,7 @@ class m_acak extends CI_Model
 			{
 			@$acak.=strtoupper($line);
 			$no++;
-			if (($no >= 5)) break;
+			if (($no >= 3)) break;
 			}
 		return $acak;
 	}

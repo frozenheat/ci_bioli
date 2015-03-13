@@ -100,9 +100,9 @@ if($result == true)
 			$nama_barang = $row->nm_brng;
 			
 		
-			$waktu_proses_cetak = $jumlah_batch_cetak * ceil($row->wkt_prdksi_cetak / 60);
-			$waktu_proses_bubut = $jumlah_batch_bubut * ceil($row->wkt_prdksi_bubut / 60);
-			$waktu_proses_milling = $jumlah_batch_milling * ceil($row->wkt_prdksi_milling / 60);
+			$waktu_proses_cetak = $jumlah_batch_cetak * $row->wkt_prdksi_cetak;
+			$waktu_proses_bubut = $jumlah_batch_bubut * $row->wkt_prdksi_bubut;
+			$waktu_proses_milling = $jumlah_batch_milling * $row->wkt_prdksi_milling;
 			
 			
 			
@@ -183,9 +183,9 @@ if($result == true)
 			$nama_barang = $row->nm_brng;
 			
 		
-			$waktu_proses_cetak = $jumlah_batch_cetak * ceil($row->wkt_prdksi_cetak / 60);
-			$waktu_proses_bubut = $jumlah_batch_bubut * ceil($row->wkt_prdksi_bubut / 60);
-			$waktu_proses_milling = $jumlah_batch_milling * ceil($row->wkt_prdksi_milling / 60);
+			$waktu_proses_cetak = $jumlah_batch_cetak * $row->wkt_prdksi_cetak;
+			$waktu_proses_bubut = $jumlah_batch_bubut * $row->wkt_prdksi_bubut ;
+			$waktu_proses_milling = $jumlah_batch_milling * $row->wkt_prdksi_milling;
 			
 			
 			
