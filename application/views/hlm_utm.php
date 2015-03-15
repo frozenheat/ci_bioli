@@ -106,6 +106,10 @@ if(!isset($body))
 		{
 		$this->load->view('body_waktu_produksi');
 		}
+		else if($body=="kapasitas")
+		{
+		$this->load->view('body_master_kapasitas');
+		}
 		}
 
 ?>

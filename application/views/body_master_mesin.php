@@ -6,8 +6,8 @@
 echo validation_errors();
 echo form_open(site_url().'/master_mesin/input_mesin/master_mesin');
 ?>
-
-<tr><td>Jenis mesin:</td><td><input type ="text" name="jenis_mesin"></td></tr>
+<tr><td>Nama mesin :</td><td><input type="text" name="nama_mesin"></td></tr>
+<tr><td>Jenis mesin :</td><td><select name="jenis_mesin"><option value="cetak">cetak</option><option value="bubut">bubut</option><option value="milling">milling</option></select></tr>
 <tr><td></td><td><input type="submit" name="tambah" value="tambah" class="submit"></td></tr>
 </form>
 </table>

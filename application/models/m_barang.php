@@ -10,7 +10,7 @@ class m_barang extends CI_Model{
 	$result=array();
 	if ($query->num_rows() > 0)
 	{
-	$result=$query->result();
+	$result = $query->result();
 	return $result;
 	}
 	else

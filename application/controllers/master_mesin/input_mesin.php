@@ -14,24 +14,17 @@ class input_mesin extends CI_Controller{
 	function master_mesin()
 	{
 		$jenis_mesin = $this->input->POST('jenis_mesin');
+		$nama_mesin = $this->input->POST('nama_mesin');
 		$acak = $this->m_acak->master_mesin();
 		
 		$id_mesin = 'z'.$acak;
 		
-		$urutan_mesin = $this->m_mesin->urutan_mesin();
-		
-		foreach($urutan_mesin as $row)
-		{
-			$urutan = $row->urutan;
-		}
-	
-			$urutan = $urutan + 1;
-		
+
 		$insert = array(
 			
 			'id_mesin' => $id_mesin,
 			'jenis_mesin' => $jenis_mesin,
-			'urutan' => $urutan
+			'nm_mesin' => $nama_mesin
 		
 		);
 		$this->m_mesin->input_mesin($insert);

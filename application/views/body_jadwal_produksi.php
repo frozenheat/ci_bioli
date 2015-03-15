@@ -95,7 +95,7 @@ else if(isset($data_mesin))
 			<td><?php echo $row->jenis_mesin; ?></td>
 			<td><?php echo $row->id_prdksi; ?></td>
 			<td><?php echo $row->nama_barang; ?></td>
-			<td><?php echo $row->waktu_prdksi ?></td>
+			<td><?php echo $row->waktu_prdksi ?> Jam</td>
 			<td><?php echo $row->jumlah_batch; ?></td>
 			<td><?php echo $row->waktu_mulai; ?></td>
 			<td><?php echo $row->waktu_selesai; ?></td>

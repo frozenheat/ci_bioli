@@ -19,7 +19,7 @@ table td{padding:5 8px;}
 /*untuk penampilan form*/
 .wrapper-form{ margin:0 auto 14px; text-align:center;}
 .table-form{display:inline-block;}
-.table-form tr td{padding:5 8px; width:113px; }
+.table-form tr td{padding:5 8px; width:169px; }
 .table-form tr td:nth-child(2n){width:200px;}
 .table-form input[type="text"], .table-form  input[type="password"]{border-radius:5px; background-color:#bdc4cb; width:200px;;}
 select{border-radius:5px; background-color:#bdc4cb; display:inline-block; }

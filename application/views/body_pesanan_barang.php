@@ -24,7 +24,10 @@ function konfirm_pesanan(hasil_konfirm, id_pesanan, id_pemesan, nama_barang, jum
 
 }
 
-
+function alert_sementara()
+{
+	alert("Anda telah telah melakukan proses penjadwalan untuk periode ini, silahkan untuk menunggu periode selanjutnya")
+}
 </script>
 
 
@@ -122,8 +125,8 @@ function konfirm_pesanan(hasil_konfirm, id_pesanan, id_pemesan, nama_barang, jum
 		echo form_open(site_url().'/penjadwalan_produksi/penjadwalan_produksi_sementara');
 		?>
 		
-		<input type ='submit' style='margin-top:5px;' value='Penjadwalan produksi'>
-		</form>
+		<input type ='submit' style='margin-top:5px;'  value='Penjadwalan produksi'>
+	
 		
 		<?php
 		}

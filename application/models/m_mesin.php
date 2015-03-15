@@ -11,7 +11,6 @@ function __construct(){
 	function tampil_mesin(){
 	$this->db->select('*');
 	$this->db->from('mesin');
-	$this->db->order_by('urutan','ASC');
 	$query = $this->db->get();
 	
 	if($query->num_rows() > 0)
@@ -304,6 +303,22 @@ function __construct(){
 		$query = $this->db->get();
 		
 		return $query->result();
+	}
+	
+	function pilih_jenis_mesin($id_mesin)
+	{
+		$this->db->select('jenis_mesin');
+		$this->db->from('mesin');
+		$this->db->where('id_mesin', $id_mesin);
+		$query = $this->db->get();
+		
+		foreach($query->result() as $row)
+		{
+			$jenis_mesin = $row->jenis_mesin;
+		}
+		
+		return $jenis_mesin;
+	
 	}
 	
 }
